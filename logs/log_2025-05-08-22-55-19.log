@@ -1,0 +1,9 @@
+2025-05-08 22:55:28,498 ChatBI->     INFO     Processing column: 区局
+2025-05-08 22:55:28,502 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-08 22:55:28,502 ChatBI->     INFO     Processing column: 工种职务
+2025-05-08 22:55:28,510 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-08 22:55:28,514 ChatBI->     INFO     Processing column: 所属行业
+2025-05-08 22:55:28,514 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-08 22:55:37,991 ChatBI->     INFO     query: 工匠数量最多的领域是哪个
+2025-05-08 22:55:39,198 ChatBI->     INFO     schema linking: {'target_columns': ['所属行业'], 'condition_columns': {}}
+2025-05-08 22:55:40,447 ChatBI->     INFO     stad sql: SELECT `所属行业`, COUNT(*) AS `数量` FROM gjw GROUP BY `所属行业` ORDER BY `数量` DESC LIMIT 1;

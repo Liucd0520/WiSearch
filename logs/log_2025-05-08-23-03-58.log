@@ -1,0 +1,49 @@
+2025-05-08 23:04:08,116 ChatBI->     INFO     Processing column: 区局
+2025-05-08 23:04:08,128 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-08 23:04:08,128 ChatBI->     INFO     Processing column: 工种职务
+2025-05-08 23:04:08,230 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-08 23:04:08,230 ChatBI->     INFO     Processing column: 所属行业
+2025-05-08 23:04:08,234 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-08 23:04:25,091 ChatBI->     INFO     query: 电信有多少工匠
+2025-05-08 23:04:27,003 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'区局': '电信', '所属行业': '电信'}}
+2025-05-08 23:04:29,766 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `工匠数量` FROM gjw WHERE `区局` = '电信' OR `所属行业` = '电信' LIMIT 10;
+2025-05-08 23:04:29,808 ChatBI->     INFO     obtain_data: [{'工匠数量': 13}]
+2025-05-08 23:04:29,808 ChatBI->     INFO     sql_result: {'sql_std': "SELECT COUNT(`姓名`) AS `工匠数量` FROM gjw WHERE `区局` = '电信' OR `所属行业` = '电信' LIMIT 10;"}
+2025-05-08 23:06:15,624 ChatBI->     INFO     query: 工匠人数随年份的变化
+2025-05-08 23:06:16,521 ChatBI->     INFO     schema linking: {'target_columns': ['年份', '姓名'], 'condition_columns': {}}
+2025-05-08 23:06:17,856 ChatBI->     INFO     stad sql: SELECT `年份`, COUNT(`姓名`) AS `工匠人数` FROM gjw GROUP BY `年份` ORDER BY `年份` LIMIT 10;
+2025-05-08 23:06:17,864 ChatBI->     INFO     obtain_data: [{'年份': 2016, '工匠人数': 88}, {'年份': 2017, '工匠人数': 94}, {'年份': 2018, '工匠人数': 98}, {'年份': 2019, '工匠人数': 102}, {'年份': 2020, '工匠人数': 98}, {'年份': 2021, '工匠人数': 103}, {'年份': 2022, '工匠人数': 100}, {'年份': 2023, '工匠人数': 100}, {'年份': 2024, '工匠人数': 108}]
+2025-05-08 23:06:17,865 ChatBI->     INFO     sql_result: {'sql_std': 'SELECT `年份`, COUNT(`姓名`) AS `工匠人数` FROM gjw GROUP BY `年份` ORDER BY `年份` LIMIT 10;'}
+2025-05-08 23:06:51,699 ChatBI->     INFO     query: 电信有多少工匠
+2025-05-08 23:06:52,706 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'区局': '电信', '所属行业': '电信'}}
+2025-05-08 23:06:54,205 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `工匠数量` FROM gjw WHERE `区局` = '电信' OR `所属行业` = '电信' LIMIT 10;
+2025-05-08 23:06:54,211 ChatBI->     INFO     obtain_data: [{'工匠数量': 13}]
+2025-05-08 23:06:54,211 ChatBI->     INFO     sql_result: {'sql_std': "SELECT COUNT(`姓名`) AS `工匠数量` FROM gjw WHERE `区局` = '电信' OR `所属行业` = '电信' LIMIT 10;"}
+2025-05-08 23:10:05,754 ChatBI->     INFO     query: 年龄大于60岁的大国工匠哟多少人
+2025-05-08 23:10:06,545 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'年龄': '60岁以上'}}
+2025-05-08 23:10:07,581 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `年龄` > 60;
+2025-05-08 23:10:07,587 ChatBI->     INFO     obtain_data: [{'数量': 130}]
+2025-05-08 23:10:07,588 ChatBI->     INFO     sql_result: {'sql_std': 'SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `年龄` > 60;'}
+2025-05-08 23:10:24,247 ChatBI->     INFO     query: 年龄大于60岁的上海工匠哟多少人
+2025-05-08 23:10:25,680 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'年龄': '60岁以上'}}
+2025-05-08 23:10:27,035 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `年龄` > 60;
+2025-05-08 23:10:27,042 ChatBI->     INFO     obtain_data: [{'数量': 130}]
+2025-05-08 23:10:27,042 ChatBI->     INFO     sql_result: {'sql_std': 'SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `年龄` > 60;'}
+2025-05-08 23:11:03,210 ChatBI->     INFO     query: 从事焊接的工匠的区局分布
+2025-05-08 23:11:04,342 ChatBI->     INFO     schema linking: {'target_columns': ['区局'], 'condition_columns': {'工种职务': '焊接'}}
+2025-05-08 23:11:06,233 ChatBI->     INFO     stad sql: SELECT `区局`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `区局` ORDER BY `数量` DESC LIMIT 10;
+2025-05-08 23:11:06,239 ChatBI->     INFO     obtain_data: [{'区局': '机电', '数量': 1}, {'区局': '建工', '数量': 1}, {'区局': '机电工会', '数量': 1}]
+2025-05-08 23:11:06,239 ChatBI->     INFO     sql_result: {'sql_std': "SELECT `区局`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `区局` ORDER BY `数量` DESC LIMIT 10;"}
+2025-05-08 23:11:45,573 ChatBI->     INFO     query: 有多少工匠是从事焊接工艺的？
+2025-05-08 23:11:46,452 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'工匠介绍（缩写）': '焊接工艺'}}
+2025-05-08 23:11:47,802 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `焊接工艺工匠数量` FROM gjw WHERE `工匠介绍（缩写）` LIKE '%焊接工艺%' LIMIT 10;
+2025-05-08 23:11:47,810 ChatBI->     INFO     obtain_data: [{'焊接工艺工匠数量': 11}]
+2025-05-08 23:11:47,810 ChatBI->     INFO     sql_result: {'sql_std': "SELECT COUNT(`姓名`) AS `焊接工艺工匠数量` FROM gjw WHERE `工匠介绍（缩写）` LIKE '%焊接工艺%' LIMIT 10;"}
+2025-05-08 23:12:06,093 ChatBI->     INFO     query: 从事焊接工艺的工匠的区局分布
+2025-05-08 23:12:07,444 ChatBI->     INFO     schema linking: {'target_columns': ['区局'], 'condition_columns': {'工匠介绍（缩写）': '焊接工艺'}}
+2025-05-08 23:12:09,035 ChatBI->     INFO     stad sql: SELECT `区局`, COUNT(*) AS `数量` FROM gjw WHERE `工匠介绍（缩写）` LIKE '%焊接工艺%' GROUP BY `区局` ORDER BY `数量` DESC LIMIT 10;
+2025-05-08 23:12:09,042 ChatBI->     INFO     obtain_data: [{'区局': '船舶', '数量': 5}, {'区局': '焊接协会', '数量': 1}, {'区局': '青浦区', '数量': 1}, {'区局': '航天局', '数量': 1}, {'区局': '机电工会', '数量': 1}, {'区局': '电力建设', '数量': 1}, {'区局': '城投集团', '数量': 1}]
+2025-05-08 23:12:09,044 ChatBI->     INFO     sql_result: {'sql_std': "SELECT `区局`, COUNT(*) AS `数量` FROM gjw WHERE `工匠介绍（缩写）` LIKE '%焊接工艺%' GROUP BY `区局` ORDER BY `数量` DESC LIMIT 10;"}
+2025-05-08 23:12:43,319 ChatBI->     INFO     query: 介绍一下夏强
+2025-05-08 23:12:44,376 ChatBI->     INFO     schema linking: {'target_columns': ['工匠介绍（缩写）'], 'condition_columns': {'姓名': '夏强'}}
+2025-05-08 23:12:45,672 ChatBI->     INFO     stad sql: SELECT `工匠介绍（缩写）` FROM gjw WHERE `姓名` = '夏强' LIMIT 10;

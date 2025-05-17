@@ -1,0 +1,15 @@
+2025-05-09 14:58:28,939 ChatBI->     INFO     Processing column: 区局
+2025-05-09 14:58:28,939 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-09 14:58:28,939 ChatBI->     INFO     Processing column: 工种职务
+2025-05-09 14:58:29,002 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-09 14:58:29,002 ChatBI->     INFO     Processing column: 所属行业
+2025-05-09 14:58:29,010 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-09 14:58:34,247 ChatBI->     INFO     query: 搞焊接的工匠年龄分布
+2025-05-09 14:58:35,135 ChatBI->     INFO     schema linking: {'target_columns': ['年龄'], 'condition_columns': {'工种职务': '焊接'}}
+2025-05-09 14:58:36,631 ChatBI->     INFO     stad sql: SELECT `年龄`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `年龄` ORDER BY `年龄` LIMIT 10;
+2025-05-09 14:58:36,631 ChatBI->     INFO     开始缩写分析 ... 
+2025-05-09 14:58:36,636 ChatBI->     INFO     要被缩写的字段信息为: {}
+2025-05-09 14:58:36,636 ChatBI->     INFO     sql_command: SELECT `年龄`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `年龄` ORDER BY `年龄` LIMIT 10;
+2025-05-09 14:58:36,636 ChatBI->     INFO     params: {}
+2025-05-09 14:58:36,638 ChatBI->     INFO     obtain_data: [{'年龄': 50.0, '数量': 1}, {'年龄': 53.0, '数量': 1}, {'年龄': 55.0, '数量': 1}]
+2025-05-09 14:58:36,638 ChatBI->     INFO     sql_result: {'sql_std': "SELECT `年龄`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `年龄` ORDER BY `年龄` LIMIT 10;", 'sql_abbr': "SELECT `年龄`, COUNT(*) AS `数量` FROM gjw WHERE `工种职务` LIKE '%焊接%' GROUP BY `年龄` ORDER BY `年龄` LIMIT 10;"}

@@ -1,0 +1,2 @@
+2025-04-30 13:35:19,446 ChatBI->     INFO     query: 被投诉拖欠农民工工资的企业有哪些，从工单内容里查找
+2025-04-30 13:35:20,089 ChatBI->     INFO     schema linking: {'target_columns': ['案件描述/内容描述'], 'condition_columns': {'案件描述/内容描述': '拖欠农民工工资'}}

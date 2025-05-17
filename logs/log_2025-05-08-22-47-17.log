@@ -1,0 +1,9 @@
+2025-05-08 22:47:33,570 ChatBI->     INFO     Processing column: 区局
+2025-05-08 22:47:33,578 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-08 22:47:33,578 ChatBI->     INFO     Processing column: 工种职务
+2025-05-08 22:47:33,595 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-08 22:47:33,598 ChatBI->     INFO     Processing column: 所属行业
+2025-05-08 22:47:33,607 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-08 22:47:59,030 ChatBI->     INFO     query: 电信工匠的数量占比
+2025-05-08 22:48:00,346 ChatBI->     INFO     schema linking: {'target_columns': ['工种职务'], 'condition_columns': {'区局': '电信', '所属行业': '电信'}}
+2025-05-08 22:48:02,316 ChatBI->     INFO     stad sql: SELECT (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM gjw WHERE `所属行业` = '电信')) AS `电信工匠占比` FROM gjw WHERE `所属行业` = '电信' AND `工种职务` LIKE '%电信%';

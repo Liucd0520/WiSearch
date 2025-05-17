@@ -1,0 +1,20 @@
+INFO:     Started server process [14877]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): [errno 98] address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-1f92f7b2-b743-4495-a442-4300bde60c2a-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+content='你好！有什么问题或者需要帮助的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 30, 'total_tokens': 41, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'Qwen2.5-7B-Instruct', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-7c409a00-db15-4ff9-98f0-d5f41df94ea6-0' usage_metadata={'input_tokens': 30, 'output_tokens': 11, 'total_tokens': 41, 'input_token_details': {}, 'output_token_details': {}}
+log_2025-05-12-07-17-47.log
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-79511f8a-e6f4-4355-9512-8fe9d012d303-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+INFO:     Started server process [14944]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): [errno 98] address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--8ffd19f9-0f85-4d75-85e8-738da09c84d5-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+content='你好！有什么问题或者需要帮助的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 30, 'total_tokens': 41, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'Qwen2.5-7B-Instruct', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--fb2ab7e2-e688-4ed1-a712-f57765c78505-0' usage_metadata={'input_tokens': 30, 'output_tokens': 11, 'total_tokens': 41, 'input_token_details': {}, 'output_token_details': {}}
+log_2025-05-12-07-17-59.log
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--632fff77-049f-4d6c-9ff4-fbc6e5f6dc9c-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}

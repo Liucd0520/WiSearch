@@ -1,0 +1,2 @@
+2025-05-02 15:22:36,310 ChatBI->     INFO     schema linking: {'target_columns': ['所属居委'], 'condition_columns': {'案件描述/内容描述': '设备维修'}}
+2025-05-02 15:22:41,045 ChatBI->     INFO     任务类型: SQL

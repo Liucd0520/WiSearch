@@ -1,0 +1,23 @@
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.823 seconds.
+Prefix dict has been built successfully.
+INFO:     Started server process [14482]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 33063): [errno 98] address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--89d1ce5a-e9cd-450e-86f7-bd9d7749e8de-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+content='你好！有什么问题或者需要帮助的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 30, 'total_tokens': 41, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'Qwen2.5-7B-Instruct', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--b9ea7434-1366-4671-b477-c8707956326a-0' usage_metadata={'input_tokens': 30, 'output_tokens': 11, 'total_tokens': 41, 'input_token_details': {}, 'output_token_details': {}}
+log_2025-05-12-06-55-43.log
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.947 seconds.
+Prefix dict has been built successfully.
+INFO:     Started server process [14696]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:33063 (Press CTRL+C to quit)

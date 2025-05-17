@@ -1,0 +1,3 @@
+2025-04-30 13:05:41,095 ChatBI->     INFO     query: 2024年8月份夜间扰民事件一共有多少起
+2025-04-30 13:05:41,993 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {'发现时间': '2024-08', '案件描述/内容描述': '扰民'}}
+2025-04-30 13:05:43,268 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `扰民事件数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `案件描述/内容描述` LIKE '%扰民%';

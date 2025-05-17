@@ -1,0 +1,16 @@
+2025-05-09 09:27:51,094 ChatBI->     INFO     Processing column: 区局
+2025-05-09 09:27:51,094 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-09 09:27:51,094 ChatBI->     INFO     Processing column: 工种职务
+2025-05-09 09:27:51,150 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-09 09:27:51,150 ChatBI->     INFO     Processing column: 所属行业
+2025-05-09 09:27:51,167 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-09 09:28:26,918 ChatBI->     INFO     query: 龙华殡仪馆的上海工匠是哪五个人?
+2025-05-09 09:28:28,012 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'工作单位': '龙华殡仪馆'}}
+2025-05-09 09:28:29,247 ChatBI->     INFO     stad sql: SELECT `姓名` FROM gjw WHERE `工作单位` LIKE '%龙华殡仪馆%' LIMIT 5;
+2025-05-09 09:28:29,250 ChatBI->     INFO     obtain_data: [{'姓名': '王  刚'}]
+2025-05-09 09:28:29,251 ChatBI->     INFO     sql_result: {'sql_std': "SELECT `姓名` FROM gjw WHERE `工作单位` LIKE '%龙华殡仪馆%' LIMIT 5;"}
+2025-05-09 09:28:48,338 ChatBI->     INFO     query: 上海电信的上海工匠是哪五个人?
+2025-05-09 09:28:49,213 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'工作单位': '上海电信'}}
+2025-05-09 09:28:50,286 ChatBI->     INFO     stad sql: SELECT `姓名` FROM gjw WHERE `工作单位` LIKE '%上海电信%' LIMIT 5;
+2025-05-09 09:28:50,290 ChatBI->     INFO     obtain_data: [{}]
+2025-05-09 09:28:50,291 ChatBI->     INFO     sql_result: {'sql_std': "SELECT `姓名` FROM gjw WHERE `工作单位` LIKE '%上海电信%' LIMIT 5;"}

@@ -1,0 +1,7 @@
+2025-05-01 22:31:25,398 ChatBI->     INFO     query: 从工单描述中总结2024年8月份的工单关注比较多是事件
+2025-05-01 22:31:26,306 ChatBI->     INFO     schema linking: {'target_columns': ['事项名称'], 'condition_columns': {'发现时间': '2024-08', '案件描述/内容描述': '台风'}}
+2025-05-01 22:31:26,307 ChatBI->     INFO     任务类型: SQL
+2025-05-01 22:31:27,824 ChatBI->     INFO     stad sql: SELECT `事项名称`, COUNT(*) AS `数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `案件描述/内容描述` LIKE '%台风%' GROUP BY `事项名称` ORDER BY `数量` DESC LIMIT 10;
+2025-05-01 22:31:27,829 ChatBI->     INFO     非结构化信息为: {"`案件描述/内容描述` LIKE '%台风%'": '台风'}
+2025-05-01 22:31:28,230 ChatBI->     INFO     台风 的命名实体判别： yes
+2025-05-01 22:31:28,230 ChatBI->     INFO     没有找到<  >对应的视图

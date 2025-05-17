@@ -1,0 +1,5 @@
+2025-05-15 13:08:59,011 ChatBI->     INFO     schema linking: {'target_columns': ['工作单位'], 'condition_columns': {'姓名': '工匠'}}
+2025-05-15 13:09:01,564 ChatBI->     INFO     任务类型: SQL
+2025-05-15 13:09:02,636 ChatBI->     INFO     stad sql: SELECT DISTINCT `工作单位` FROM gjw WHERE `姓名` LIKE '%工匠%' LIMIT 10;
+2025-05-15 13:09:02,654 ChatBI->     INFO     非结构化信息为: {}
+2025-05-15 13:09:02,654 ChatBI->     INFO     没有找到<  >对应的视图

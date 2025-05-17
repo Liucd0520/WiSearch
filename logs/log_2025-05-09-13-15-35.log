@@ -1,0 +1,15 @@
+2025-05-09 13:15:36,803 ChatBI->     INFO     Processing column: 区局
+2025-05-09 13:15:36,807 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-09 13:15:36,807 ChatBI->     INFO     Processing column: 工种职务
+2025-05-09 13:15:36,868 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-09 13:15:36,868 ChatBI->     INFO     Processing column: 所属行业
+2025-05-09 13:15:36,872 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-09 13:16:19,098 ChatBI->     INFO     query: 上海电信工匠有多少人
+2025-05-09 13:16:19,950 ChatBI->     INFO     schema linking: {'target_columns': ['姓名'], 'condition_columns': {'工作单位': '电信'}}
+2025-05-09 13:16:21,166 ChatBI->     INFO     stad sql: SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `工作单位` LIKE '%电信%' LIMIT 10;
+2025-05-09 13:16:21,167 ChatBI->     INFO     开始缩写分析 ... 
+2025-05-09 13:16:21,171 ChatBI->     INFO     要被缩写的字段信息为: {"`工作单位` LIKE '%电信%'": '电信'}
+2025-05-09 13:16:21,172 ChatBI->     INFO     sql_command: SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE  `工作单位` IN (:val0, :val1, :val2, :val3, :val4, :val5, :val6) LIMIT 10;
+2025-05-09 13:16:21,172 ChatBI->     INFO     params: {'val0': '中国电信股份有限公司上海西区电信局', 'val1': '中国电信股份 有限公司上海分公司', 'val2': '中国电信股份有限公司上海南区电信局', 'val3': '中国电信股份有限公司上海政企客户事业群', 'val4': '中国电信上海理想信息产业（集团）有限公司', 'val5': '中国电信股份有限公司上海移动互联网部', 'val6': '中国电信股份有限公司上海松江电信局'}
+2025-05-09 13:16:21,176 ChatBI->     INFO     obtain_data: [{'数量': 7}]
+2025-05-09 13:16:21,176 ChatBI->     INFO     sql_result: {'sql_std': "SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE `工作单位` LIKE '%电信%' LIMIT 10;", 'sql_abbr': 'SELECT COUNT(`姓名`) AS `数量` FROM gjw WHERE  `工作单位` IN (:val0, :val1, :val2, :val3, :val4, :val5, :val6) LIMIT 10;'}

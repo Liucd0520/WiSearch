@@ -1,0 +1,56 @@
+[
+    {
+        "query": "上海有多少个大国工匠",
+        "target_columns": [
+            "区局"
+        ],
+        "condition_columns": {
+            "区局": "浦东新区"
+        }
+    },
+    {
+        "query": "上海大国工匠的岗位分布",
+        "target_columns": [
+            "区局"
+        ],
+        "condition_columns": {
+            "姓名": "大国工匠"
+        }
+    },
+    {
+        "query": "60岁以上的大国工匠有多少人",
+        "target_columns": [
+            "编号"
+        ],
+        "condition_columns": {
+            "年龄": "60岁以上"
+        }
+    },
+    {
+        "query": "有多少个水电工工匠",
+        "target_columns": [
+            "编号"
+        ],
+        "condition_columns": {
+            "行业": "水电"
+        }
+    },
+    {
+        "query": "医疗领域的工匠有多少人",
+        "target_columns": [
+            "领域"
+        ],
+        "condition_columns": {
+            "领域": "医疗"
+        }
+    },
+    {
+        "query": "介绍一下沈国兴工匠",
+        "target_columns": [
+            "工匠介绍"
+        ],
+        "condition_columns": {
+            "姓名": "沈国兴"
+        }
+    }
+]

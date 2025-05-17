@@ -1,0 +1,12 @@
+2025-05-08 22:51:05,496 ChatBI->     INFO     Processing column: 区局
+2025-05-08 22:51:05,504 ChatBI->     INFO     Found 145 distinct values for 区局
+2025-05-08 22:51:05,504 ChatBI->     INFO     Processing column: 工种职务
+2025-05-08 22:51:05,512 ChatBI->     INFO     Found 617 distinct values for 工种职务
+2025-05-08 22:51:05,512 ChatBI->     INFO     Processing column: 所属行业
+2025-05-08 22:51:05,512 ChatBI->     INFO     Found 112 distinct values for 所属行业
+2025-05-08 22:51:08,751 ChatBI->     INFO     query: 电信工匠的数量占比
+2025-05-08 22:51:09,669 ChatBI->     INFO     schema linking: {'target_columns': ['工种职务'], 'condition_columns': {'区局': '电信', '所属行业': '电信'}}
+2025-05-08 22:51:12,082 ChatBI->     INFO     stad sql: SELECT (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM gjw WHERE `所属行业` = '电信')) AS `电信工匠占比` FROM gjw WHERE `所属行业` = '电信' AND `工种职务` LIKE '%电信%';
+2025-05-08 22:52:02,759 ChatBI->     INFO     query: 工匠数量最多的领域是哪个
+2025-05-08 22:52:03,621 ChatBI->     INFO     schema linking: {'target_columns': ['所属行业'], 'condition_columns': {}}
+2025-05-08 22:52:05,088 ChatBI->     INFO     stad sql: SELECT `所属行业`, COUNT(*) AS `数量` FROM gjw GROUP BY `所属行业` ORDER BY `数量` DESC LIMIT 1;
