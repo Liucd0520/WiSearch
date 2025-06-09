@@ -21,23 +21,30 @@ from milvus_model.sparse.bm25.bm25 import BM25EmbeddingFunction
 from milvus_model.sparse.bm25.tokenizers import build_default_analyzer
 from pymilvus import AnnSearchRequest, RRFRanker, connections, CollectionSchema, FieldSchema, DataType, Collection
 from models.langchain_models import embedding_bge
-from tools.utils import build_index
-from tools.utils import build_schema
+from tools.tool_utils import build_index
+from tools.tool_utils import build_schema
 import datetime
+from utils.util import params_parser
 
-unstr_field = config.related_columns[-1]
+
+unstr_field = config.unstructrued_column
 primary_key_name = config.primary_key_name
 
-mysql_table_name = config.table_names[0]
+mysql_table_name = config.data_table_names[0]
 collection_name = config.collection_name
 
 
 
 # 连接服务器
 mysql_db = SQLDatabase.from_uri(config.mysql_uri)
-client = MilvusClient(uri=config.uri)
+# param_db = SQLDatabase.from_uri(config.param_uri)  !!!!!!  ####
+client = MilvusClient(uri=config.uri)  # 创建数据库
 
+ # 获取某个表的元数据获取
+# _, _, _, columns_map = \
+#     params_parser(param_db, config.param_table_metadata, config.data_table_names[0])
 
+columns_map = config.columns_map
 
 def mysql_values_operator(table_name, column_name):
     """获取非结构化字段的值"""
@@ -75,12 +82,12 @@ else:
     bm25_ef = bm25_init(config.bm25_ef_path)
 
 
-schema = build_schema(mysql_db, mysql_table_name, primary_key_name)
-# print(schema)
+schema = build_schema(mysql_db, mysql_table_name, primary_key_name, columns_map, is_chinese=False)
+print(schema)
 
 index_params = build_index(client)
 
-client.create_collection(
+client.create_collection( 
         collection_name=collection_name,
         schema=schema,
         index_params=index_params
@@ -116,9 +123,9 @@ while True:
                 each_data[key] = value.strftime("%Y-%m-%d %H:%M:%S")
     
     # 将字段名映射为Milvus字段名
-    batch_data = [ {config.columns_map[k]: v  for k, v in each_data.items()}  for each_data in batch_data ]
+    batch_data = [ {columns_map[k]: v  for k, v in each_data.items()}  for each_data in batch_data ]
     
-    text_list = [each_data[config.columns_map[unstr_field]] for each_data in batch_data]
+    text_list = [each_data[columns_map[unstr_field]] for each_data in batch_data]
     sparse_embs = bm25_ef.encode_documents(text_list)
     dense_embs = embedding_bge(text_list)
 
@@ -137,7 +144,6 @@ while True:
 
     offset += batch_size
 
-    break
 
     
 

@@ -2,7 +2,7 @@
 from langchain_community.utilities import SQLDatabase
 
 
-def create_temp_view(mysql_uri: str, table_name: str, view_index: str, values):
+def create_temp_view(mysql_db, table_name: str, view_index: str, values):
     # 如果values为空，则不创建视图
     if not values:
         return 
@@ -14,13 +14,12 @@ def create_temp_view(mysql_uri: str, table_name: str, view_index: str, values):
     WHERE `{view_index}` = '{values}'
 
     """
-    mysql_db = SQLDatabase.from_uri(mysql_uri)
+    
     mysql_db.run(view_sql)
 
     return view_table_name
 
-def drop_view(mysql_uri: str, table_names: list):
-    mysql_db = SQLDatabase.from_uri(mysql_uri)
+def drop_view(mysql_db, table_names: list):
 
     for table_name in table_names:
         drop_view_sql = f"DROP VIEW IF EXISTS {table_name}"

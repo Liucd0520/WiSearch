@@ -1,2 +1,0 @@
-2025-04-30 12:32:34,447 ChatBI->     INFO     query: 2024年8月份北外滩街道的工单数量有多少
-2025-04-30 12:32:35,328 ChatBI->     INFO     schema linking: {'target_columns': ['所属街道'], 'condition_columns': {'发现时间': '2024-08', '所属街道': '北外滩街道'}}

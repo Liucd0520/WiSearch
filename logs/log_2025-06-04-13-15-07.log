@@ -1,0 +1,612 @@
+2025-06-04 13:15:37,957 ChatBI->     INFO     full_schema: 
+CREATE TABLE znrpt_cuv_summary_gd_extend (
+	id BIGINT NOT NULL COMMENT '主键ID' AUTO_INCREMENT, 
+	section_id VARCHAR(40) COMMENT '业务小结(id)', 
+	cuv_customer_name VARCHAR(50) COMMENT '客户名称', 
+	cuv_session_id VARCHAR(100) COMMENT '会话ID', 
+	cuv_replay_account VARCHAR(50) COMMENT '来电号码', 
+	cuv_qes_desc TEXT COMMENT '咨询内容', 
+	cuv_deal_scheme VARCHAR(200) COMMENT '处理主题', 
+	cuv_channel VARCHAR(20) COMMENT '渠道', 
+	cuv_channel_cn VARCHAR(20) COMMENT '渠道中文含义', 
+	cuv_customer_id VARCHAR(40) COMMENT '客户ID', 
+	cuv_start_time DATETIME NOT NULL COMMENT '来电时间', 
+	cuv_biztype1 VARCHAR(200) COMMENT '一级保险类型', 
+	cuv_biztype2 VARCHAR(200) COMMENT '二级保险类型', 
+	cuv_biztype3 VARCHAR(200) COMMENT '三级保险类型', 
+	cuv_biztype4 VARCHAR(200) COMMENT '四级保险类型', 
+	cuv_biztype5 VARCHAR(200) COMMENT '五级保险类型', 
+	cuv_biztype6 VARCHAR(200) COMMENT '六级保险类型', 
+	cuv_biztype7 VARCHAR(200) COMMENT '七级保险类型', 
+	cuv_biztype1_cn VARCHAR(1000) COMMENT '一级保险类型中文含义', 
+	cuv_biztype2_cn VARCHAR(1000) COMMENT '二级保险类型中文含义', 
+	cuv_biztype3_cn VARCHAR(1000) COMMENT '三级保险类型中文含义', 
+	cuv_biztype4_cn VARCHAR(1000) COMMENT '四级保险类型中文含义', 
+	cuv_biztype5_cn VARCHAR(1000) COMMENT '五级保险类型中文含义', 
+	cuv_biztype6_cn VARCHAR(1000) COMMENT '六级保险类型中文含义', 
+	cuv_biztype7_cn VARCHAR(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '七级保险类型中文含义', 
+	cuv_summary_type VARCHAR(10) COMMENT '小结类型：0社保1医保', 
+	cuv_summary_type_cn VARCHAR(100) COMMENT '小结类型中文含义', 
+	cuv_call_type VARCHAR(10) COMMENT '来电类型', 
+	cuv_call_type_cn VARCHAR(100) COMMENT '来电类型中文含义', 
+	cuv_identity VARCHAR(20) COMMENT '人员身份', 
+	cuv_identity_cn VARCHAR(100) COMMENT '人员身份中文含义', 
+	cuv_customer_type VARCHAR(10) COMMENT '人员分类', 
+	cuv_customer_type_cn VARCHAR(100) COMMENT '人员分类中文含义', 
+	cuv_district VARCHAR(20) COMMENT '区县信息，徐汇、黄埔、静安、虹口、杨浦、闵行、宝山、嘉定、浦东、南汇、奉贤、松江、金山、青浦、崇明、长宁、医保、鉴定中心、外就办', 
+	cuv_district_cn VARCHAR(100) COMMENT '区县信息中文含义', 
+	cuv_contact_tel VARCHAR(50) COMMENT '联系方式', 
+	cuv_solved VARCHAR(2) COMMENT '是否解决', 
+	cuv_solved_cn VARCHAR(100) COMMENT '是否解决中文含义', 
+	gd_order_id VARCHAR(16) COMMENT '工单编号', 
+	gd_call_id VARCHAR(16) COMMENT '录音流水号', 
+	gd_session_id VARCHAR(128) COMMENT '坐席会话id', 
+	gd_work_no VARCHAR(10) COMMENT '坐席工号', 
+	gd_call_no VARCHAR(50) COMMENT '来电号码', 
+	gd_call_time DATETIME COMMENT '来电时间', 
+	gd_contact_name VARCHAR(60) COMMENT '联系人姓名', 
+	gd_contact_sex VARCHAR(1) COMMENT '联系人性别(0未知,1男,2女)', 
+	gd_contact_sex_cn VARCHAR(10) COMMENT '联系人性别中文含义', 
+	gd_contact_address VARCHAR(300) COMMENT '联系人地址(投诉、举报人基本情况-联系地址)', 
+	gd_order_type VARCHAR(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单分类：1疑难问题件;2库调整件;3协调件;4交互平台件;5劳动监察件;6政风行风件;7公示反馈件;8社会保险举报投诉件;9意见建议件;10其他件;11信息反馈件;12表扬件;13投诉件;14纠错件;15急件;', 
+	gd_order_type_cn VARCHAR(100) COMMENT '工单分类中文含义', 
+	gd_order_content TEXT COMMENT '工单内容', 
+	gd_create_time DATETIME COMMENT '工单生成时间', 
+	gd_order_status VARCHAR(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单状态：0未提交;1已提交;2已领取;3待监理初审;4待运控部审核;5待质监部审核;6待监理复审;7工单归档;8待组长审核;9待推送;10待咨询科处理;', 
+	gd_order_status_cn VARCHAR(100) COMMENT '工单状态中文含义', 
+	gd_back_flag VARCHAR(1) COMMENT '退单标志(1:是，0:否)', 
+	gd_back_flag_cn VARCHAR(10) COMMENT '退单标志中文含义', 
+	gd_order_index VARCHAR(2) COMMENT '工单级别(1:一般,2:急件)', 
+	gd_order_index_cn VARCHAR(10) COMMENT '工单级别中文含义', 
+	gd_order_source VARCHAR(1) COMMENT '工单来源', 
+	gd_order_source_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_wx_order_type VARCHAR(1) COMMENT '自建工单退单标志(1:是，0:否)', 
+	gd_wx_order_type_cn VARCHAR(10) COMMENT '自建工单退单标志中文含义', 
+	gd_service_level1 VARCHAR(8) COMMENT '业务分类--一级分类', 
+	gd_service_level2 VARCHAR(8) COMMENT '业务分类--二级分类', 
+	gd_service_level3 VARCHAR(8) COMMENT '业务分类--三级分类', 
+	gd_service_level4 VARCHAR(8) COMMENT '业务分类--四级分类', 
+	gd_service_level1_cn VARCHAR(200) COMMENT '业务分类--一级分类中文含义', 
+	gd_service_level2_cn VARCHAR(200) COMMENT '业务分类--二级分类中文含义', 
+	gd_service_level3_cn VARCHAR(200) COMMENT '业务分类--三级分类中文含义', 
+	gd_service_level4_cn VARCHAR(200) COMMENT '业务分类--四级分类中文含义', 
+	gd_call_type VARCHAR(1) COMMENT '来电类型 1个人 2企业', 
+	gd_call_type_cn VARCHAR(10) COMMENT '来电类型中文含义', 
+	gd_channel_typeid VARCHAR(4) COMMENT '工单来源(电话、微信、微博、留言、网上信访、回访)', 
+	gd_channel_typeid_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_order_class VARCHAR(1) COMMENT '工单类别：1咨询类;2求助类;3举报投诉类;4意见建议类;', 
+	gd_order_class_cn VARCHAR(100) COMMENT '工单类别中文含义', 
+	extend_call_matter VARCHAR(1) COMMENT '来电原因：1表扬 2投诉 3撤诉', 
+	extend_call_matter_cn VARCHAR(50) COMMENT '来电原因中文含义', 
+	extend_commend_category VARCHAR(1) COMMENT '表扬类别', 
+	extend_commend_category_cn VARCHAR(100) COMMENT '表扬类别中文含义', 
+	content TEXT COMMENT '大模型传参content内容，对数据内容进行整合', 
+	PRIMARY KEY (id, cuv_start_time)
+)PARTITION_DEFINITIONS=PARTITION p_month_197001 VALUES LESS THAN (719528) ENGINE = InnoDB, PARTITION p_month_202404 VALUES LESS THAN (739372) ENGINE = InnoDB, PARTITION p_month_202405 VALUES LESS THAN (739403) ENGINE = InnoDB, PARTITION p_month_202406 VALUES LESS THAN (739433) ENGINE = InnoDB, PARTITION p_month_202407 VALUES LESS THAN (739464) ENGINE = InnoDB, PARTITION p_month_202408 VALUES LESS THAN (739495) ENGINE = InnoDB, PARTITION p_month_202409 VALUES LESS THAN (739525) ENGINE = InnoDB, PARTITION p_month_202410 VALUES LESS THAN (739556) ENGINE = InnoDB, PARTITION p_month_202411 VALUES LESS THAN (739586) ENGINE = InnoDB, PARTITION p_month_202412 VALUES LESS THAN (739617) ENGINE = InnoDB, PARTITION p_month_202501 VALUES LESS THAN (739648) ENGINE = InnoDB, PARTITION p_month_202502 VALUES LESS THAN (739676) ENGINE = InnoDB, PARTITION p_month_202503 VALUES LESS THAN (739707) ENGINE = InnoDB COMMENT='带分区：话单小结工单扩展表' ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8mb3 ENGINE=InnoDB PARTITION BY RANGE (to_days(`cuv_start_time`))
+
+/*
+3 rows from znrpt_cuv_summary_gd_extend table:
+id	section_id	cuv_customer_name	cuv_session_id	cuv_replay_account	cuv_qes_desc	cuv_deal_scheme	cuv_channel	cuv_channel_cn	cuv_customer_id	cuv_start_time	cuv_biztype1	cuv_biztype2	cuv_biztype3	cuv_biztype4	cuv_biztype5	cuv_biztype6	cuv_biztype7	cuv_biztype1_cn	cuv_biztype2_cn	cuv_biztype3_cn	cuv_biztype4_cn	cuv_biztype5_cn	cuv_biztype6_cn	cuv_biztype7_cn	cuv_summary_type	cuv_summary_type_cn	cuv_call_type	cuv_call_type_cn	cuv_identity	cuv_identity_cn	cuv_customer_type	cuv_customer_type_cn	cuv_district	cuv_district_cn	cuv_contact_tel	cuv_solved	cuv_solved_cn	gd_order_id	gd_call_id	gd_session_id	gd_work_no	gd_call_no	gd_call_time	gd_contact_name	gd_contact_sex	gd_contact_sex_cn	gd_contact_address	gd_order_type	gd_order_type_cn	gd_order_content	gd_create_time	gd_order_status	gd_order_status_cn	gd_back_flag	gd_back_flag_cn	gd_order_index	gd_order_index_cn	gd_order_source	gd_order_source_cn	gd_wx_order_type	gd_wx_order_type_cn	gd_service_level1	gd_service_level2	gd_service_level3	gd_service_level4	gd_service_level1_cn	gd_service_level2_cn	gd_service_level3_cn	gd_service_level4_cn	gd_call_type	gd_call_type_cn	gd_channel_typeid	gd_channel_typeid_cn	gd_order_class	gd_order_class_cn	extend_call_matter	extend_call_matter_cn	extend_commend_category	extend_commend_category_cn	content
+1	25150078	None	1000136363645901233317135666661173014060001713566706648	13636364590	1	None	1000	语音	0	2024-04-20 06:45:06	861	None	None	1871	None	None	None	转队列-医保	None	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150078,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+2	25150079	None	1000139182614751233317135671461174114060001713567165817	13918261475	12345	None	1000	语音	0	2024-04-20 06:52:45	849	1216	None	1871	None	None	None	非我局业务范围	其它	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150079,客户名称:,咨询内容:12345,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类
+3	25150080	None	100019116007618123331713567784103586060001713567802666	19116007618	1	None	1000	语音	0	2024-04-20 07:03:21	837	1196	None	1870	None	None	None	咨询办事机构	街道乡镇	None	办事机构咨询				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150080,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+*/
+2025-06-04 13:15:38,226 ChatBI->     DEBUG    Error processing column cuv_biztype6: invalid syntax (<string>, line 0)
+2025-06-04 13:15:38,300 ChatBI->     DEBUG    Error processing column cuv_biztype7: invalid syntax (<string>, line 0)
+2025-06-04 13:15:38,394 ChatBI->     INFO     Found enum field: cuv_biztype1_cn with 20 values
+2025-06-04 13:15:38,669 ChatBI->     INFO     Found enum field: cuv_biztype4_cn with 18 values
+2025-06-04 13:15:38,750 ChatBI->     INFO     Found enum field: cuv_biztype5_cn with 1 values
+2025-06-04 13:15:38,843 ChatBI->     INFO     Found enum field: cuv_biztype6_cn with 1 values
+2025-06-04 13:15:38,946 ChatBI->     INFO     Found enum field: cuv_biztype7_cn with 1 values
+2025-06-04 13:15:39,030 ChatBI->     INFO     Found enum field: cuv_summary_type with 1 values
+2025-06-04 13:15:39,133 ChatBI->     INFO     Found enum field: cuv_summary_type_cn with 1 values
+2025-06-04 13:15:39,202 ChatBI->     DEBUG    Error processing column cuv_call_type: invalid syntax (<string>, line 0)
+2025-06-04 13:15:39,307 ChatBI->     INFO     Found enum field: cuv_call_type_cn with 1 values
+2025-06-04 13:15:39,372 ChatBI->     DEBUG    Error processing column cuv_identity: invalid syntax (<string>, line 0)
+2025-06-04 13:15:39,458 ChatBI->     INFO     Found enum field: cuv_identity_cn with 1 values
+2025-06-04 13:15:39,783 ChatBI->     INFO     Found enum field: cuv_customer_type_cn with 1 values
+2025-06-04 13:15:39,850 ChatBI->     DEBUG    Error processing column cuv_district: invalid syntax (<string>, line 0)
+2025-06-04 13:15:39,952 ChatBI->     INFO     Found enum field: cuv_district_cn with 1 values
+2025-06-04 13:15:40,036 ChatBI->     INFO     Found enum field: cuv_contact_tel with 84 values
+2025-06-04 13:15:40,135 ChatBI->     INFO     Found enum field: cuv_solved with 6 values
+2025-06-04 13:15:40,238 ChatBI->     INFO     Found enum field: cuv_solved_cn with 7 values
+2025-06-04 13:15:40,309 ChatBI->     DEBUG    Error processing column cuv_customer_type: invalid syntax (<string>, line 0)
+2025-06-04 13:15:40,822 ChatBI->     DEBUG    Error processing column gd_contact_sex: invalid syntax (<string>, line 0)
+2025-06-04 13:15:40,924 ChatBI->     INFO     Found enum field: gd_contact_sex_cn with 1 values
+2025-06-04 13:15:41,002 ChatBI->     INFO     Found enum field: gd_contact_address with 9 values
+2025-06-04 13:15:41,079 ChatBI->     INFO     Found enum field: gd_order_type with 14 values
+2025-06-04 13:15:41,163 ChatBI->     INFO     Found enum field: gd_order_type_cn with 15 values
+2025-06-04 13:15:41,434 ChatBI->     INFO     Found enum field: gd_order_status with 6 values
+2025-06-04 13:15:41,542 ChatBI->     INFO     Found enum field: gd_order_status_cn with 7 values
+2025-06-04 13:15:41,620 ChatBI->     INFO     Found enum field: gd_back_flag with 1 values
+2025-06-04 13:15:41,698 ChatBI->     INFO     Found enum field: gd_back_flag_cn with 2 values
+2025-06-04 13:15:41,749 ChatBI->     INFO     Found enum field: gd_order_index with 2 values
+2025-06-04 13:15:41,792 ChatBI->     INFO     Found enum field: gd_order_index_cn with 3 values
+2025-06-04 13:15:41,823 ChatBI->     DEBUG    Error processing column gd_order_source: invalid syntax (<string>, line 0)
+2025-06-04 13:15:41,884 ChatBI->     INFO     Found enum field: gd_order_source_cn with 1 values
+2025-06-04 13:15:41,900 ChatBI->     DEBUG    Error processing column gd_wx_order_type: invalid syntax (<string>, line 0)
+2025-06-04 13:15:41,997 ChatBI->     INFO     Found enum field: gd_wx_order_type_cn with 1 values
+2025-06-04 13:15:42,029 ChatBI->     INFO     Found enum field: gd_service_level1 with 13 values
+2025-06-04 13:15:42,135 ChatBI->     INFO     Found enum field: cuv_channel with 1 values
+2025-06-04 13:15:42,147 ChatBI->     DEBUG    Error processing column cuv_customer_name: invalid syntax (<string>, line 0)
+2025-06-04 13:15:42,173 ChatBI->     DEBUG    Error processing column cuv_deal_scheme: invalid syntax (<string>, line 0)
+2025-06-04 13:15:42,180 ChatBI->     INFO     Found enum field: gd_channel_typeid with 2 values
+2025-06-04 13:15:42,197 ChatBI->     DEBUG    Error processing column gd_service_level4: invalid syntax (<string>, line 0)
+2025-06-04 13:15:42,203 ChatBI->     INFO     Found enum field: cuv_biztype1 with 22 values
+2025-06-04 13:15:42,232 ChatBI->     INFO     Found enum field: gd_service_level2 with 38 values
+2025-06-04 13:15:42,265 ChatBI->     INFO     Found enum field: cuv_biztype4 with 18 values
+2025-06-04 13:15:42,277 ChatBI->     INFO     Found enum field: cuv_channel_cn with 1 values
+2025-06-04 13:15:42,278 ChatBI->     INFO     Found enum field: cuv_customer_id with 1 values
+2025-06-04 13:15:42,288 ChatBI->     DEBUG    Error processing column gd_service_level4_cn: invalid syntax (<string>, line 0)
+2025-06-04 13:15:42,293 ChatBI->     INFO     Found enum field: extend_call_matter_cn with 2 values
+2025-06-04 13:15:42,303 ChatBI->     INFO     Found enum field: gd_call_type with 2 values
+2025-06-04 13:15:42,327 ChatBI->     INFO     Found enum field: gd_service_level3 with 47 values
+2025-06-04 13:15:42,327 ChatBI->     INFO     Found enum field: gd_service_level1_cn with 12 values
+2025-06-04 13:15:42,352 ChatBI->     INFO     Found enum field: extend_commend_category_cn with 1 values
+2025-06-04 13:15:42,356 ChatBI->     INFO     Found enum field: gd_order_class with 5 values
+2025-06-04 13:15:42,367 ChatBI->     DEBUG    Error processing column extend_commend_category: invalid syntax (<string>, line 0)
+2025-06-04 13:15:42,374 ChatBI->     INFO     Found enum field: gd_service_level3_cn with 41 values
+2025-06-04 13:15:42,374 ChatBI->     INFO     Found enum field: extend_call_matter with 1 values
+2025-06-04 13:15:42,375 ChatBI->     INFO     Found enum field: gd_channel_typeid_cn with 3 values
+2025-06-04 13:15:42,383 ChatBI->     INFO     Found enum field: gd_service_level2_cn with 34 values
+2025-06-04 13:15:42,384 ChatBI->     INFO     Found enum field: gd_call_type_cn with 3 values
+2025-06-04 13:15:42,399 ChatBI->     INFO     Found enum field: gd_order_class_cn with 5 values
+2025-06-04 13:16:10,771 ChatBI->     INFO     full_schema: 
+CREATE TABLE znrpt_cuv_summary_gd_extend (
+	id BIGINT NOT NULL COMMENT '主键ID' AUTO_INCREMENT, 
+	section_id VARCHAR(40) COMMENT '业务小结(id)', 
+	cuv_customer_name VARCHAR(50) COMMENT '客户名称', 
+	cuv_session_id VARCHAR(100) COMMENT '会话ID', 
+	cuv_replay_account VARCHAR(50) COMMENT '来电号码', 
+	cuv_qes_desc TEXT COMMENT '咨询内容', 
+	cuv_deal_scheme VARCHAR(200) COMMENT '处理主题', 
+	cuv_channel VARCHAR(20) COMMENT '渠道', 
+	cuv_channel_cn VARCHAR(20) COMMENT '渠道中文含义', 
+	cuv_customer_id VARCHAR(40) COMMENT '客户ID', 
+	cuv_start_time DATETIME NOT NULL COMMENT '来电时间', 
+	cuv_biztype1 VARCHAR(200) COMMENT '一级保险类型', 
+	cuv_biztype2 VARCHAR(200) COMMENT '二级保险类型', 
+	cuv_biztype3 VARCHAR(200) COMMENT '三级保险类型', 
+	cuv_biztype4 VARCHAR(200) COMMENT '四级保险类型', 
+	cuv_biztype5 VARCHAR(200) COMMENT '五级保险类型', 
+	cuv_biztype6 VARCHAR(200) COMMENT '六级保险类型', 
+	cuv_biztype7 VARCHAR(200) COMMENT '七级保险类型', 
+	cuv_biztype1_cn VARCHAR(1000) COMMENT '一级保险类型中文含义', 
+	cuv_biztype2_cn VARCHAR(1000) COMMENT '二级保险类型中文含义', 
+	cuv_biztype3_cn VARCHAR(1000) COMMENT '三级保险类型中文含义', 
+	cuv_biztype4_cn VARCHAR(1000) COMMENT '四级保险类型中文含义', 
+	cuv_biztype5_cn VARCHAR(1000) COMMENT '五级保险类型中文含义', 
+	cuv_biztype6_cn VARCHAR(1000) COMMENT '六级保险类型中文含义', 
+	cuv_biztype7_cn VARCHAR(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '七级保险类型中文含义', 
+	cuv_summary_type VARCHAR(10) COMMENT '小结类型：0社保1医保', 
+	cuv_summary_type_cn VARCHAR(100) COMMENT '小结类型中文含义', 
+	cuv_call_type VARCHAR(10) COMMENT '来电类型', 
+	cuv_call_type_cn VARCHAR(100) COMMENT '来电类型中文含义', 
+	cuv_identity VARCHAR(20) COMMENT '人员身份', 
+	cuv_identity_cn VARCHAR(100) COMMENT '人员身份中文含义', 
+	cuv_customer_type VARCHAR(10) COMMENT '人员分类', 
+	cuv_customer_type_cn VARCHAR(100) COMMENT '人员分类中文含义', 
+	cuv_district VARCHAR(20) COMMENT '区县信息，徐汇、黄埔、静安、虹口、杨浦、闵行、宝山、嘉定、浦东、南汇、奉贤、松江、金山、青浦、崇明、长宁、医保、鉴定中心、外就办', 
+	cuv_district_cn VARCHAR(100) COMMENT '区县信息中文含义', 
+	cuv_contact_tel VARCHAR(50) COMMENT '联系方式', 
+	cuv_solved VARCHAR(2) COMMENT '是否解决', 
+	cuv_solved_cn VARCHAR(100) COMMENT '是否解决中文含义', 
+	gd_order_id VARCHAR(16) COMMENT '工单编号', 
+	gd_call_id VARCHAR(16) COMMENT '录音流水号', 
+	gd_session_id VARCHAR(128) COMMENT '坐席会话id', 
+	gd_work_no VARCHAR(10) COMMENT '坐席工号', 
+	gd_call_no VARCHAR(50) COMMENT '来电号码', 
+	gd_call_time DATETIME COMMENT '来电时间', 
+	gd_contact_name VARCHAR(60) COMMENT '联系人姓名', 
+	gd_contact_sex VARCHAR(1) COMMENT '联系人性别(0未知,1男,2女)', 
+	gd_contact_sex_cn VARCHAR(10) COMMENT '联系人性别中文含义', 
+	gd_contact_address VARCHAR(300) COMMENT '联系人地址(投诉、举报人基本情况-联系地址)', 
+	gd_order_type VARCHAR(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单分类：1疑难问题件;2库调整件;3协调件;4交互平台件;5劳动监察件;6政风行风件;7公示反馈件;8社会保险举报投诉件;9意见建议件;10其他件;11信息反馈件;12表扬件;13投诉件;14纠错件;15急件;', 
+	gd_order_type_cn VARCHAR(100) COMMENT '工单分类中文含义', 
+	gd_order_content TEXT COMMENT '工单内容', 
+	gd_create_time DATETIME COMMENT '工单生成时间', 
+	gd_order_status VARCHAR(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单状态：0未提交;1已提交;2已领取;3待监理初审;4待运控部审核;5待质监部审核;6待监理复审;7工单归档;8待组长审核;9待推送;10待咨询科处理;', 
+	gd_order_status_cn VARCHAR(100) COMMENT '工单状态中文含义', 
+	gd_back_flag VARCHAR(1) COMMENT '退单标志(1:是，0:否)', 
+	gd_back_flag_cn VARCHAR(10) COMMENT '退单标志中文含义', 
+	gd_order_index VARCHAR(2) COMMENT '工单级别(1:一般,2:急件)', 
+	gd_order_index_cn VARCHAR(10) COMMENT '工单级别中文含义', 
+	gd_order_source VARCHAR(1) COMMENT '工单来源', 
+	gd_order_source_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_wx_order_type VARCHAR(1) COMMENT '自建工单退单标志(1:是，0:否)', 
+	gd_wx_order_type_cn VARCHAR(10) COMMENT '自建工单退单标志中文含义', 
+	gd_service_level1 VARCHAR(8) COMMENT '业务分类--一级分类', 
+	gd_service_level2 VARCHAR(8) COMMENT '业务分类--二级分类', 
+	gd_service_level3 VARCHAR(8) COMMENT '业务分类--三级分类', 
+	gd_service_level4 VARCHAR(8) COMMENT '业务分类--四级分类', 
+	gd_service_level1_cn VARCHAR(200) COMMENT '业务分类--一级分类中文含义', 
+	gd_service_level2_cn VARCHAR(200) COMMENT '业务分类--二级分类中文含义', 
+	gd_service_level3_cn VARCHAR(200) COMMENT '业务分类--三级分类中文含义', 
+	gd_service_level4_cn VARCHAR(200) COMMENT '业务分类--四级分类中文含义', 
+	gd_call_type VARCHAR(1) COMMENT '来电类型 1个人 2企业', 
+	gd_call_type_cn VARCHAR(10) COMMENT '来电类型中文含义', 
+	gd_channel_typeid VARCHAR(4) COMMENT '工单来源(电话、微信、微博、留言、网上信访、回访)', 
+	gd_channel_typeid_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_order_class VARCHAR(1) COMMENT '工单类别：1咨询类;2求助类;3举报投诉类;4意见建议类;', 
+	gd_order_class_cn VARCHAR(100) COMMENT '工单类别中文含义', 
+	extend_call_matter VARCHAR(1) COMMENT '来电原因：1表扬 2投诉 3撤诉', 
+	extend_call_matter_cn VARCHAR(50) COMMENT '来电原因中文含义', 
+	extend_commend_category VARCHAR(1) COMMENT '表扬类别', 
+	extend_commend_category_cn VARCHAR(100) COMMENT '表扬类别中文含义', 
+	content TEXT COMMENT '大模型传参content内容，对数据内容进行整合', 
+	PRIMARY KEY (id, cuv_start_time)
+)PARTITION_DEFINITIONS=PARTITION p_month_197001 VALUES LESS THAN (719528) ENGINE = InnoDB, PARTITION p_month_202404 VALUES LESS THAN (739372) ENGINE = InnoDB, PARTITION p_month_202405 VALUES LESS THAN (739403) ENGINE = InnoDB, PARTITION p_month_202406 VALUES LESS THAN (739433) ENGINE = InnoDB, PARTITION p_month_202407 VALUES LESS THAN (739464) ENGINE = InnoDB, PARTITION p_month_202408 VALUES LESS THAN (739495) ENGINE = InnoDB, PARTITION p_month_202409 VALUES LESS THAN (739525) ENGINE = InnoDB, PARTITION p_month_202410 VALUES LESS THAN (739556) ENGINE = InnoDB, PARTITION p_month_202411 VALUES LESS THAN (739586) ENGINE = InnoDB, PARTITION p_month_202412 VALUES LESS THAN (739617) ENGINE = InnoDB, PARTITION p_month_202501 VALUES LESS THAN (739648) ENGINE = InnoDB, PARTITION p_month_202502 VALUES LESS THAN (739676) ENGINE = InnoDB, PARTITION p_month_202503 VALUES LESS THAN (739707) ENGINE = InnoDB COMMENT='带分区：话单小结工单扩展表' ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8mb3 ENGINE=InnoDB PARTITION BY RANGE (to_days(`cuv_start_time`))
+
+/*
+3 rows from znrpt_cuv_summary_gd_extend table:
+id	section_id	cuv_customer_name	cuv_session_id	cuv_replay_account	cuv_qes_desc	cuv_deal_scheme	cuv_channel	cuv_channel_cn	cuv_customer_id	cuv_start_time	cuv_biztype1	cuv_biztype2	cuv_biztype3	cuv_biztype4	cuv_biztype5	cuv_biztype6	cuv_biztype7	cuv_biztype1_cn	cuv_biztype2_cn	cuv_biztype3_cn	cuv_biztype4_cn	cuv_biztype5_cn	cuv_biztype6_cn	cuv_biztype7_cn	cuv_summary_type	cuv_summary_type_cn	cuv_call_type	cuv_call_type_cn	cuv_identity	cuv_identity_cn	cuv_customer_type	cuv_customer_type_cn	cuv_district	cuv_district_cn	cuv_contact_tel	cuv_solved	cuv_solved_cn	gd_order_id	gd_call_id	gd_session_id	gd_work_no	gd_call_no	gd_call_time	gd_contact_name	gd_contact_sex	gd_contact_sex_cn	gd_contact_address	gd_order_type	gd_order_type_cn	gd_order_content	gd_create_time	gd_order_status	gd_order_status_cn	gd_back_flag	gd_back_flag_cn	gd_order_index	gd_order_index_cn	gd_order_source	gd_order_source_cn	gd_wx_order_type	gd_wx_order_type_cn	gd_service_level1	gd_service_level2	gd_service_level3	gd_service_level4	gd_service_level1_cn	gd_service_level2_cn	gd_service_level3_cn	gd_service_level4_cn	gd_call_type	gd_call_type_cn	gd_channel_typeid	gd_channel_typeid_cn	gd_order_class	gd_order_class_cn	extend_call_matter	extend_call_matter_cn	extend_commend_category	extend_commend_category_cn	content
+1	25150078	None	1000136363645901233317135666661173014060001713566706648	13636364590	1	None	1000	语音	0	2024-04-20 06:45:06	861	None	None	1871	None	None	None	转队列-医保	None	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150078,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+2	25150079	None	1000139182614751233317135671461174114060001713567165817	13918261475	12345	None	1000	语音	0	2024-04-20 06:52:45	849	1216	None	1871	None	None	None	非我局业务范围	其它	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150079,客户名称:,咨询内容:12345,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类
+3	25150080	None	100019116007618123331713567784103586060001713567802666	19116007618	1	None	1000	语音	0	2024-04-20 07:03:21	837	1196	None	1870	None	None	None	咨询办事机构	街道乡镇	None	办事机构咨询				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150080,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+*/
+2025-06-04 13:16:11,065 ChatBI->     DEBUG    Error processing column cuv_biztype6: invalid syntax (<string>, line 0)
+2025-06-04 13:16:11,132 ChatBI->     DEBUG    Error processing column cuv_biztype7: invalid syntax (<string>, line 0)
+2025-06-04 13:16:11,233 ChatBI->     INFO     Found enum field: cuv_biztype1_cn with 20 values
+2025-06-04 13:16:11,512 ChatBI->     INFO     Found enum field: cuv_biztype4_cn with 18 values
+2025-06-04 13:16:11,616 ChatBI->     INFO     Found enum field: cuv_biztype5_cn with 1 values
+2025-06-04 13:16:11,700 ChatBI->     INFO     Found enum field: cuv_biztype6_cn with 1 values
+2025-06-04 13:16:11,794 ChatBI->     INFO     Found enum field: cuv_biztype7_cn with 1 values
+2025-06-04 13:16:11,890 ChatBI->     INFO     Found enum field: cuv_summary_type with 1 values
+2025-06-04 13:16:11,990 ChatBI->     INFO     Found enum field: cuv_summary_type_cn with 1 values
+2025-06-04 13:16:12,060 ChatBI->     DEBUG    Error processing column cuv_call_type: invalid syntax (<string>, line 0)
+2025-06-04 13:16:12,143 ChatBI->     INFO     Found enum field: cuv_call_type_cn with 1 values
+2025-06-04 13:16:12,217 ChatBI->     DEBUG    Error processing column cuv_identity: invalid syntax (<string>, line 0)
+2025-06-04 13:16:12,317 ChatBI->     INFO     Found enum field: cuv_identity_cn with 1 values
+2025-06-04 13:16:12,377 ChatBI->     DEBUG    Error processing column cuv_customer_type: invalid syntax (<string>, line 0)
+2025-06-04 13:16:12,471 ChatBI->     INFO     Found enum field: cuv_customer_type_cn with 1 values
+2025-06-04 13:16:12,544 ChatBI->     DEBUG    Error processing column cuv_district: invalid syntax (<string>, line 0)
+2025-06-04 13:16:12,641 ChatBI->     INFO     Found enum field: cuv_district_cn with 1 values
+2025-06-04 13:16:12,714 ChatBI->     INFO     Found enum field: cuv_contact_tel with 84 values
+2025-06-04 13:16:12,807 ChatBI->     INFO     Found enum field: cuv_solved with 6 values
+2025-06-04 13:16:12,899 ChatBI->     DEBUG    Error processing column gd_contact_sex: invalid syntax (<string>, line 0)
+2025-06-04 13:16:13,525 ChatBI->     INFO     Found enum field: cuv_solved_cn with 7 values
+2025-06-04 13:16:13,607 ChatBI->     INFO     Found enum field: gd_contact_sex_cn with 1 values
+2025-06-04 13:16:13,683 ChatBI->     INFO     Found enum field: gd_contact_address with 9 values
+2025-06-04 13:16:13,747 ChatBI->     INFO     Found enum field: gd_order_type with 14 values
+2025-06-04 13:16:13,850 ChatBI->     INFO     Found enum field: gd_order_type_cn with 15 values
+2025-06-04 13:16:14,066 ChatBI->     INFO     Found enum field: gd_order_status with 6 values
+2025-06-04 13:16:14,155 ChatBI->     INFO     Found enum field: gd_order_status_cn with 7 values
+2025-06-04 13:16:14,259 ChatBI->     INFO     Found enum field: gd_back_flag with 1 values
+2025-06-04 13:16:14,346 ChatBI->     INFO     Found enum field: gd_back_flag_cn with 2 values
+2025-06-04 13:16:14,419 ChatBI->     INFO     Found enum field: gd_order_index with 2 values
+2025-06-04 13:16:14,502 ChatBI->     INFO     Found enum field: gd_order_index_cn with 3 values
+2025-06-04 13:16:14,521 ChatBI->     DEBUG    Error processing column cuv_customer_name: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,590 ChatBI->     DEBUG    Error processing column gd_order_source: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,617 ChatBI->     INFO     Found enum field: gd_order_source_cn with 1 values
+2025-06-04 13:16:14,663 ChatBI->     INFO     Found enum field: cuv_biztype1 with 22 values
+2025-06-04 13:16:14,682 ChatBI->     DEBUG    Error processing column gd_wx_order_type: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,735 ChatBI->     INFO     Found enum field: gd_wx_order_type_cn with 1 values
+2025-06-04 13:16:14,788 ChatBI->     DEBUG    Error processing column gd_service_level4_cn: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,823 ChatBI->     INFO     Found enum field: cuv_customer_id with 1 values
+2025-06-04 13:16:14,883 ChatBI->     DEBUG    Error processing column gd_service_level4: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,916 ChatBI->     INFO     Found enum field: cuv_channel with 1 values
+2025-06-04 13:16:14,935 ChatBI->     DEBUG    Error processing column cuv_deal_scheme: invalid syntax (<string>, line 0)
+2025-06-04 13:16:14,949 ChatBI->     INFO     Found enum field: gd_service_level2 with 38 values
+2025-06-04 13:16:14,966 ChatBI->     INFO     Found enum field: cuv_channel_cn with 1 values
+2025-06-04 13:16:14,967 ChatBI->     INFO     Found enum field: gd_service_level1_cn with 12 values
+2025-06-04 13:16:14,983 ChatBI->     INFO     Found enum field: cuv_biztype4 with 18 values
+2025-06-04 13:16:14,988 ChatBI->     INFO     Found enum field: gd_service_level3 with 47 values
+2025-06-04 13:16:15,013 ChatBI->     INFO     Found enum field: gd_service_level2_cn with 34 values
+2025-06-04 13:16:15,030 ChatBI->     INFO     Found enum field: gd_call_type with 2 values
+2025-06-04 13:16:15,041 ChatBI->     INFO     Found enum field: gd_order_class_cn with 5 values
+2025-06-04 13:16:15,108 ChatBI->     INFO     Found enum field: gd_call_type_cn with 3 values
+2025-06-04 13:16:15,128 ChatBI->     INFO     Found enum field: extend_call_matter with 1 values
+2025-06-04 13:16:15,140 ChatBI->     INFO     Found enum field: gd_order_class with 5 values
+2025-06-04 13:16:15,141 ChatBI->     INFO     Found enum field: gd_service_level1 with 13 values
+2025-06-04 13:16:15,141 ChatBI->     DEBUG    Error processing column extend_commend_category: invalid syntax (<string>, line 0)
+2025-06-04 13:16:15,141 ChatBI->     INFO     Found enum field: extend_call_matter_cn with 2 values
+2025-06-04 13:16:15,142 ChatBI->     INFO     Found enum field: gd_channel_typeid_cn with 3 values
+2025-06-04 13:16:15,142 ChatBI->     INFO     Found enum field: gd_channel_typeid with 2 values
+2025-06-04 13:16:15,170 ChatBI->     INFO     Found enum field: extend_commend_category_cn with 1 values
+2025-06-04 13:16:15,186 ChatBI->     INFO     Found enum field: gd_service_level3_cn with 41 values
+2025-06-04 13:21:45,336 ChatBI->     INFO     full_schema: 
+CREATE TABLE znrpt_cuv_summary_gd_extend (
+	id BIGINT NOT NULL COMMENT '主键ID' AUTO_INCREMENT, 
+	section_id VARCHAR(40) COMMENT '业务小结(id)', 
+	cuv_customer_name VARCHAR(50) COMMENT '客户名称', 
+	cuv_session_id VARCHAR(100) COMMENT '会话ID', 
+	cuv_replay_account VARCHAR(50) COMMENT '来电号码', 
+	cuv_qes_desc TEXT COMMENT '咨询内容', 
+	cuv_deal_scheme VARCHAR(200) COMMENT '处理主题', 
+	cuv_channel VARCHAR(20) COMMENT '渠道', 
+	cuv_channel_cn VARCHAR(20) COMMENT '渠道中文含义', 
+	cuv_customer_id VARCHAR(40) COMMENT '客户ID', 
+	cuv_start_time DATETIME NOT NULL COMMENT '来电时间', 
+	cuv_biztype1 VARCHAR(200) COMMENT '一级保险类型', 
+	cuv_biztype2 VARCHAR(200) COMMENT '二级保险类型', 
+	cuv_biztype3 VARCHAR(200) COMMENT '三级保险类型', 
+	cuv_biztype4 VARCHAR(200) COMMENT '四级保险类型', 
+	cuv_biztype5 VARCHAR(200) COMMENT '五级保险类型', 
+	cuv_biztype6 VARCHAR(200) COMMENT '六级保险类型', 
+	cuv_biztype7 VARCHAR(200) COMMENT '七级保险类型', 
+	cuv_biztype1_cn VARCHAR(1000) COMMENT '一级保险类型中文含义', 
+	cuv_biztype2_cn VARCHAR(1000) COMMENT '二级保险类型中文含义', 
+	cuv_biztype3_cn VARCHAR(1000) COMMENT '三级保险类型中文含义', 
+	cuv_biztype4_cn VARCHAR(1000) COMMENT '四级保险类型中文含义', 
+	cuv_biztype5_cn VARCHAR(1000) COMMENT '五级保险类型中文含义', 
+	cuv_biztype6_cn VARCHAR(1000) COMMENT '六级保险类型中文含义', 
+	cuv_biztype7_cn VARCHAR(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '七级保险类型中文含义', 
+	cuv_summary_type VARCHAR(10) COMMENT '小结类型：0社保1医保', 
+	cuv_summary_type_cn VARCHAR(100) COMMENT '小结类型中文含义', 
+	cuv_call_type VARCHAR(10) COMMENT '来电类型', 
+	cuv_call_type_cn VARCHAR(100) COMMENT '来电类型中文含义', 
+	cuv_identity VARCHAR(20) COMMENT '人员身份', 
+	cuv_identity_cn VARCHAR(100) COMMENT '人员身份中文含义', 
+	cuv_customer_type VARCHAR(10) COMMENT '人员分类', 
+	cuv_customer_type_cn VARCHAR(100) COMMENT '人员分类中文含义', 
+	cuv_district VARCHAR(20) COMMENT '区县信息，徐汇、黄埔、静安、虹口、杨浦、闵行、宝山、嘉定、浦东、南汇、奉贤、松江、金山、青浦、崇明、长宁、医保、鉴定中心、外就办', 
+	cuv_district_cn VARCHAR(100) COMMENT '区县信息中文含义', 
+	cuv_contact_tel VARCHAR(50) COMMENT '联系方式', 
+	cuv_solved VARCHAR(2) COMMENT '是否解决', 
+	cuv_solved_cn VARCHAR(100) COMMENT '是否解决中文含义', 
+	gd_order_id VARCHAR(16) COMMENT '工单编号', 
+	gd_call_id VARCHAR(16) COMMENT '录音流水号', 
+	gd_session_id VARCHAR(128) COMMENT '坐席会话id', 
+	gd_work_no VARCHAR(10) COMMENT '坐席工号', 
+	gd_call_no VARCHAR(50) COMMENT '来电号码', 
+	gd_call_time DATETIME COMMENT '来电时间', 
+	gd_contact_name VARCHAR(60) COMMENT '联系人姓名', 
+	gd_contact_sex VARCHAR(1) COMMENT '联系人性别(0未知,1男,2女)', 
+	gd_contact_sex_cn VARCHAR(10) COMMENT '联系人性别中文含义', 
+	gd_contact_address VARCHAR(300) COMMENT '联系人地址(投诉、举报人基本情况-联系地址)', 
+	gd_order_type VARCHAR(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单分类：1疑难问题件;2库调整件;3协调件;4交互平台件;5劳动监察件;6政风行风件;7公示反馈件;8社会保险举报投诉件;9意见建议件;10其他件;11信息反馈件;12表扬件;13投诉件;14纠错件;15急件;', 
+	gd_order_type_cn VARCHAR(100) COMMENT '工单分类中文含义', 
+	gd_order_content TEXT COMMENT '工单内容', 
+	gd_create_time DATETIME COMMENT '工单生成时间', 
+	gd_order_status VARCHAR(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单状态：0未提交;1已提交;2已领取;3待监理初审;4待运控部审核;5待质监部审核;6待监理复审;7工单归档;8待组长审核;9待推送;10待咨询科处理;', 
+	gd_order_status_cn VARCHAR(100) COMMENT '工单状态中文含义', 
+	gd_back_flag VARCHAR(1) COMMENT '退单标志(1:是，0:否)', 
+	gd_back_flag_cn VARCHAR(10) COMMENT '退单标志中文含义', 
+	gd_order_index VARCHAR(2) COMMENT '工单级别(1:一般,2:急件)', 
+	gd_order_index_cn VARCHAR(10) COMMENT '工单级别中文含义', 
+	gd_order_source VARCHAR(1) COMMENT '工单来源', 
+	gd_order_source_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_wx_order_type VARCHAR(1) COMMENT '自建工单退单标志(1:是，0:否)', 
+	gd_wx_order_type_cn VARCHAR(10) COMMENT '自建工单退单标志中文含义', 
+	gd_service_level1 VARCHAR(8) COMMENT '业务分类--一级分类', 
+	gd_service_level2 VARCHAR(8) COMMENT '业务分类--二级分类', 
+	gd_service_level3 VARCHAR(8) COMMENT '业务分类--三级分类', 
+	gd_service_level4 VARCHAR(8) COMMENT '业务分类--四级分类', 
+	gd_service_level1_cn VARCHAR(200) COMMENT '业务分类--一级分类中文含义', 
+	gd_service_level2_cn VARCHAR(200) COMMENT '业务分类--二级分类中文含义', 
+	gd_service_level3_cn VARCHAR(200) COMMENT '业务分类--三级分类中文含义', 
+	gd_service_level4_cn VARCHAR(200) COMMENT '业务分类--四级分类中文含义', 
+	gd_call_type VARCHAR(1) COMMENT '来电类型 1个人 2企业', 
+	gd_call_type_cn VARCHAR(10) COMMENT '来电类型中文含义', 
+	gd_channel_typeid VARCHAR(4) COMMENT '工单来源(电话、微信、微博、留言、网上信访、回访)', 
+	gd_channel_typeid_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_order_class VARCHAR(1) COMMENT '工单类别：1咨询类;2求助类;3举报投诉类;4意见建议类;', 
+	gd_order_class_cn VARCHAR(100) COMMENT '工单类别中文含义', 
+	extend_call_matter VARCHAR(1) COMMENT '来电原因：1表扬 2投诉 3撤诉', 
+	extend_call_matter_cn VARCHAR(50) COMMENT '来电原因中文含义', 
+	extend_commend_category VARCHAR(1) COMMENT '表扬类别', 
+	extend_commend_category_cn VARCHAR(100) COMMENT '表扬类别中文含义', 
+	content TEXT COMMENT '大模型传参content内容，对数据内容进行整合', 
+	PRIMARY KEY (id, cuv_start_time)
+)PARTITION_DEFINITIONS=PARTITION p_month_197001 VALUES LESS THAN (719528) ENGINE = InnoDB, PARTITION p_month_202404 VALUES LESS THAN (739372) ENGINE = InnoDB, PARTITION p_month_202405 VALUES LESS THAN (739403) ENGINE = InnoDB, PARTITION p_month_202406 VALUES LESS THAN (739433) ENGINE = InnoDB, PARTITION p_month_202407 VALUES LESS THAN (739464) ENGINE = InnoDB, PARTITION p_month_202408 VALUES LESS THAN (739495) ENGINE = InnoDB, PARTITION p_month_202409 VALUES LESS THAN (739525) ENGINE = InnoDB, PARTITION p_month_202410 VALUES LESS THAN (739556) ENGINE = InnoDB, PARTITION p_month_202411 VALUES LESS THAN (739586) ENGINE = InnoDB, PARTITION p_month_202412 VALUES LESS THAN (739617) ENGINE = InnoDB, PARTITION p_month_202501 VALUES LESS THAN (739648) ENGINE = InnoDB, PARTITION p_month_202502 VALUES LESS THAN (739676) ENGINE = InnoDB, PARTITION p_month_202503 VALUES LESS THAN (739707) ENGINE = InnoDB COMMENT='带分区：话单小结工单扩展表' ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8mb3 ENGINE=InnoDB PARTITION BY RANGE (to_days(`cuv_start_time`))
+
+/*
+3 rows from znrpt_cuv_summary_gd_extend table:
+id	section_id	cuv_customer_name	cuv_session_id	cuv_replay_account	cuv_qes_desc	cuv_deal_scheme	cuv_channel	cuv_channel_cn	cuv_customer_id	cuv_start_time	cuv_biztype1	cuv_biztype2	cuv_biztype3	cuv_biztype4	cuv_biztype5	cuv_biztype6	cuv_biztype7	cuv_biztype1_cn	cuv_biztype2_cn	cuv_biztype3_cn	cuv_biztype4_cn	cuv_biztype5_cn	cuv_biztype6_cn	cuv_biztype7_cn	cuv_summary_type	cuv_summary_type_cn	cuv_call_type	cuv_call_type_cn	cuv_identity	cuv_identity_cn	cuv_customer_type	cuv_customer_type_cn	cuv_district	cuv_district_cn	cuv_contact_tel	cuv_solved	cuv_solved_cn	gd_order_id	gd_call_id	gd_session_id	gd_work_no	gd_call_no	gd_call_time	gd_contact_name	gd_contact_sex	gd_contact_sex_cn	gd_contact_address	gd_order_type	gd_order_type_cn	gd_order_content	gd_create_time	gd_order_status	gd_order_status_cn	gd_back_flag	gd_back_flag_cn	gd_order_index	gd_order_index_cn	gd_order_source	gd_order_source_cn	gd_wx_order_type	gd_wx_order_type_cn	gd_service_level1	gd_service_level2	gd_service_level3	gd_service_level4	gd_service_level1_cn	gd_service_level2_cn	gd_service_level3_cn	gd_service_level4_cn	gd_call_type	gd_call_type_cn	gd_channel_typeid	gd_channel_typeid_cn	gd_order_class	gd_order_class_cn	extend_call_matter	extend_call_matter_cn	extend_commend_category	extend_commend_category_cn	content
+1	25150078	None	1000136363645901233317135666661173014060001713566706648	13636364590	1	None	1000	语音	0	2024-04-20 06:45:06	861	None	None	1871	None	None	None	转队列-医保	None	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150078,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+2	25150079	None	1000139182614751233317135671461174114060001713567165817	13918261475	12345	None	1000	语音	0	2024-04-20 06:52:45	849	1216	None	1871	None	None	None	非我局业务范围	其它	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150079,客户名称:,咨询内容:12345,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类
+3	25150080	None	100019116007618123331713567784103586060001713567802666	19116007618	1	None	1000	语音	0	2024-04-20 07:03:21	837	1196	None	1870	None	None	None	咨询办事机构	街道乡镇	None	办事机构咨询				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150080,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+*/
+2025-06-04 13:21:45,843 ChatBI->     DEBUG    Error processing column cuv_biztype6: invalid syntax (<string>, line 0)
+2025-06-04 13:21:45,914 ChatBI->     DEBUG    Error processing column cuv_biztype7: invalid syntax (<string>, line 0)
+2025-06-04 13:21:46,011 ChatBI->     INFO     Found enum field: cuv_biztype1_cn with 20 values
+2025-06-04 13:21:46,302 ChatBI->     INFO     Found enum field: cuv_biztype4_cn with 18 values
+2025-06-04 13:21:46,384 ChatBI->     INFO     Found enum field: cuv_biztype5_cn with 1 values
+2025-06-04 13:21:46,472 ChatBI->     INFO     Found enum field: cuv_biztype6_cn with 1 values
+2025-06-04 13:21:46,556 ChatBI->     INFO     Found enum field: cuv_biztype7_cn with 1 values
+2025-06-04 13:21:46,653 ChatBI->     INFO     Found enum field: cuv_summary_type with 1 values
+2025-06-04 13:21:46,744 ChatBI->     INFO     Found enum field: cuv_summary_type_cn with 1 values
+2025-06-04 13:21:46,821 ChatBI->     DEBUG    Error processing column cuv_call_type: invalid syntax (<string>, line 0)
+2025-06-04 13:21:46,909 ChatBI->     INFO     Found enum field: cuv_call_type_cn with 1 values
+2025-06-04 13:21:47,002 ChatBI->     DEBUG    Error processing column cuv_identity: invalid syntax (<string>, line 0)
+2025-06-04 13:21:47,082 ChatBI->     INFO     Found enum field: cuv_identity_cn with 1 values
+2025-06-04 13:21:47,154 ChatBI->     DEBUG    Error processing column cuv_customer_type: invalid syntax (<string>, line 0)
+2025-06-04 13:21:47,249 ChatBI->     INFO     Found enum field: cuv_customer_type_cn with 1 values
+2025-06-04 13:21:47,317 ChatBI->     DEBUG    Error processing column cuv_district: invalid syntax (<string>, line 0)
+2025-06-04 13:21:47,419 ChatBI->     INFO     Found enum field: cuv_district_cn with 1 values
+2025-06-04 13:21:47,488 ChatBI->     INFO     Found enum field: cuv_contact_tel with 84 values
+2025-06-04 13:21:47,591 ChatBI->     INFO     Found enum field: cuv_solved with 6 values
+2025-06-04 13:21:47,687 ChatBI->     INFO     Found enum field: cuv_solved_cn with 7 values
+2025-06-04 13:21:48,245 ChatBI->     DEBUG    Error processing column gd_contact_sex: invalid syntax (<string>, line 0)
+2025-06-04 13:21:48,345 ChatBI->     INFO     Found enum field: gd_contact_sex_cn with 1 values
+2025-06-04 13:21:48,421 ChatBI->     INFO     Found enum field: gd_contact_address with 9 values
+2025-06-04 13:21:48,507 ChatBI->     INFO     Found enum field: gd_order_type with 14 values
+2025-06-04 13:21:48,595 ChatBI->     INFO     Found enum field: gd_order_type_cn with 15 values
+2025-06-04 13:21:48,901 ChatBI->     INFO     Found enum field: gd_order_status with 6 values
+2025-06-04 13:21:49,017 ChatBI->     INFO     Found enum field: gd_order_status_cn with 7 values
+2025-06-04 13:21:49,110 ChatBI->     INFO     Found enum field: gd_back_flag with 1 values
+2025-06-04 13:21:49,127 ChatBI->     INFO     Found enum field: cuv_biztype4 with 18 values
+2025-06-04 13:21:49,156 ChatBI->     INFO     Found enum field: cuv_channel with 1 values
+2025-06-04 13:21:49,202 ChatBI->     INFO     Found enum field: cuv_customer_id with 1 values
+2025-06-04 13:21:49,213 ChatBI->     INFO     Found enum field: gd_back_flag_cn with 2 values
+2025-06-04 13:21:49,222 ChatBI->     INFO     Found enum field: gd_order_index with 2 values
+2025-06-04 13:21:49,248 ChatBI->     INFO     Found enum field: gd_order_index_cn with 3 values
+2025-06-04 13:21:49,288 ChatBI->     DEBUG    Error processing column gd_order_source: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,513 ChatBI->     DEBUG    Error processing column gd_wx_order_type: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,530 ChatBI->     DEBUG    Error processing column gd_service_level4: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,665 ChatBI->     INFO     Found enum field: cuv_channel_cn with 1 values
+2025-06-04 13:21:49,670 ChatBI->     DEBUG    Error processing column cuv_customer_name: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,685 ChatBI->     INFO     Found enum field: gd_service_level1 with 13 values
+2025-06-04 13:21:49,690 ChatBI->     INFO     Found enum field: cuv_biztype1 with 22 values
+2025-06-04 13:21:49,700 ChatBI->     INFO     Found enum field: gd_service_level2 with 38 values
+2025-06-04 13:21:49,705 ChatBI->     DEBUG    Error processing column cuv_deal_scheme: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,739 ChatBI->     INFO     Found enum field: gd_service_level3_cn with 41 values
+2025-06-04 13:21:49,769 ChatBI->     INFO     Found enum field: gd_service_level3 with 47 values
+2025-06-04 13:21:49,795 ChatBI->     INFO     Found enum field: gd_channel_typeid with 2 values
+2025-06-04 13:21:49,810 ChatBI->     INFO     Found enum field: gd_order_source_cn with 1 values
+2025-06-04 13:21:49,824 ChatBI->     INFO     Found enum field: gd_wx_order_type_cn with 1 values
+2025-06-04 13:21:49,824 ChatBI->     DEBUG    Error processing column extend_commend_category: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,835 ChatBI->     INFO     Found enum field: extend_call_matter with 1 values
+2025-06-04 13:21:49,835 ChatBI->     INFO     Found enum field: gd_service_level1_cn with 12 values
+2025-06-04 13:21:49,835 ChatBI->     INFO     Found enum field: gd_call_type with 2 values
+2025-06-04 13:21:49,853 ChatBI->     INFO     Found enum field: gd_service_level2_cn with 34 values
+2025-06-04 13:21:49,867 ChatBI->     INFO     Found enum field: extend_commend_category_cn with 1 values
+2025-06-04 13:21:49,868 ChatBI->     INFO     Found enum field: gd_channel_typeid_cn with 3 values
+2025-06-04 13:21:49,876 ChatBI->     DEBUG    Error processing column gd_service_level4_cn: invalid syntax (<string>, line 0)
+2025-06-04 13:21:49,892 ChatBI->     INFO     Found enum field: gd_order_class_cn with 5 values
+2025-06-04 13:21:49,902 ChatBI->     INFO     Found enum field: extend_call_matter_cn with 2 values
+2025-06-04 13:21:49,909 ChatBI->     INFO     Found enum field: gd_call_type_cn with 3 values
+2025-06-04 13:21:49,913 ChatBI->     INFO     Found enum field: gd_order_class with 5 values
+2025-06-04 13:22:38,204 ChatBI->     INFO     full_schema: 
+CREATE TABLE znrpt_cuv_summary_gd_extend (
+	id BIGINT NOT NULL COMMENT '主键ID' AUTO_INCREMENT, 
+	section_id VARCHAR(40) COMMENT '业务小结(id)', 
+	cuv_customer_name VARCHAR(50) COMMENT '客户名称', 
+	cuv_session_id VARCHAR(100) COMMENT '会话ID', 
+	cuv_replay_account VARCHAR(50) COMMENT '来电号码', 
+	cuv_qes_desc TEXT COMMENT '咨询内容', 
+	cuv_deal_scheme VARCHAR(200) COMMENT '处理主题', 
+	cuv_channel VARCHAR(20) COMMENT '渠道', 
+	cuv_channel_cn VARCHAR(20) COMMENT '渠道中文含义', 
+	cuv_customer_id VARCHAR(40) COMMENT '客户ID', 
+	cuv_start_time DATETIME NOT NULL COMMENT '来电时间', 
+	cuv_biztype1 VARCHAR(200) COMMENT '一级保险类型', 
+	cuv_biztype2 VARCHAR(200) COMMENT '二级保险类型', 
+	cuv_biztype3 VARCHAR(200) COMMENT '三级保险类型', 
+	cuv_biztype4 VARCHAR(200) COMMENT '四级保险类型', 
+	cuv_biztype5 VARCHAR(200) COMMENT '五级保险类型', 
+	cuv_biztype6 VARCHAR(200) COMMENT '六级保险类型', 
+	cuv_biztype7 VARCHAR(200) COMMENT '七级保险类型', 
+	cuv_biztype1_cn VARCHAR(1000) COMMENT '一级保险类型中文含义', 
+	cuv_biztype2_cn VARCHAR(1000) COMMENT '二级保险类型中文含义', 
+	cuv_biztype3_cn VARCHAR(1000) COMMENT '三级保险类型中文含义', 
+	cuv_biztype4_cn VARCHAR(1000) COMMENT '四级保险类型中文含义', 
+	cuv_biztype5_cn VARCHAR(1000) COMMENT '五级保险类型中文含义', 
+	cuv_biztype6_cn VARCHAR(1000) COMMENT '六级保险类型中文含义', 
+	cuv_biztype7_cn VARCHAR(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '七级保险类型中文含义', 
+	cuv_summary_type VARCHAR(10) COMMENT '小结类型：0社保1医保', 
+	cuv_summary_type_cn VARCHAR(100) COMMENT '小结类型中文含义', 
+	cuv_call_type VARCHAR(10) COMMENT '来电类型', 
+	cuv_call_type_cn VARCHAR(100) COMMENT '来电类型中文含义', 
+	cuv_identity VARCHAR(20) COMMENT '人员身份', 
+	cuv_identity_cn VARCHAR(100) COMMENT '人员身份中文含义', 
+	cuv_customer_type VARCHAR(10) COMMENT '人员分类', 
+	cuv_customer_type_cn VARCHAR(100) COMMENT '人员分类中文含义', 
+	cuv_district VARCHAR(20) COMMENT '区县信息，徐汇、黄埔、静安、虹口、杨浦、闵行、宝山、嘉定、浦东、南汇、奉贤、松江、金山、青浦、崇明、长宁、医保、鉴定中心、外就办', 
+	cuv_district_cn VARCHAR(100) COMMENT '区县信息中文含义', 
+	cuv_contact_tel VARCHAR(50) COMMENT '联系方式', 
+	cuv_solved VARCHAR(2) COMMENT '是否解决', 
+	cuv_solved_cn VARCHAR(100) COMMENT '是否解决中文含义', 
+	gd_order_id VARCHAR(16) COMMENT '工单编号', 
+	gd_call_id VARCHAR(16) COMMENT '录音流水号', 
+	gd_session_id VARCHAR(128) COMMENT '坐席会话id', 
+	gd_work_no VARCHAR(10) COMMENT '坐席工号', 
+	gd_call_no VARCHAR(50) COMMENT '来电号码', 
+	gd_call_time DATETIME COMMENT '来电时间', 
+	gd_contact_name VARCHAR(60) COMMENT '联系人姓名', 
+	gd_contact_sex VARCHAR(1) COMMENT '联系人性别(0未知,1男,2女)', 
+	gd_contact_sex_cn VARCHAR(10) COMMENT '联系人性别中文含义', 
+	gd_contact_address VARCHAR(300) COMMENT '联系人地址(投诉、举报人基本情况-联系地址)', 
+	gd_order_type VARCHAR(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单分类：1疑难问题件;2库调整件;3协调件;4交互平台件;5劳动监察件;6政风行风件;7公示反馈件;8社会保险举报投诉件;9意见建议件;10其他件;11信息反馈件;12表扬件;13投诉件;14纠错件;15急件;', 
+	gd_order_type_cn VARCHAR(100) COMMENT '工单分类中文含义', 
+	gd_order_content TEXT COMMENT '工单内容', 
+	gd_create_time DATETIME COMMENT '工单生成时间', 
+	gd_order_status VARCHAR(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '工单状态：0未提交;1已提交;2已领取;3待监理初审;4待运控部审核;5待质监部审核;6待监理复审;7工单归档;8待组长审核;9待推送;10待咨询科处理;', 
+	gd_order_status_cn VARCHAR(100) COMMENT '工单状态中文含义', 
+	gd_back_flag VARCHAR(1) COMMENT '退单标志(1:是，0:否)', 
+	gd_back_flag_cn VARCHAR(10) COMMENT '退单标志中文含义', 
+	gd_order_index VARCHAR(2) COMMENT '工单级别(1:一般,2:急件)', 
+	gd_order_index_cn VARCHAR(10) COMMENT '工单级别中文含义', 
+	gd_order_source VARCHAR(1) COMMENT '工单来源', 
+	gd_order_source_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_wx_order_type VARCHAR(1) COMMENT '自建工单退单标志(1:是，0:否)', 
+	gd_wx_order_type_cn VARCHAR(10) COMMENT '自建工单退单标志中文含义', 
+	gd_service_level1 VARCHAR(8) COMMENT '业务分类--一级分类', 
+	gd_service_level2 VARCHAR(8) COMMENT '业务分类--二级分类', 
+	gd_service_level3 VARCHAR(8) COMMENT '业务分类--三级分类', 
+	gd_service_level4 VARCHAR(8) COMMENT '业务分类--四级分类', 
+	gd_service_level1_cn VARCHAR(200) COMMENT '业务分类--一级分类中文含义', 
+	gd_service_level2_cn VARCHAR(200) COMMENT '业务分类--二级分类中文含义', 
+	gd_service_level3_cn VARCHAR(200) COMMENT '业务分类--三级分类中文含义', 
+	gd_service_level4_cn VARCHAR(200) COMMENT '业务分类--四级分类中文含义', 
+	gd_call_type VARCHAR(1) COMMENT '来电类型 1个人 2企业', 
+	gd_call_type_cn VARCHAR(10) COMMENT '来电类型中文含义', 
+	gd_channel_typeid VARCHAR(4) COMMENT '工单来源(电话、微信、微博、留言、网上信访、回访)', 
+	gd_channel_typeid_cn VARCHAR(100) COMMENT '工单来源中文含义', 
+	gd_order_class VARCHAR(1) COMMENT '工单类别：1咨询类;2求助类;3举报投诉类;4意见建议类;', 
+	gd_order_class_cn VARCHAR(100) COMMENT '工单类别中文含义', 
+	extend_call_matter VARCHAR(1) COMMENT '来电原因：1表扬 2投诉 3撤诉', 
+	extend_call_matter_cn VARCHAR(50) COMMENT '来电原因中文含义', 
+	extend_commend_category VARCHAR(1) COMMENT '表扬类别', 
+	extend_commend_category_cn VARCHAR(100) COMMENT '表扬类别中文含义', 
+	content TEXT COMMENT '大模型传参content内容，对数据内容进行整合', 
+	PRIMARY KEY (id, cuv_start_time)
+)PARTITION_DEFINITIONS=PARTITION p_month_197001 VALUES LESS THAN (719528) ENGINE = InnoDB, PARTITION p_month_202404 VALUES LESS THAN (739372) ENGINE = InnoDB, PARTITION p_month_202405 VALUES LESS THAN (739403) ENGINE = InnoDB, PARTITION p_month_202406 VALUES LESS THAN (739433) ENGINE = InnoDB, PARTITION p_month_202407 VALUES LESS THAN (739464) ENGINE = InnoDB, PARTITION p_month_202408 VALUES LESS THAN (739495) ENGINE = InnoDB, PARTITION p_month_202409 VALUES LESS THAN (739525) ENGINE = InnoDB, PARTITION p_month_202410 VALUES LESS THAN (739556) ENGINE = InnoDB, PARTITION p_month_202411 VALUES LESS THAN (739586) ENGINE = InnoDB, PARTITION p_month_202412 VALUES LESS THAN (739617) ENGINE = InnoDB, PARTITION p_month_202501 VALUES LESS THAN (739648) ENGINE = InnoDB, PARTITION p_month_202502 VALUES LESS THAN (739676) ENGINE = InnoDB, PARTITION p_month_202503 VALUES LESS THAN (739707) ENGINE = InnoDB COMMENT='带分区：话单小结工单扩展表' ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8mb3 ENGINE=InnoDB PARTITION BY RANGE (to_days(`cuv_start_time`))
+
+/*
+3 rows from znrpt_cuv_summary_gd_extend table:
+id	section_id	cuv_customer_name	cuv_session_id	cuv_replay_account	cuv_qes_desc	cuv_deal_scheme	cuv_channel	cuv_channel_cn	cuv_customer_id	cuv_start_time	cuv_biztype1	cuv_biztype2	cuv_biztype3	cuv_biztype4	cuv_biztype5	cuv_biztype6	cuv_biztype7	cuv_biztype1_cn	cuv_biztype2_cn	cuv_biztype3_cn	cuv_biztype4_cn	cuv_biztype5_cn	cuv_biztype6_cn	cuv_biztype7_cn	cuv_summary_type	cuv_summary_type_cn	cuv_call_type	cuv_call_type_cn	cuv_identity	cuv_identity_cn	cuv_customer_type	cuv_customer_type_cn	cuv_district	cuv_district_cn	cuv_contact_tel	cuv_solved	cuv_solved_cn	gd_order_id	gd_call_id	gd_session_id	gd_work_no	gd_call_no	gd_call_time	gd_contact_name	gd_contact_sex	gd_contact_sex_cn	gd_contact_address	gd_order_type	gd_order_type_cn	gd_order_content	gd_create_time	gd_order_status	gd_order_status_cn	gd_back_flag	gd_back_flag_cn	gd_order_index	gd_order_index_cn	gd_order_source	gd_order_source_cn	gd_wx_order_type	gd_wx_order_type_cn	gd_service_level1	gd_service_level2	gd_service_level3	gd_service_level4	gd_service_level1_cn	gd_service_level2_cn	gd_service_level3_cn	gd_service_level4_cn	gd_call_type	gd_call_type_cn	gd_channel_typeid	gd_channel_typeid_cn	gd_order_class	gd_order_class_cn	extend_call_matter	extend_call_matter_cn	extend_commend_category	extend_commend_category_cn	content
+1	25150078	None	1000136363645901233317135666661173014060001713566706648	13636364590	1	None	1000	语音	0	2024-04-20 06:45:06	861	None	None	1871	None	None	None	转队列-医保	None	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150078,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+2	25150079	None	1000139182614751233317135671461174114060001713567165817	13918261475	12345	None	1000	语音	0	2024-04-20 06:52:45	849	1216	None	1871	None	None	None	非我局业务范围	其它	None	非我局				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150079,客户名称:,咨询内容:12345,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类
+3	25150080	None	100019116007618123331713567784103586060001713567802666	19116007618	1	None	1000	语音	0	2024-04-20 07:03:21	837	1196	None	1870	None	None	None	咨询办事机构	街道乡镇	None	办事机构咨询				0	社保	None		None		None		None		None	14	解决	None	None	None	None	None	None	None	None	未知	None	None		None	None	None		None	否	None		None		None		None	None	None	None	None	None	None	None	None		None		None		None		None		业务小结(id)25150080,客户名称:,咨询内容:1,处理主题:,渠道:语音,小结类型:社保,来电类型:,人员身份:,人员分类:,区县信息:。工单信息:【,工单分类:,工单内容:,来电类型:,工
+*/
+2025-06-04 13:22:38,631 ChatBI->     DEBUG    Error processing column cuv_biztype6: invalid syntax (<string>, line 0)
+2025-06-04 13:22:38,705 ChatBI->     DEBUG    Error processing column cuv_biztype7: invalid syntax (<string>, line 0)
+2025-06-04 13:22:38,800 ChatBI->     INFO     Found enum field: cuv_biztype1_cn with 20 values
+2025-06-04 13:22:39,090 ChatBI->     INFO     Found enum field: cuv_biztype4_cn with 18 values
+2025-06-04 13:22:39,186 ChatBI->     INFO     Found enum field: cuv_biztype5_cn with 1 values
+2025-06-04 13:22:39,280 ChatBI->     INFO     Found enum field: cuv_biztype6_cn with 1 values
+2025-06-04 13:22:39,369 ChatBI->     INFO     Found enum field: cuv_biztype7_cn with 1 values
+2025-06-04 13:22:39,456 ChatBI->     INFO     Found enum field: cuv_summary_type with 1 values
+2025-06-04 13:22:39,553 ChatBI->     INFO     Found enum field: cuv_summary_type_cn with 1 values
+2025-06-04 13:22:39,623 ChatBI->     DEBUG    Error processing column cuv_call_type: invalid syntax (<string>, line 0)
+2025-06-04 13:22:39,731 ChatBI->     INFO     Found enum field: cuv_call_type_cn with 1 values
+2025-06-04 13:22:39,793 ChatBI->     DEBUG    Error processing column cuv_identity: invalid syntax (<string>, line 0)
+2025-06-04 13:22:39,885 ChatBI->     INFO     Found enum field: cuv_identity_cn with 1 values
+2025-06-04 13:22:39,947 ChatBI->     DEBUG    Error processing column cuv_customer_type: invalid syntax (<string>, line 0)
+2025-06-04 13:22:40,042 ChatBI->     INFO     Found enum field: cuv_customer_type_cn with 1 values
+2025-06-04 13:22:40,107 ChatBI->     DEBUG    Error processing column cuv_district: invalid syntax (<string>, line 0)
+2025-06-04 13:22:40,207 ChatBI->     INFO     Found enum field: cuv_district_cn with 1 values
+2025-06-04 13:22:40,382 ChatBI->     INFO     Found enum field: cuv_solved with 6 values
+2025-06-04 13:22:40,473 ChatBI->     INFO     Found enum field: cuv_solved_cn with 7 values
+2025-06-04 13:22:40,886 ChatBI->     INFO     Found enum field: cuv_contact_tel with 84 values
+2025-06-04 13:22:41,036 ChatBI->     DEBUG    Error processing column gd_contact_sex: invalid syntax (<string>, line 0)
+2025-06-04 13:22:41,150 ChatBI->     INFO     Found enum field: gd_contact_sex_cn with 1 values
+2025-06-04 13:22:41,234 ChatBI->     INFO     Found enum field: gd_contact_address with 9 values
+2025-06-04 13:22:41,300 ChatBI->     INFO     Found enum field: gd_order_type with 14 values
+2025-06-04 13:22:41,406 ChatBI->     INFO     Found enum field: gd_order_type_cn with 15 values
+2025-06-04 13:22:41,671 ChatBI->     INFO     Found enum field: gd_order_status with 6 values
+2025-06-04 13:22:41,763 ChatBI->     INFO     Found enum field: gd_order_status_cn with 7 values
+2025-06-04 13:22:41,841 ChatBI->     INFO     Found enum field: gd_back_flag with 1 values
+2025-06-04 13:22:41,975 ChatBI->     INFO     Found enum field: gd_back_flag_cn with 2 values
+2025-06-04 13:22:42,025 ChatBI->     INFO     Found enum field: cuv_channel with 1 values
+2025-06-04 13:22:42,145 ChatBI->     INFO     Found enum field: gd_order_index with 2 values
+2025-06-04 13:22:42,145 ChatBI->     INFO     Found enum field: gd_order_index_cn with 3 values
+2025-06-04 13:22:42,175 ChatBI->     DEBUG    Error processing column gd_service_level4: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,206 ChatBI->     INFO     Found enum field: cuv_biztype4 with 18 values
+2025-06-04 13:22:42,234 ChatBI->     INFO     Found enum field: gd_order_source_cn with 1 values
+2025-06-04 13:22:42,266 ChatBI->     DEBUG    Error processing column cuv_deal_scheme: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,358 ChatBI->     INFO     Found enum field: gd_service_level1_cn with 12 values
+2025-06-04 13:22:42,368 ChatBI->     DEBUG    Error processing column gd_service_level4_cn: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,369 ChatBI->     INFO     Found enum field: gd_wx_order_type_cn with 1 values
+2025-06-04 13:22:42,393 ChatBI->     INFO     Found enum field: cuv_customer_id with 1 values
+2025-06-04 13:22:42,403 ChatBI->     INFO     Found enum field: gd_service_level1 with 13 values
+2025-06-04 13:22:42,421 ChatBI->     INFO     Found enum field: gd_service_level3 with 47 values
+2025-06-04 13:22:42,440 ChatBI->     DEBUG    Error processing column gd_order_source: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,451 ChatBI->     DEBUG    Error processing column cuv_customer_name: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,493 ChatBI->     INFO     Found enum field: extend_call_matter with 1 values
+2025-06-04 13:22:42,498 ChatBI->     DEBUG    Error processing column gd_wx_order_type: invalid syntax (<string>, line 0)
+2025-06-04 13:22:42,532 ChatBI->     INFO     Found enum field: cuv_biztype1 with 22 values
+2025-06-04 13:22:42,582 ChatBI->     INFO     Found enum field: cuv_channel_cn with 1 values
+2025-06-04 13:22:42,588 ChatBI->     INFO     Found enum field: gd_call_type with 2 values
+2025-06-04 13:22:42,605 ChatBI->     INFO     Found enum field: gd_channel_typeid with 2 values
+2025-06-04 13:22:42,605 ChatBI->     INFO     Found enum field: extend_call_matter_cn with 2 values
+2025-06-04 13:22:42,606 ChatBI->     INFO     Found enum field: extend_commend_category_cn with 1 values
+2025-06-04 13:22:42,621 ChatBI->     INFO     Found enum field: gd_service_level2_cn with 34 values
+2025-06-04 13:22:42,622 ChatBI->     INFO     Found enum field: gd_channel_typeid_cn with 3 values
+2025-06-04 13:22:42,622 ChatBI->     INFO     Found enum field: gd_order_class_cn with 5 values
+2025-06-04 13:22:42,623 ChatBI->     INFO     Found enum field: gd_call_type_cn with 3 values
+2025-06-04 13:22:42,630 ChatBI->     INFO     Found enum field: gd_order_class with 5 values
+2025-06-04 13:22:42,639 ChatBI->     INFO     Found enum field: gd_service_level3_cn with 41 values
+2025-06-04 13:22:42,641 ChatBI->     INFO     Found enum field: gd_service_level2 with 38 values
+2025-06-04 13:22:42,648 ChatBI->     DEBUG    Error processing column extend_commend_category: invalid syntax (<string>, line 0)

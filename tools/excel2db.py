@@ -41,12 +41,12 @@ def excel2db(file_path: str, table_name: str, uri: str):
         raise ValueError(f"Unsupported file type: {file_path}")
 
     engine = create_engine(uri)
-
+    print('xxx')
     df.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
 
 
 if __name__ == '__main__':
-    excel2db(file_path='gjw_data.xlsx', 
-             table_name=config.table_names[0], 
+    excel2db(file_path='shanghai.csv', 
+             table_name=config.data_table_names[0], 
              uri=config.mysql_uri)
 

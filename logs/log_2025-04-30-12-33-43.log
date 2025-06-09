@@ -1,2 +1,0 @@
-2025-04-30 12:33:50,448 ChatBI->     INFO     query: 2024年8月份夜间施工扰民事件有多少起
-2025-04-30 12:33:51,407 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {'发现时间': '2024-08', '事项名称': '夜间施工扰民'}}
