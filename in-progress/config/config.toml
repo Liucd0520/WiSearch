@@ -1,0 +1,21 @@
+[LLM]
+model_name = "Qwen2.5-7B-Instruct"
+base_url = "http://172.31.24.111:9050/v1"
+api_key = "EMPTY"
+temperature = 0
+
+[EMBEDDING]
+model_name = "bge-large-embedding"
+base_url = "http://172.31.24.111:8003/v1"
+api_key = "EMPTY"
+
+[MYSQL]
+host = "172.31.24.111"
+port = 5669
+user = "chatbi"
+password = "IDEAL"
+database = "finData"
+charset = "utf8mb4"
+
+[MILVUS]
+uri = "http://172.31.24.111:19530"
