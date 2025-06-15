@@ -1,0 +1,140 @@
+2025-05-23 04:05:34,657 ChatBI->     INFO     full_schema: 
+CREATE TABLE `HongKouDemo` (
+	`案件编号` BIGINT COMMENT '案件的编号xxx', 
+	`原编号` BIGINT COMMENT '原有编号', 
+	`案件来源/信息来源` TEXT, 
+	`工单类型` TEXT, 
+	`发现时间` TEXT, 
+	`状态` TEXT, 
+	`事项类别` TEXT, 
+	`事项大类` TEXT, 
+	`事项小类` TEXT, 
+	`事项名称` TEXT, 
+	`事项标签` TEXT, 
+	`案件描述/内容描述` TEXT, 
+	`上报地址` TEXT, 
+	`实际地址` TEXT, 
+	`联系人` DOUBLE, 
+	`联系电话` DOUBLE, 
+	`所属街道` TEXT, 
+	`主责部门` TEXT, 
+	`协同部门` TEXT, 
+	`主处置部门` TEXT, 
+	`协同处置部门` TEXT, 
+	`办理描述` TEXT, 
+	`结案时间` TEXT, 
+	`结案期限(是否超时)` TEXT, 
+	`市紧急程度` TEXT, 
+	`收单时间` TEXT, 
+	`紧急程度` TEXT, 
+	`所属片区` TEXT, 
+	`所属居委` TEXT, 
+	`派遣时间` TEXT, 
+	`案件期限` BIGINT, 
+	`处置计时` TEXT, 
+	`案件整体计时` TEXT, 
+	`事实认定` TEXT, 
+	`诉求认定` TEXT, 
+	`是否解决区回访` TEXT, 
+	`是否满意区回访` TEXT
+)DEFAULT CHARSET=utf8mb4 ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci
+
+/*
+3 rows from HongKouDemo table:
+案件编号	原编号	案件来源/信息来源	工单类型	发现时间	状态	事项类别	事项大类	事项小类	事项名称	事项标签	案件描述/内容描述	上报地址	实际地址	联系人	联系电话	所属街道	主责部门	协同部门	主处置部门	协同处置部门	办理描述	结案时间	结案期限(是否超时)	市紧急程度	收单时间	紧急程度	所属片区	所属居委	派遣时间	案件期限	处置计时	案件整体计时	事实认定	诉求认定	是否解决区回访	是否满意区回访
+202408317745200116	20240831030597	12345热线	投诉举报类	2024-08-31 22:20	待接单处置	公共管理	环境保护	噪声污染	夜间施工扰民	None	市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需	虹口区衡水路89弄小区附近	衡水路89弄小区附近	None	None	四川北路街道	虹口区建设和管理委员会	None	虹口区建设和管理委员会/市政和水务管理中心5	None	None	None	正常	普通	2024-09-01 11:12:36	一般	第三片区	四川居委	2024-09-01 11:53:06	7	0天15小时50分钟14秒	0天15小时50分钟14秒	None	None	None	None
+202408311356400115	20240831030096	12345热线	咨询类	2024-08-31 21:31	待接单处置	公共服务	民生服务	帮困救助	津贴补助	None	市民来电咨询:其目前66岁，无退休工资、无医保、也未申请最低生活保障，目前在法院打官司，咨询上址街道能否给其开证明请免费的律师。诉求：请管理部门核实告知。	虹口区江湾街道	江湾镇街道	None	None	江湾镇街道	江湾镇街道办事处	None	江湾镇街道办事处/社区服务办公室	None	None	None	正常	普通	2024-09-02 08:53:56	一般	第四片区	沽源居委	2024-09-02 08:55:00	7	0天6小时55分钟14秒	0天15小时50分钟14秒	None	None	None	None
+202408314662400114	20240831030001	12345热线	投诉举报类	2024-08-31 21:21	待接单处置	公共管理	环境保护	噪声污染	夜间施工扰民	None	市民来电反映:虹口区长阳路靠近保定路在进行道路施工，使用打桩机噪音扰民，具体施工项目不清楚，8月30日20:00—22:00期间，强烈要求施工方今后18:00之后不要施工。（市民要求信息保密 需回复）	虹口区长阳路靠近保定路	长阳路靠近保定路	None	None	北外滩街道	虹口区建设和管理委员会	None	虹口区建设和管理委员会/市政和水务管理中心5	None	None	None	正常	普通	2024-09-01 10:28:58	一般	东片区	春江居委	2024-09-01 10:34:05	7	0天15小时50分钟14秒	0天15小时50分钟14秒	None	None	None	None
+*/
+2025-05-23 04:05:34,725 ChatBI->     INFO     Found enum field: 主责部门 with 38 values
+2025-05-23 04:05:34,734 ChatBI->     INFO     Found enum field: 协同部门 with 15 values
+2025-05-23 04:05:34,756 ChatBI->     INFO     Found enum field: 协同处置部门 with 55 values
+2025-05-23 04:05:34,859 ChatBI->     INFO     Found enum field: 结案期限(是否超时) with 3 values
+2025-05-23 04:05:34,866 ChatBI->     INFO     Found enum field: 市紧急程度 with 2 values
+2025-05-23 04:05:34,913 ChatBI->     INFO     Found enum field: 紧急程度 with 2 values
+2025-05-23 04:05:34,918 ChatBI->     INFO     Found enum field: 所属片区 with 10 values
+2025-05-23 04:05:34,929 ChatBI->     INFO     Found enum field: 所属居委 with 206 values
+2025-05-23 04:05:35,043 ChatBI->     INFO     Found enum field: 案件期限 with 12 values
+2025-05-23 04:05:35,129 ChatBI->     INFO     Found enum field: 事实认定 with 10 values
+2025-05-23 04:05:35,134 ChatBI->     INFO     Found enum field: 诉求认定 with 4 values
+2025-05-23 04:05:35,139 ChatBI->     INFO     Found enum field: 是否解决区回访 with 5 values
+2025-05-23 04:05:35,144 ChatBI->     INFO     Found enum field: 是否满意区回访 with 5 values
+2025-05-23 04:05:35,155 ChatBI->     INFO     Found enum field: 工单类型 with 5 values
+2025-05-23 04:05:35,185 ChatBI->     INFO     Found enum field: 事项类别 with 4 values
+2025-05-23 04:05:35,190 ChatBI->     INFO     Found enum field: 事项大类 with 22 values
+2025-05-23 04:05:35,195 ChatBI->     INFO     Found enum field: 状态 with 6 values
+2025-05-23 04:05:35,199 ChatBI->     INFO     Found enum field: 事项小类 with 55 values
+2025-05-23 04:05:35,201 ChatBI->     INFO     Found enum field: 所属街道 with 8 values
+2025-05-23 04:05:35,206 ChatBI->     INFO     Found enum field: 案件来源/信息来源 with 1 values
+2025-05-23 04:05:35,209 ChatBI->     INFO     Found enum field: 事项标签 with 104 values
+2025-05-23 04:05:35,217 ChatBI->     INFO     Found enum field: 事项名称 with 204 values
+2025-05-23 04:09:18,674 ChatBI->     INFO     full_schema: 
+CREATE TABLE `HongKouDemo` (
+	`案件编号` BIGINT COMMENT '案件的编号xxx', 
+	`原编号` BIGINT COMMENT '原有编号', 
+	`案件来源/信息来源` TEXT, 
+	`工单类型` TEXT, 
+	`发现时间` TEXT, 
+	`状态` TEXT, 
+	`事项类别` TEXT, 
+	`事项大类` TEXT, 
+	`事项小类` TEXT, 
+	`事项名称` TEXT, 
+	`事项标签` TEXT, 
+	`案件描述/内容描述` TEXT, 
+	`上报地址` TEXT, 
+	`实际地址` TEXT, 
+	`联系人` DOUBLE, 
+	`联系电话` DOUBLE, 
+	`所属街道` TEXT, 
+	`主责部门` TEXT, 
+	`协同部门` TEXT, 
+	`主处置部门` TEXT, 
+	`协同处置部门` TEXT, 
+	`办理描述` TEXT, 
+	`结案时间` TEXT, 
+	`结案期限(是否超时)` TEXT, 
+	`市紧急程度` TEXT, 
+	`收单时间` TEXT, 
+	`紧急程度` TEXT, 
+	`所属片区` TEXT, 
+	`所属居委` TEXT, 
+	`派遣时间` TEXT, 
+	`案件期限` BIGINT, 
+	`处置计时` TEXT, 
+	`案件整体计时` TEXT, 
+	`事实认定` TEXT, 
+	`诉求认定` TEXT, 
+	`是否解决区回访` TEXT, 
+	`是否满意区回访` TEXT
+)DEFAULT CHARSET=utf8mb4 ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci
+
+/*
+3 rows from HongKouDemo table:
+案件编号	原编号	案件来源/信息来源	工单类型	发现时间	状态	事项类别	事项大类	事项小类	事项名称	事项标签	案件描述/内容描述	上报地址	实际地址	联系人	联系电话	所属街道	主责部门	协同部门	主处置部门	协同处置部门	办理描述	结案时间	结案期限(是否超时)	市紧急程度	收单时间	紧急程度	所属片区	所属居委	派遣时间	案件期限	处置计时	案件整体计时	事实认定	诉求认定	是否解决区回访	是否满意区回访
+202408317745200116	20240831030597	12345热线	投诉举报类	2024-08-31 22:20	待接单处置	公共管理	环境保护	噪声污染	夜间施工扰民	None	市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需	虹口区衡水路89弄小区附近	衡水路89弄小区附近	None	None	四川北路街道	虹口区建设和管理委员会	None	虹口区建设和管理委员会/市政和水务管理中心5	None	None	None	正常	普通	2024-09-01 11:12:36	一般	第三片区	四川居委	2024-09-01 11:53:06	7	0天15小时50分钟14秒	0天15小时50分钟14秒	None	None	None	None
+202408311356400115	20240831030096	12345热线	咨询类	2024-08-31 21:31	待接单处置	公共服务	民生服务	帮困救助	津贴补助	None	市民来电咨询:其目前66岁，无退休工资、无医保、也未申请最低生活保障，目前在法院打官司，咨询上址街道能否给其开证明请免费的律师。诉求：请管理部门核实告知。	虹口区江湾街道	江湾镇街道	None	None	江湾镇街道	江湾镇街道办事处	None	江湾镇街道办事处/社区服务办公室	None	None	None	正常	普通	2024-09-02 08:53:56	一般	第四片区	沽源居委	2024-09-02 08:55:00	7	0天6小时55分钟14秒	0天15小时50分钟14秒	None	None	None	None
+202408314662400114	20240831030001	12345热线	投诉举报类	2024-08-31 21:21	待接单处置	公共管理	环境保护	噪声污染	夜间施工扰民	None	市民来电反映:虹口区长阳路靠近保定路在进行道路施工，使用打桩机噪音扰民，具体施工项目不清楚，8月30日20:00—22:00期间，强烈要求施工方今后18:00之后不要施工。（市民要求信息保密 需回复）	虹口区长阳路靠近保定路	长阳路靠近保定路	None	None	北外滩街道	虹口区建设和管理委员会	None	虹口区建设和管理委员会/市政和水务管理中心5	None	None	None	正常	普通	2024-09-01 10:28:58	一般	东片区	春江居委	2024-09-01 10:34:05	7	0天15小时50分钟14秒	0天15小时50分钟14秒	None	None	None	None
+*/
+2025-05-23 04:09:18,736 ChatBI->     INFO     Found enum field: 主责部门 with 38 values
+2025-05-23 04:09:18,741 ChatBI->     INFO     Found enum field: 是否解决区回访 with 5 values
+2025-05-23 04:09:18,746 ChatBI->     INFO     Found enum field: 是否满意区回访 with 5 values
+2025-05-23 04:09:18,752 ChatBI->     INFO     Found enum field: 协同处置部门 with 55 values
+2025-05-23 04:09:18,856 ChatBI->     INFO     Found enum field: 结案期限(是否超时) with 3 values
+2025-05-23 04:09:18,862 ChatBI->     INFO     Found enum field: 市紧急程度 with 2 values
+2025-05-23 04:09:18,909 ChatBI->     INFO     Found enum field: 紧急程度 with 2 values
+2025-05-23 04:09:18,916 ChatBI->     INFO     Found enum field: 所属片区 with 10 values
+2025-05-23 04:09:18,925 ChatBI->     INFO     Found enum field: 所属居委 with 206 values
+2025-05-23 04:09:18,970 ChatBI->     INFO     Found enum field: 案件期限 with 12 values
+2025-05-23 04:09:19,058 ChatBI->     INFO     Found enum field: 事实认定 with 10 values
+2025-05-23 04:09:19,063 ChatBI->     INFO     Found enum field: 诉求认定 with 4 values
+2025-05-23 04:09:19,066 ChatBI->     INFO     Found enum field: 协同部门 with 15 values
+2025-05-23 04:09:19,247 ChatBI->     INFO     Found enum field: 工单类型 with 5 values
+2025-05-23 04:09:19,249 ChatBI->     INFO     Found enum field: 状态 with 6 values
+2025-05-23 04:09:19,290 ChatBI->     INFO     Found enum field: 事项大类 with 22 values
+2025-05-23 04:09:19,294 ChatBI->     INFO     Found enum field: 事项类别 with 4 values
+2025-05-23 04:09:19,296 ChatBI->     INFO     Found enum field: 案件来源/信息来源 with 1 values
+2025-05-23 04:09:19,299 ChatBI->     INFO     Found enum field: 事项标签 with 104 values
+2025-05-23 04:09:19,299 ChatBI->     INFO     Found enum field: 所属街道 with 8 values
+2025-05-23 04:09:19,307 ChatBI->     INFO     Found enum field: 事项名称 with 204 values
+2025-05-23 04:09:19,309 ChatBI->     INFO     Found enum field: 事项小类 with 55 values

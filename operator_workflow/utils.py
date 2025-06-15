@@ -3,7 +3,7 @@ from sklearn.cluster import DBSCAN, KMeans
 import numpy as np 
 from models.langchain_models import embedding_bge
 from operator_workflow.milvus_client import MilvusOperation
-from configs.config import bm25_ef_path, related_columns, columns_map
+from configs import config 
 from collections import Counter
 from langchain.schema.runnable import Runnable
 from utils.util import * 
@@ -13,16 +13,17 @@ from configs import config
 def retrieve_document_milvus(query: str, milvus_opt: object,  filter_exp='', limit=5000):
     """query 是非结构化内容"""
     
-    unstructured_field = columns_map[related_columns[-1]] 
+    unstructured_field = config.columns_map[config.unstructrued_column] 
 
     if query: # query 非空
+    
         search_result = milvus_opt.search_hybrid(
             query=query, 
             output_fields=[unstructured_field, 'dense'],  # 除了`内容描述`之外选择使用哪些字段应该由query解析的结果决定
             filter_exp=filter_exp, 
             limit = limit)
         result = search_result[0]  # 因为query只有一个，而milvus支持若干个
-
+        
         return [retr_result['entity'][unstructured_field] for retr_result in result], \
                [retr_result['entity']['dense'] for retr_result in result]
     

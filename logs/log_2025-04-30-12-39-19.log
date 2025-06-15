@@ -1,5 +1,0 @@
-2025-04-30 12:39:26,647 ChatBI->     INFO     query: 2024年8月份夜间施工扰民事件一共有多少起
-2025-04-30 12:39:27,598 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {'发现时间': '2024-08', '事项名称': '夜间施工扰民'}}
-2025-04-30 12:39:28,874 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `夜间施工扰民事件数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `事项名称` LIKE '%夜间施工扰民%';
-2025-04-30 12:39:28,879 ChatBI->     INFO     sql semantic: SELECT COUNT(`案件编号`) AS `夜间施工扰民事件数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `事项名称` LIKE '%夜间施工扰民%';
-2025-04-30 12:39:28,880 ChatBI->     INFO     sql view: SELECT COUNT(`案件编号`) AS `夜间施工扰民事件数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `事项名称` LIKE '%夜间施工扰民%';

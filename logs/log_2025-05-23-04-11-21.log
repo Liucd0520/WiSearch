@@ -1,0 +1,10 @@
+2025-05-23 04:11:23,464 ChatBI->     INFO     关联字段的枚举值:  {}
+2025-05-23 04:11:23,464 ChatBI->     INFO     缩写字段的枚举值： []
+2025-05-23 04:11:44,123 ChatBI->     INFO     schema linking: {'target_columns': [], 'condition_columns': {}}
+2025-05-23 04:11:45,314 ChatBI->     INFO     任务类型: SQL
+2025-05-23 04:11:45,314 ChatBI->     ERROR    Unexpected error occured:list index out of range
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB/apps/app_main_ws.py", line 102, in websocket_endpoint
+    sql_gen_chain,  sql_feedback_chain, abbr_columns[0], full_abbr_values,
+                                        ~~~~~~~~~~~~^^^
+IndexError: list index out of range

@@ -6,7 +6,9 @@ clients: List[WebSocket] = []
 
 # 发送消息给所有连接的客户端
 async def send_to_clients(message: str):
-    logger.info(f'websocket发送的数据为：{message}')
+    if len(message) < 20:
+        logger.info(f'websocket发送的数据为：{message}')
+        
     for client in clients:
         await client.send_text(message)
 

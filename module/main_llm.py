@@ -79,7 +79,19 @@ def meta_data_model(model):
 
     return meta_data_chain
 
+def each_meta_data_model(model):
+    # meta data 
+    """生成某个字段的元数据，field_info与enum_values均为某个字段"""
+    prompt_meta_data = PromptTemplate(template=each_metadata_prompt, input_variables=["db_info", "full_schema", "field_info",  "enum_values", ])
+    each_meta_data_chain = create_str_chain(prompt_meta_data, model)
+    
+    return each_meta_data_chain
 
+def translate_english_model(model):
+    prompt = PromptTemplate(template=translate_prompt, input_variables=["word", ])
+    translate_chain = create_str_chain(prompt, model)
+
+    return translate_chain
 
 class DateTimeModel(BaseModel):
     create_time: List[datetime]

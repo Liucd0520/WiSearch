@@ -11,7 +11,6 @@ class GraphState(TypedDict):
         db_name: database name
         documents: list of documents
     """
-
     query: str
     unstr_value: str
     filter_exp: str 

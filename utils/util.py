@@ -17,9 +17,17 @@ import sqlparse
 from langchain.schema.runnable import Runnable
 from langchain_community.utilities import SQLDatabase
 from configs import config as config
-from datetime import datetime
+# from datetime import datetime
 from configs import config
-
+import random 
+import time 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+import random
+import datetime 
+from models.langchain_models import embedding_bge
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 
 def create_path(_path):
@@ -58,6 +66,32 @@ def get_log(log_dir):
 
 log_dir = config.log_dir
 logger = get_log(log_dir)
+
+
+
+def retrieve_cases(query, embedding_corpus, top_k=3):
+    """
+    根据输入问题从词库中检索最相似的TOP3词条。
+
+    参数:
+        query (str): 输入的问题。
+        corpus (list of str): 词库，包含多个词条。
+        embedding_func (function): 嵌入模型函数，用于将文本转化为向量。
+
+    返回:
+        list of tuple: TOP3相似词条及其相似度分数。
+    """
+    # 将输入问题转化为向量
+
+    query_embedding = embedding_bge(query).reshape(1, -1)  # 确保是二维数组
+
+    # 计算余弦相似度
+    similarities = cosine_similarity(query_embedding, embedding_corpus).flatten()
+    # 获取相似度最高的TOP3索引
+    top_indices = np.argsort(similarities)[-top_k:][::-1]
+    # 返回TOP3词条及其相似度分数
+
+    return top_indices
 
 
 def split_metadata(mysql_schema_with_samples):
@@ -132,7 +166,6 @@ def unstructured_clause(sql_query, special_column):
 
 def unstructure_value_extract(sql_query, unstructured_column):
     conditions = unstructured_clause(sql_query, unstructured_column)
-    print(conditions)
 
     value_dict = {}
     for condintion in conditions:
@@ -154,6 +187,50 @@ def unstructure_value_extract(sql_query, unstructured_column):
 
 def abbr_value_extract(sql_query, abbr_column):
     return unstructure_value_extract(sql_query, abbr_column)
+
+
+import sqlparse
+from sqlparse.sql import IdentifierList, Identifier
+from sqlparse.tokens import Keyword, DML
+
+def remove_group_by(sql):
+    # 解析SQL语句
+    parsed = sqlparse.parse(sql)
+    stmt = parsed[0]  # 假定只有一个SQL语句
+    
+    new_tokens = []
+    group_by_seen = False
+    having_seen = False
+    
+    for token in stmt.tokens:
+        if token.ttype is Keyword and token.value.upper() == 'GROUP BY':
+            group_by_seen = True
+            continue  # 跳过GROUP BY及其后续直到HAVING之前的token
+        
+        if group_by_seen and isinstance(token, IdentifierList):
+            # 跳过IdentifierList内的内容，假设这是GROUP BY后的列名列表
+            continue
+        
+        if group_by_seen and token.ttype is Keyword and token.value.upper() == 'HAVING':
+            having_seen = True
+            continue  # 跳过HAVING及其后续的内容
+        
+        if not group_by_seen or (group_by_seen and having_seen and token.ttype is None and not isinstance(token, Identifier)):
+            new_tokens.append(token)
+        
+        if having_seen and token.ttype is None and not isinstance(token, Identifier):
+            # 当我们遇到非标识符且非None类型的token时，停止忽略token
+            group_by_seen = False
+            having_seen = False
+        
+        if token.ttype is DML and token.value.upper() == 'SELECT':
+            # 处理聚合函数 - 这里简化处理，实际中需要更复杂的逻辑来识别并处理聚合函数
+            pass  # 需要额外逻辑来处理聚合函数，这取决于具体情况
+
+    # 将处理过的tokens重新组合成SQL语句
+    result_sql = ''.join(str(token) for token in new_tokens).strip()
+    
+    return result_sql
 
 
 # 这段代码的for循环有问题，没有真正支持多个非结构化字段的语义，比如 内容描述 like '支付宝平台' or 案件描述 like '支付宝平台'
@@ -209,20 +286,18 @@ def keyword_matching(substring, main_strings):
     return matching_strings
 
 
-async def sql_abbr_rewrite(sql_command: str,  abbr_dict: dict, abbreviation_column: str, ):
+async def sql_abbr_rewrite(sql_command: str,  abbr_dict: dict, abbreviation_column: str, full_abbr_values: list, total_len=0):
     """
     将sql中某写列是涉及缩写的，找出来替换成 满足缩写匹配条件的字段值
     """
     parameters = {}
-    total_len = 0 
+    
     for ori_cmd, abbr_str in abbr_dict.items():  
         # 对非结构化的值判断是否为命名实体，如果是的话就不必执行非结构化检索了
-        import json 
-        with open(f'gjw_distinct_values.json', 'r', encoding='utf-8') as f:
-            full_list = json.load(f)
-
-        abbr_values = keyword_matching(abbr_str, full_list)
-       
+    
+        print(abbr_str, full_abbr_values)
+        abbr_values = keyword_matching(abbr_str, full_abbr_values)
+        print(f'缩写字段值{abbr_str} match 的全文为： {abbr_values}')
         placeholders = ', '.join([f":val{i + total_len}" for i in range(len(abbr_values))]) 
         sql_command = sql_command.replace(ori_cmd, f""" `{abbreviation_column}` IN ({placeholders})""")
         
@@ -235,25 +310,24 @@ async def sql_abbr_rewrite(sql_command: str,  abbr_dict: dict, abbreviation_colu
 
 
 
-def sql_execute(mysql_uri: str, sql_command: str, schema: str,  params: dict, sql_rewrite_chain: Runnable,):
-    # print('sql command --> ', sql_command)
-    import time 
-    start_time = time.time()
-    mysql_db = SQLDatabase.from_uri(mysql_uri)
-    print(time.time() - start_time)
+def sql_execute(mysql_db, sql_command: str, schema: str,  params: dict, sql_rewrite_chain: Runnable,):
+
     try:
         if len(params) != 0:
             try:
-                # print('params', params)
+                logger.info(f'sql 语句：{sql_command}')
+                # logger.info(f'params: {params}')
+                
                 sql_result = mysql_db.run(sql_command, include_columns=True, parameters=params)
             except Exception as e :
-                logger.info(f'execute sql with seme wrong: {e}')
+                sql_result = ''
+                logger.error(f'execute sql with seme wrong: {e}', exc_info=True)
         else:
             sql_result = mysql_db.run(sql_command, include_columns=True)
             
     except Exception as e:
-        if config.is_semantic_analysis:
-            print('sql 执行错误，语义分析不支持sql重写')
+        if config.is_semantic_analysis or config.is_abbr_analysis:
+            print('sql 执行错误，语义分析/缩写分析不支持sql重写')
             return ''
         new_sql_command_result = sql_rewrite_chain.invoke({"schema": schema, "old_sql": sql_command, 'error': e})
         new_sql_command = new_sql_command_result.sql
@@ -266,7 +340,6 @@ def sql_execute(mysql_uri: str, sql_command: str, schema: str,  params: dict, sq
             sql_result = ''  #在 SQLDatabase 中存在'[xxx]'，与 '' 两种
     
     return sql_result
-
 
 
 
@@ -319,8 +392,169 @@ def generation_filter_expr(milvus_field_type: dict, condition_columns: dict, uns
 
 
 
+def params_parser(param_db, metadata_table_name, data_table_name):
+    # 重新获取表结构
+    sql_cmd = f"""SELECT * FROM `{metadata_table_name}` """
+    try:
+        result = param_db.run(sql_cmd,include_columns=True)  
+    except Exception as e:
+        logger.info(f"获取表 {metadata_table_name} 的元数据失败: {e}")
+        return '', [], [], {}
+
+    if result == '':
+        logger.info(f"没有找到表 {metadata_table_name} 的元数据")
+        
+    # 获取对应表的元数据
+    full_meta_data_list = eval(result) 
+    meta_data_list = [i for i in full_meta_data_list if i['table_name'] == data_table_name]
+    # 生成Schema信息
+    schema_list = []
+    
+    start_str = f"CREATE TABLE `{data_table_name}` ("
+    schema_list.append(start_str)
+    for field_meta_data in meta_data_list:
+        meta_data_str = f"""`{field_meta_data['field_name']}` {field_meta_data['field_type']}; {field_meta_data['field_comment']}; {field_meta_data['data_example']}"""
+        schema_list.append(meta_data_str)
+    end_str = f""") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci """
+    
+    schema_list.append(end_str)
+    schema = '\n'.join(schema_list)
+
+    # 判断是否有缩写
+    abbr_columns = [each_data['field_name'] for each_data in meta_data_list if each_data['is_abbr_dim'] == 1] 
+    # 获取关联字段的列表
+    related_columns = [each_data['field_name'] for each_data in meta_data_list if each_data['is_search_dim'] == 1]
+    # 获取字段映射表
+    filed_mapping = {each_data['field_name']: each_data['english_name'] for each_data in meta_data_list}
+
+    return schema, abbr_columns, related_columns, filed_mapping
+
+
+
+
+def get_enum_values(
+    mysql_db,
+    table_name: str,
+    max_distinct_values_num: int = 1000, 
+    max_combined_values_length: int = 5000,
+    LIMIT: int = 10000):
+    
+    """
+    获取表中所有可能的枚举字段及其值（并发版本）
+    """
+    random.seed(42)
+
+    try:
+        # 获取表的所有列名
+        columns_query = f"""
+            SELECT COLUMN_NAME, DATA_TYPE 
+            FROM INFORMATION_SCHEMA.COLUMNS 
+            WHERE TABLE_NAME = '{table_name}'
+            AND TABLE_SCHEMA = DATABASE()
+        """
+        columns_result = mysql_db.run(columns_query)
+        columns_result = eval(columns_result)
+        print(f"columns_result: {columns_result}")
+
+        enum_values = {}
+        sample_values = {}
+
+        def process_column(column_info):
+            column_name = column_info[0]
+            data_type = column_info[1]
+            print(f"Processing column (in thread): {column_name}, data_type: {data_type}")
+
+            if data_type.lower() not in ['enum', 'char', 'varchar', 'text', 'longtext', 'bool', 'boolean',
+                                         'tinyint', 'int', 'bigint']:
+                return None, None, None # Skip non-enum types
+
+            distinct_query = f"""
+                SELECT DISTINCT `{column_name}`
+                FROM `{table_name}` 
+                WHERE `{column_name}` IS NOT NULL 
+                LIMIT {LIMIT}
+            """
+
+            try:
+                distinct_values = mysql_db.run(distinct_query)
+                distinct_values = eval(distinct_values)
+                distinct_values = [v[0] for v in distinct_values]
+
+                combined_length = sum(len(str(v)) for v in distinct_values)
+
+                if len(distinct_values) <= max_distinct_values_num and combined_length <= max_combined_values_length:
+                    return column_name, sorted(distinct_values), None
+                else:
+                    samples = random.sample(distinct_values, k=min(3, len(distinct_values)))
+                    return column_name, None, samples
+
+            except Exception as e:
+                logger.debug(f"Error processing column {column_name}: {str(e)}")
+                return column_name, None, None
+
+        with ThreadPoolExecutor() as executor:
+            future_to_column = {
+                executor.submit(process_column, column_info): column_info
+                for column_info in columns_result
+            }
+
+            for future in as_completed(future_to_column):
+                result = future.result()
+                col_name, enum_list, sample_list = result
+
+                if enum_list is not None:
+                    enum_values[col_name] = enum_list
+                    logger.info(f"Found enum field: {col_name} with {len(enum_list)} values")
+                elif sample_list:
+                    sample_values[col_name] = sample_list
+
+        return enum_values, sample_values
+
+    except Exception as e:
+        logger.error(f"Error in get_enum_values: {str(e)}")
+        return {}, {}
+    
+
+def get_distinct_values(
+    mysql_db,
+    table_name: str,
+    column_list: list, 
+    LIMIT: int = 100000):
+    """
+    获取表中制定列名的枚举值
+    """
+    result = {}
+    for column_name in column_list:
+        distinct_query = f"""
+            SELECT DISTINCT `{column_name}`
+            FROM `{table_name}` 
+            WHERE `{column_name}` IS NOT NULL 
+            LIMIT {LIMIT}
+        """
+
+        distinct_values = mysql_db.run(distinct_query, include_columns=True)
+        distinct_values = eval(distinct_values)
+        dist_dict =  {column_name: [d[column_name] for d in distinct_values]}
+        result.update(dist_dict)
+    
+    # result: {'事项名称': [x, x, x], 'xx': [x, x, x,]}
+    return result
+                
+
+
 if __name__ == '__main__':
 
-    sql_query = "SELECT COUNT(`案件编号`) AS `扰民事件数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' AND `案件描述/内容描述` LIKE '%扰民%';"
-    result = unstructure_value_extract(sql_query, '案件描述/内容描述')
-    print(result)
+    # param_db = SQLDatabase.from_uri(config.param_uri,)
+    # metadata_table_name = config.param_table_metadata
+    # search_table_name = config.param_table_search
+
+    # data_table_name = config.data_table_names[0]
+
+    # # schema, abbr_columns, related_columns, field_mapping = params_parser(param_db, metadata_table_name, data_table_name)
+    # # print(schema, abbr_columns, related_columns, field_mapping)
+
+    # enum_values, _ = get_enum_values(param_db, search_table_name, config.max_distinct_values_num, config.max_combined_values_length)
+    # print(enum_values)
+
+    mysql_db = SQLDatabase.from_uri(config.mysql_uri,)  
+    get_distinct_values(mysql_db, 'hongkou', ['事项大类', '事项小类', '事项标签'])

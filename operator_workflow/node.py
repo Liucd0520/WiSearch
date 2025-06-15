@@ -5,7 +5,7 @@ from langchain.prompts import PromptTemplate
 from operator_workflow.prompt import *
 from pydantic import BaseModel, Field
 from typing import List, Literal
-from configs import config #  collection_name, uri, extend_field, columns_map, related_columns, limit
+from configs import config 
 from pymilvus import MilvusClient
 from collections import Counter
 from operator_workflow.utils import index_search
@@ -14,6 +14,7 @@ import random
 from models.langchain_models import llm_qwen_14B, llm_qwen_7B
 from utils.util import *
 import numpy as np 
+from more_itertools import collapse
 
 class KeywordExtraction(BaseModel):
     extracted_keyword: List[str] = Field(
@@ -24,7 +25,7 @@ class ExtractTargetModel(BaseModel):
 
 
 grade_prompt = PromptTemplate(template=create_documentgrade_prompt_template, input_variables=["document", "query"])
-grade_chain = create_str_chain(grade_prompt, llm_qwen_7B)
+grade_chain = create_str_chain(grade_prompt, llm_qwen_14B)
 
 kw_prompt = PromptTemplate(template=obtain_keyword_list_prompt, input_variables=["query",]) #  obtain_keyword_prompt
 keyword_chain =  create_structured_chain(kw_prompt, llm_qwen_14B, structured_data=ExtractTargetModel)
@@ -37,10 +38,10 @@ keyword_chain =  create_structured_chain(kw_prompt, llm_qwen_14B, structured_dat
 # 多个关键词
 IE_prompt = PromptTemplate(template=create_extraction_list_prompt_template,
                         input_variables=["key_word_json", "document_with_address",  "query"])
-enr_ext_chain =  create_json_chain(IE_prompt, llm_qwen_7B) #create_structured_chain(prompt, EntityExtraction)
+enr_ext_chain =  create_json_chain(IE_prompt, llm_qwen_14B) #create_structured_chain(prompt, EntityExtraction)
 
 summary_prompt = PromptTemplate(template=create_summary_prompt_template, input_variables=["docs_list"])
-summary_chain = create_str_chain(summary_prompt, llm_qwen_7B)
+summary_chain = create_str_chain(summary_prompt, llm_qwen_14B)
 
 async def retrieve(state):
     """
@@ -52,13 +53,13 @@ async def retrieve(state):
             state (dict): update document based on LLM generation
     """
     logger.info('开始对非结构化文档【粗略】检索')
-
+    
     filter_exp = state['filter_exp']
     milvus_opt = state['milvus_opt']
     unstructured_value = state['unstr_value']
     documents, dense_emb = retrieve_document_milvus(unstructured_value,milvus_opt, filter_exp, limit=config.limit)
     logger.info(f'检索到的文档总数量为：{len(documents)}')
-   
+    
     return {"documents": documents, "outputs": np.array(dense_emb)}
 
 
@@ -92,7 +93,7 @@ async def relevance_grade(state):
     if unstructured_value == '': # 没有非结构化字段，是四级分类里的信息，上一步的过滤查询已经获取到了
         return {'documents': documents}
 
-
+    # grade_chain.batch([{"document": doc, "query": query} for doc in steped_documents], )
     idx = await index_search(unstructured_value, documents, grade_chain)
     window_size = min(config.window_size, 100)  # 与阈值的idx有关，最多不超过100个
     logger.info(f"阈值索引为：{idx}, 窗口大小为: {window_size} ")
@@ -104,7 +105,9 @@ async def relevance_grade(state):
     logger.info(f'确定的文档: {len(document_accept)}; 在次确认的文档: {len(condidate_document)}')
 
     # 对剩余的分类
-    scores_list = await grade_chain.abatch([{"document": doc, "query": unstructured_value} for doc in condidate_document], )
+    scores_list = await grade_chain.abatch([{"document": doc, 
+                                            "query": unstructured_value
+                                            } for doc in condidate_document], ) # f"与 <{unstructured_value}> 相关的{config.unstructrued_column}
     
     filtered_docs = []
     filtered_embs = []
@@ -148,7 +151,7 @@ async def ENR_with_extension(state):
     logger.info('关键词json输出格式 --> {}'.format(key_word_format))
 
 
-    unstr_filed = config.related_columns[-1]
+    unstr_filed = config.unstructrued_column
     unstr_field_en = config.columns_map[unstr_filed]  # 向量数据库中的非结构化字段的英文列名
     extend_field_en = config.columns_map[config.extend_field] if config.extend_field else None  
 
@@ -166,11 +169,12 @@ async def ENR_with_extension(state):
     # [{"诉求地址": xxx, "内容描述": xxx, }, {}, {}]
 
     output_ner = await enr_ext_chain.abatch([{"key_word_json": key_word_format, "query": query, 'document_with_address': d} for d in ext_dicts])
-    print(len(output_ner), output_ner)
+    # print(len(output_ner), output_ner)
 
     outputs = []
     new_documents = []
     for ext_dict, each_output in zip(ext_dicts, output_ner):
+        
         if len(each_output) == 0:  # output_output = {}
             continue 
         if [each_output[key_word] for key_word in key_words] == [''] * len(key_words): # value 均为""
@@ -190,7 +194,8 @@ async def ENR_with_extension(state):
     
     # 按照第一个抽取的信息的数量进行排序
     key_word = key_words[0]
-    new_output = sorted(Counter(d[key_word] for d in outputs if key_word in d).items(), key=lambda x: x[1], reverse=True)
+    extracted_entities = list(collapse([d[key_word] for d in outputs if key_word in d])) # collapse 操作是为了让其中某些元素是列表的情况展平为实体，为了解决存在抽取了多个实体的问题
+    new_output = sorted(Counter(extracted_entities).items(), key=lambda x: x[1], reverse=True)
     new_output = dict(new_output)    
     output_list =  [{key_word: key, '数量': value} for key, value in new_output.items()]
     

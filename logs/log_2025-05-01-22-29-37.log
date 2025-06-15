@@ -1,6 +1,0 @@
-2025-05-01 22:29:45,413 ChatBI->     INFO     query: 总结2024年8月份的工单关注比较多是事件
-2025-05-01 22:29:46,115 ChatBI->     INFO     schema linking: {'target_columns': ['事项名称'], 'condition_columns': {'发现时间': '2024-08'}}
-2025-05-01 22:29:46,116 ChatBI->     INFO     任务类型: SQL
-2025-05-01 22:29:47,976 ChatBI->     INFO     stad sql: SELECT `事项名称`, COUNT(*) AS `数量` FROM `HongKouDemo` WHERE `发现时间` LIKE '2024-08%' GROUP BY `事项名称` ORDER BY `数量` DESC LIMIT 10;
-2025-05-01 22:29:47,981 ChatBI->     INFO     非结构化信息为: {}
-2025-05-01 22:29:47,982 ChatBI->     INFO     没有找到<  >对应的视图

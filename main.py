@@ -14,11 +14,8 @@ from online_sql import sql_path
 from pymilvus import MilvusClient
 from operator_workflow.milvus_client import MilvusOperation
 import asyncio
-
-    # select_case_list = [corpus[i]  for i in top_indices]
-    # filtered_list = [str(item) for item in case_list if item['query'] in select_case_list] # 要转出str，否则后面无法Join
-    # logger.info('filtered_list: {}'.format(filtered_list))
-    
+from models.create_chain import *
+from configs import config 
 
 async def main(query, view_values):
     
@@ -78,14 +75,6 @@ async def main(query, view_values):
 
 if __name__ == '__main__':
     
-    # 模型
-    task_aware_chain = task_aware_model(llm_qwen_14B)
-    schema_linking_chain = schema_linking_model(llm_qwen_14B)
-    sql_gen_chain = sql_gen_model(llm_qwen_14B)
-    ner_clf_chain = ner_clf_model(llm_qwen_14B)
-    sql_feedback_chain = sql_feedback_model(llm_qwen_14B)
-    text2datetime_chain = datetime_interval_model(llm_qwen_14B)
-    meta_data_chain = meta_data_model(llm_qwen_14B)
     
     milvus_opt = MilvusOperation(uri=config.uri,collection_name= config.collection_name, bm25_ef_path=config.bm25_ef_path)
 

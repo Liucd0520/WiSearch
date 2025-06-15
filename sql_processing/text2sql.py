@@ -59,13 +59,11 @@ def schema_linking(query: str,
             output['condition_columns'].pop(condition_field) 
             output['condition_columns'].update(renew_dict)
         else:    
-            # 意味着四级分类里的值没有与之对应的，当related_columns里最后一个字段不在标签体系里时则扔给非结构化字段
-            if related_columns[-1] not in values_dict.keys():  
-                unstructured_field = related_columns[-1]
-                output['condition_columns'].pop(condition_field)
-                output['condition_columns'].update({unstructured_field: condition_value})
-            else:
-                pass 
+            # 意味着四级分类里的值没有与之对应的，则扔给非结构化字段
+            unstructured_field = config.unstructrued_column
+            output['condition_columns'].pop(condition_field)
+            output['condition_columns'].update({unstructured_field: condition_value})
+        
 
     return  output
 

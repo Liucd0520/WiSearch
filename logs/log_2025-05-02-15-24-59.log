@@ -1,3 +1,0 @@
-2025-05-02 15:25:20,316 ChatBI->     INFO     schema linking: {'target_columns': ['所属居委'], 'condition_columns': {'案件描述/内容描述': '设备维修'}}
-2025-05-02 15:25:24,416 ChatBI->     INFO     任务类型: SQL
-2025-05-02 15:25:24,417 ChatBI->     INFO     name 'view_values' is not defined
