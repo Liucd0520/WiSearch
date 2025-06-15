@@ -1,0 +1,14 @@
+2025-04-20 22:14:40,560 ChatBI->     INFO     Found enum field: 资产编号 with 5 values
+2025-04-20 22:14:40,561 ChatBI->     INFO     Found enum field: 国资系统编号 with 5 values
+2025-04-20 22:14:40,562 ChatBI->     INFO     Found enum field: 资产名称 with 5 values
+2025-04-20 22:14:40,563 ChatBI->     INFO     Found enum field: 资产分类 with 5 values
+2025-04-20 22:14:40,564 ChatBI->     INFO     Found enum field: 折旧年限 with 4 values
+2025-04-20 22:14:40,564 ChatBI->     INFO     Found enum field: 备注名称 with 5 values
+2025-04-20 22:14:40,565 ChatBI->     INFO     Found enum field: 品牌 with 2 values
+2025-04-20 22:14:40,567 ChatBI->     INFO     Found enum field: 规格型号 with 4 values
+2025-04-20 22:14:40,569 ChatBI->     INFO     Found enum field: 数量 with 1 values
+2025-04-20 22:14:40,570 ChatBI->     INFO     Found enum field: 使用部门 with 4 values
+2025-04-20 22:14:40,571 ChatBI->     INFO     Found enum field: 存放地点 with 4 values
+2025-04-20 22:14:40,573 ChatBI->     INFO     Found enum field: 使用人 with 3 values
+2025-04-20 22:14:40,574 ChatBI->     INFO     Found enum field: 备注 with 4 values
+2025-04-20 22:14:40,574 ChatBI->     INFO     enum_values: {'资产编号': ['531710-0007', '628102-0001', '707701-0696', '711105-0001', '906000-0153'], '国资系统编号': ['JJ202001000010', 'JJ202001000012', 'JJ202001000018', 'JJ202001000040', 'JJ202001000100'], '资产名称': ['低压开关柜', '微型数字电子计算机', '架类', '液晶显示设备', '警车'], '资产分类': ['A02010105_台式计算机', 'A02021104_液晶显示器', 'A02030501_轿车', 'A02061711_开关柜', 'A05010601_木质架类'], '折旧年限': [60, 72, 120, 180], '备注名称': ['711105', '低压开关柜AA1', '沪FJH886', '液晶显示设备', '装备架'], '品牌': ['别克', '联想'], '规格型号': ['GL8', 'MNS2200*600*1000', 'T2224rbA', '开天M630Z'], '数量': [1], '使用部门': ['工程', '民事庭', '法警大队', '行装科'], '存放地点': ['南1602室', '南片A506室', '南片安检处', '待定'], '使用人': ['法警大队', '王某', '陈某'], '备注': ['原执行局吴某使用，23年12月3日归还', '原民庭王某某使用，24年11月退休归还', '合肥路213号A楼总配电间改造', '车价238188+21078.58购置税']}
