@@ -37,14 +37,13 @@ collection_name = config.collection_name
 
 # 连接服务器
 mysql_db = SQLDatabase.from_uri(config.mysql_uri)
-# param_db = SQLDatabase.from_uri(config.param_uri)  !!!!!!  ####
-client = MilvusClient(uri=config.uri)  # 创建数据库
+param_db = SQLDatabase.from_uri(config.param_uri)
+client = MilvusClient(uri=config.uri)
 
  # 获取某个表的元数据获取
-# _, _, _, columns_map = \
-#     params_parser(param_db, config.param_table_metadata, config.data_table_names[0])
+_, _, _, columns_map = \
+    params_parser(param_db, config.param_table_metadata, config.data_table_names[0])
 
-columns_map = config.columns_map
 
 def mysql_values_operator(table_name, column_name):
     """获取非结构化字段的值"""
@@ -82,7 +81,7 @@ else:
     bm25_ef = bm25_init(config.bm25_ef_path)
 
 
-schema = build_schema(mysql_db, mysql_table_name, primary_key_name, columns_map, is_chinese=False)
+schema = build_schema(mysql_db, mysql_table_name, primary_key_name, columns_map, is_chinese=False) # 字段可能直接就是英文的
 print(schema)
 
 index_params = build_index(client)

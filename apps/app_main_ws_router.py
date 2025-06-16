@@ -52,6 +52,7 @@ allow_headers=["*"],
 
 class ObtainDataItem(BaseModel):
     query: str = '近1年哪些小区有设备维修的需求'
+    task_type:  Literal['SQL', '内容抽取', '内容总结', 'All'] = Field(default='All')
 
 # WebSocket路由
 @app.websocket('/ws')
@@ -67,6 +68,7 @@ async def websocket_endpoint(websocket: WebSocket):
             # 使用 Pydantic 模型验证输入
             validated_data = ObtainDataItem(**data)
             query = validated_data.query
+            task_type = validated_data.task_type
             view_values = '' # 暂且不设置视图
 
             logger.info('案例库查询')
@@ -88,13 +90,16 @@ async def websocket_endpoint(websocket: WebSocket):
                 # logger.info(chunk)
                 await websocket.send_text(chunk)  # 将每个 chunk 发送给客户端
             
-                
-            task_type = 'SQL'
-            # 判断查询列是否在结构化字段里
-            if  related_columns in target_columns: 
-                # 意味着可能需要语义分析
-                res = task_aware_chain.invoke({'query': query, })
-                task_type = res['TaskType']
+            # 如果不指定，则进行模型决策
+            if task_type == 'All':
+                # 判断查询列是否在结构化字段里
+                if  related_columns in target_columns: 
+                    # 意味着可能需要语义分析
+                    res = task_aware_chain.invoke({'query': query, })
+                    task_type = res['TaskType']
+                else:
+                    task_type = 'SQL'
+
             logger.info(f'任务类型: {task_type}')
 
             if task_type in ['SQL', '内容分类']: 
@@ -112,7 +117,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 
             elif task_type in ['内容抽取', '内容总结']:
                 # 生成filter_exp (会过滤掉非 结构化字段)
-                filter_expr, unstructrued_value = generation_filter_expr(milvus_field_type, condition_columns, config.related_columns[-1], 
+                filter_expr, unstructrued_value = generation_filter_expr(milvus_field_type, condition_columns, config.unstructrued_column, 
                                                                         ner_clf_chain, text2datetime_chain, )  
                 logger.info(f'过滤表达式： {filter_expr}; 查询问题： {unstructrued_value}')
                 # 执行
@@ -246,13 +251,9 @@ if __name__ == '__main__':
     logger.info(f"缩写字段的枚举值： {full_abbr_values}")
     
     # 案例库：
-    try:
-        with open(f'examples_{config.data_table_names[0]}.json', 'r', encoding='utf-8') as f_json:
-            examples = json.load(f_json)
-    except Exception as e:
-        logger.error(f'读取文件错误：{e}')
-        
-
+    with open(f'examples_{config.data_table_names[0]}.json', 'r', encoding='utf-8') as f_json:
+        examples = json.load(f_json)
+    
     # 案例库的语料
     corpus = [each_data['query'] for each_data in examples]
     embedding_corpus = embedding_bge(corpus)
@@ -265,5 +266,5 @@ if __name__ == '__main__':
     milvus_field_type = {each_field['name']: each_field['type'].name for each_field in collection_info['fields']} # <DataType.INT64: 5> ==> .name, .value 获取枚举类型的数据
     # {'id': 'INT64'}
 
-    uvicorn.run(app=app, host='0.0.0.0', port=33063 )
+    uvicorn.run(app=app, host='0.0.0.0', port=33064 )
 
