@@ -1,4 +1,15 @@
-from models.langchain_models import llm_qwen_14B
+
+from pathlib import Path
+import sys 
+import os 
+import json
+# 添加项目根目录到Python路径
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+from models.langchain_models import llm_qwen_7B
 from utils.util import *
 from langchain.prompts import PromptTemplate
 
@@ -18,12 +29,13 @@ from sql_processing.view_manager import create_temp_view, sql_replace_view, drop
 from schema_linking.chain_link import chain_link
 from schema_linking.case_retrieval import retrieve_cases
 
-from tools.metadata_gen import sql_create, update
+# from tools.metadata_gen import sql_create, update
 
 from chathistory.history import ChatHistory, history_preprocess
 
 import uuid
 import json
+from collections import OrderedDict
 
 InitChatHistory = ChatHistory()
 
@@ -34,7 +46,8 @@ def main(query, session_id='', message_id=''):
         session_id = str(uuid.uuid4())
     message_id = str(uuid.uuid4())
     history = InitChatHistory.retrieve_history(session_id)
-    if history != []:
+
+    if history != OrderedDict():
         history_string = history_preprocess(history)
         print("HISTORY:", history_string)
         rewrite_query, status = rewrite(query, history_string)
@@ -51,16 +64,16 @@ def main(query, session_id='', message_id=''):
     gen_result_1 = sql_gen_without_sl(rewrite_query, schema_1)
 
     # 语句2生成
-    case_list, corpus, embedding_corpus = example_preprocess('./examples_PP.json')
+    '''case_list, corpus, embedding_corpus = example_preprocess('./examples_PP.json')
     top_indices = retrieve_cases(query, embedding_corpus)
     filtered_list, select_case_list = example_postprocess(case_list, top_indices)
-    gen_result_2 = sql_gen_sl(table_list, filtered_list)
+    gen_result_2 = sql_gen_sl(table_list, filtered_list)'''
     print(gen_result_1)
 
     # 选择
-    choice = choose_sql(query, [gen_result_1, gen_result_2])
+    # choice = choose_sql(query, [gen_result_1, gen_result_2])
 
-    return choice
+    return gen_result_1
     
 
 
@@ -73,5 +86,6 @@ if __name__ == '__main__':
     # InitChatHistory.update_history(session_id, message_id_2, 'AI: 2024年的一审判决案件中，嫌疑人是男性的案件有15起')
     retrieved = InitChatHistory.retrieve_history(session_id)
     print(retrieved)
-    query = '有多少项目的主要负责人是Dane，给我这些项目的编号'
-    main(query, session_id)
+    query = '近1个月虹口区发生了多少起城市管理类的投诉事件'
+    schema_list, schema_linking_samples, distinct_values = init(query_list=[query], )
+    # main(query, session_id)

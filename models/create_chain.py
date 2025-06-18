@@ -18,3 +18,15 @@ translate_chain = translate_english_model(llm_qwen_14B)
 explanation_chain = query_insight_model(llm_qwen_14B)
 chat_chain =  result_chat_model(llm_qwen_14B)
 recommand_chain = query_recommand_model(llm_qwen_14B)
+
+
+# 模型工具
+choose_sql_chain = choose_sql_model(llm_qwen_7B)
+error_rewrite_chain = error_rewrite_model(llm_qwen_7B)
+check_query_chain = check_query_model(llm_qwen_7B)
+poi_mask_chain = poi_mask_model(llm_qwen_7B)
+rewrite_check_chain = rewrite_check_model(llm_qwen_7B)
+rewrite_chain = rewrite_model(llm_qwen_7B)
+abstract_chain = abstract_model(llm_qwen_7B)
+assumption_chain = assumption_model(llm_qwen_7B)
+time_mask_chain = time_mask_model(llm_qwen_7B)

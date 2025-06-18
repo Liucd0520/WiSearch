@@ -8,7 +8,7 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 
-from models.langchain_models import llm_qwen_7B
+from models.langchain_models import llm_qwen_7B, embedding_bge
 from utils.util import *
 from langchain.prompts import PromptTemplate
 
@@ -60,14 +60,14 @@ def main(query):
     gen_result_1 = sql_gen_without_sl(rewrite_query, schema_1)
 
     # 语句2生成
-    '''case_list, corpus, embedding_corpus = example_preprocess('./examples_PP.json')
+    case_list, corpus, embedding_corpus = example_preprocess('./metadata/examples_shanghai.json')
     top_indices = retrieve_cases(query, embedding_corpus)
     filtered_list, select_case_list = example_postprocess(case_list, top_indices)
     gen_result_2 = sql_gen_sl(table_list, filtered_list)
     print(gen_result_1)
 
     # 选择
-    choice = choose_sql(query, [gen_result_1, gen_result_2])'''
+    choice = choose_sql(query, [gen_result_1, gen_result_2])
 
     return gen_result_1
 

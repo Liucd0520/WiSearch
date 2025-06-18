@@ -102,3 +102,58 @@ def datetime_interval_model(model):
 
     return datetime_interval_chain
 
+
+
+def choose_sql_model(model):
+    prompt = PromptTemplate(template=choice_prompt, variables=["query", "candi"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def error_rewrite_model(model):
+    prompt = PromptTemplate(template=error_rewrite_prompt, input_variables=['query','columns','schema','generated_sql','error_message'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def check_query_model(model):
+    prompt = PromptTemplate(template=check_query_prompt, input_variables=['query','generated_sql','retrieved_result'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def poi_mask_model(model):
+    prompt = PromptTemplate(template=mask_prompt, variables=["query", "SQL"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return model
+
+def rewrite_check_model(model):
+    prompt = PromptTemplate(template=check_prompt, variables=['query', 'history'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def rewrite_model(model):
+    prompt = PromptTemplate(template=write_prompt, variables=['query', 'history'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def abstract_model(model):
+    prompt = PromptTemplate(template=abstract_prompt, variables=["query", "content"])
+    chain = create_str_chain(model=model, prompt=prompt)
+
+    return chain
+
+def assumption_model(model):
+    prompt = PromptTemplate(template=assumption_prompt, variables=['query'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def time_mask_model(model):
+    prompt = PromptTemplate(template=time_mask_prompt, variables=["query"])
+    chain = create_json_chain(model=model, prompt=prompt)
+    
+    return chain
