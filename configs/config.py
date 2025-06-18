@@ -1,4 +1,5 @@
-mysql_uri = 'mysql+mysqlconnector://sh12333_znrpt:Znrpt14!$@10.218.0.3:3324/sh_12333_znrpt'
+# mysql_uri = 'mysql+mysqlconnector://sh12333_znrpt:Znrpt14!$@10.218.0.3:3324/sh_12333_znrpt'
+mysql_uri = 'mysql+mysqlconnector://chatbi:IDEAL@172.31.24.111:3307/shanghai'
 param_uri = 'mysql+mysqlconnector://root:liucd123@172.31.24.111:3307/xingchentwo'  # !!
 
 data_table_names = ['znrpt_cuv_summary_gd_extend', ]

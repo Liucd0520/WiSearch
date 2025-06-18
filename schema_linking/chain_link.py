@@ -8,10 +8,13 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 from langchain.prompts import PromptTemplate
-from langchain.schema.runnable import Runnable
+# from langchain.schema.runnable import Runnable
 from utils.util import *
+
+from module.structured_output import *
+
 
 def chain_link(query, databases=None, tables=None):
     """
@@ -26,21 +29,21 @@ def chain_link(query, databases=None, tables=None):
         list of str: 大模型选择的对sql生成有用的字段 ['chatbiNew.aj_yx_aj.BMSAH', 'chatbi.t_tyyw_xj_xlj_aj.AJMC']
     
     """
-    
+
     db_prompt = PromptTemplate(template=metadata_db_prompt, input_variables=["schema","question"])
-    db_chain = create_json_chain(llm_qwen_14B, db_prompt)
+    db_chain = create_json_chain(model=llm_qwen_7B, prompt=db_prompt)
     table_prompt = PromptTemplate(template=metadata_table_prompt, input_variables=["schema","question"])
-    table_chain = create_json_chain(llm_qwen_14B, table_prompt)
+    table_chain = create_json_chain(model=llm_qwen_7B, prompt=table_prompt)
     para_prompt = PromptTemplate(template=metadata_para_prompt, input_variables=["schema","question"])
-    para_chain = create_json_chain(llm_qwen_14B, para_prompt)
+    para_chain = create_json_chain(model=llm_qwen_7B, prompt=para_prompt)
 
     # 数据库筛选
     if databases:
         dbs = databases
     else:
-        with open('./database_list.txt', 'r', encoding='utf-8') as f_db_list:
+        with open('./metadata/database_list.txt', 'r', encoding='utf-8') as f_db_list:
             db_list = '\n'.join(f_db_list)
-        meta_db = db_chain.invoke({"schema":db_list,"question":query})
+        meta_db = db_chain.invoke({"schema":db_list, "question":query})
         print("META DB:", meta_db)
         explanations, dbs = meta_db['explanations'], meta_db['databases']
 
@@ -51,7 +54,7 @@ def chain_link(query, databases=None, tables=None):
     else:
         for selected_db in dbs:
             print("SELECTED DB:", selected_db)
-            with open(f'./{selected_db}_list.txt', 'r', encoding='utf-8') as f_table_list:
+            with open(f'./metadata/table_list_{selected_db}.txt', 'r', encoding='utf-8') as f_table_list:
                 table_list = '\n'.join(f_table_list)
             meta_table = table_chain.invoke({"schema":table_list,"question":query})
             print("META TABLE:", meta_table)
@@ -62,7 +65,7 @@ def chain_link(query, databases=None, tables=None):
     para_list_total = []
     for selected_table in table_list_total:
         db_name, table_name = selected_table.split('.', 1)
-        with open(f'./meta_data_{db_name}_{table_name}.txt', 'r', encoding='utf-8') as f_para_list:
+        with open(f'./metadata/metadata_{db_name}_{table_name}.txt', 'r', encoding='utf-8') as f_para_list:
             para_list = '\n'.join(f_para_list)
         meta_para = para_chain.invoke({"schema":para_list,"question":query})
         print("META PARA:", meta_para)
@@ -74,7 +77,7 @@ def chain_link(query, databases=None, tables=None):
 if __name__ == "__main__":
     # 示例
 
-    query = "有多少项目的主要负责人是Dane，给我这些项目的编号"
+    query = "近1个月虹口区发生了多少起城市管理类的投诉事件"
     para_list = chain_link(query)
 
     print(para_list)

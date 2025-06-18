@@ -13,12 +13,13 @@ from models.langchain_models import llm_qwen_14B, llm_qwen_7B
 from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
 def poi_mask(query, sql):
     """"""
 
     prompt = PromptTemplate(template=mask_prompt, variables=["query", "SQL"])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     output = chain.invoke({"query":query, "SQL":sql})
     masked_query = output['masked_query']
 

@@ -21,8 +21,8 @@ from configs import config
 def get_enum_values(
     mysql_uri: str,
     table_name: str,
-    max_distinct_values: int = config.max_distinct_length, #500,
-    max_combined_length: int = config.max_distinct_length, #2000,
+    max_distinct_values: int = config.max_distinct_values_num, #500,
+    max_combined_length: int = config.max_combined_values_length, #2000,
     LIMIT : int = 1000
 ) -> Dict[str, List[str]]:
     """

@@ -9,10 +9,11 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
 def assumption_sql(query):
     """
@@ -25,7 +26,7 @@ def assumption_sql(query):
         result (str): 生成的SQL查询语句
     """
     prompt = PromptTemplate(template=assumption_prompt, variables=['query'])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     output = chain.invoke({"query":query})
     _, result = output['explain'], output['sql']
     print("EXPLAIN:", _)

@@ -8,16 +8,17 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
 def rewrite(query, history):
     rewrite_check_prompt = PromptTemplate(template=check_prompt, variables=['query', 'history'])
-    rewrite_check_chain = create_json_chain(llm_qwen_14B, rewrite_check_prompt)
+    rewrite_check_chain = create_json_chain(model=llm_qwen_7B, prompt=rewrite_check_prompt)
     rewrite_prompt = PromptTemplate(template=write_prompt, variables=['query', 'history'])
-    rewrite_chain = create_json_chain(llm_qwen_14B, rewrite_prompt)
+    rewrite_chain = create_json_chain(model=llm_qwen_7B, prompt=rewrite_prompt)
 
     rewrite_check_output = rewrite_check_chain.invoke({"query":query,"history":history})
     rewrite_check = rewrite_check_output['necessity']

@@ -3,7 +3,7 @@ from utils.util import *
 from langchain.prompts import PromptTemplate
 
 from configs import config as config
-from offline_initial import init
+from offline_initial_file import init
 from langchain_community.utilities import SQLDatabase
 
 from sql_processing.text2sql import schema_linking, sql_gen, sql_gen_without_sl, sql_gen_sl, chat
@@ -16,7 +16,7 @@ from sql_processing.sql_assumption import assumption_sql
 from sql_processing.view_manager import create_temp_view, sql_replace_view, drop_view
 
 from schema_linking.chain_link import chain_link
-from schema_linking.case_retrieval import retrieve_cases, example_preprocess, example_postprocess
+from schema_linking.case_retrieval import retrieve_cases
 
 from tools.metadata_gen import sql_create, update
 

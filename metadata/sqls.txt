@@ -1,0 +1,8 @@
+1. 获取表名和表注释：
+SELECT TABLE_COMMENT FROM information_schema.TABLES WHERE TABLE_NAME={table_name}
+
+2. 获取表字段：
+SELECT COLUMN_NAME, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME={table_name}
+
+3. 获取表结构：
+SHOW CREATE TABLE {table_name}
