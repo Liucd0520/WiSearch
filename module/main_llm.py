@@ -102,7 +102,7 @@ def datetime_interval_model(model):
 
     return datetime_interval_chain
 
-
+# 额外工具
 
 def choose_sql_model(model):
     prompt = PromptTemplate(template=choice_prompt, variables=["query", "candi"])
@@ -123,10 +123,10 @@ def check_query_model(model):
     return chain
 
 def poi_mask_model(model):
-    prompt = PromptTemplate(template=mask_prompt, variables=["query", "SQL"])
+    prompt = PromptTemplate(template=mask_prompt, variables=["query", "metadata"])
     chain = create_json_chain(model=model, prompt=prompt)
 
-    return model
+    return chain
 
 def rewrite_check_model(model):
     prompt = PromptTemplate(template=check_prompt, variables=['query', 'history'])
@@ -153,7 +153,7 @@ def assumption_model(model):
     return chain
 
 def time_mask_model(model):
-    prompt = PromptTemplate(template=time_mask_prompt, variables=["query"])
+    prompt = PromptTemplate(template=time_mask_prompt, variables=["query", "date"])
     chain = create_json_chain(model=model, prompt=prompt)
     
     return chain

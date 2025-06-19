@@ -16,14 +16,7 @@ from configs import config as config
 from offline_initial_file import init
 from langchain_community.utilities import SQLDatabase
 
-from sql_processing.text2sql import schema_linking, sql_gen, sql_gen_without_sl, sql_gen_sl, chat
-from sql_processing.choose_sql import choose_sql
-from sql_processing.poimask import poi_mask
-from sql_processing.timemask import datetime_retriever
-from sql_processing.rewrite_check import rewrite
-from sql_processing.search import online_search
-from sql_processing.sql_assumption import assumption_sql
-from sql_processing.view_manager import create_temp_view, sql_replace_view, drop_view
+from models.create_chain import *
 
 from schema_linking.chain_link import chain_link
 from schema_linking.case_retrieval import retrieve_cases
@@ -32,6 +25,8 @@ from chathistory.history import ChatHistory, history_preprocess
 
 import uuid
 import json
+import time
+from datetime import datetime
 
 InitChatHistory = ChatHistory()
 
@@ -53,23 +48,39 @@ def main(query):
 
     InitChatHistory.update_history(session_id, message_id, f'Human: {rewrite_query}')'''
     
-    rewrite_query = query
+    # 假设性SQL
+    st = time.time()
+    assumption = assumption_chain.invoke({"query":query})
+    print("ASSUMPTION:", assumption, query)
+    ft = time.time()
+    print(ft - st)
 
-    # 语句1生成
-    table_list, schema_1 = chain_link(rewrite_query)
-    gen_result_1 = sql_gen_without_sl(rewrite_query, schema_1)
+    # 关键点mask
+    st = time.time()
+    with open("metadata/table_list_12345.txt", 'r', encoding='utf-8') as f:
+        content = f.read()
+    poi = poi_mask_chain.invoke({"query": query, "metadata": content})
+    # 没办法很好的进行多级分类，需要手动replace
+    print("POI:", poi, query)
+    ft = time.time()
+    print(ft - st)
 
-    # 语句2生成
-    case_list, corpus, embedding_corpus = example_preprocess('./metadata/examples_shanghai.json')
-    top_indices = retrieve_cases(query, embedding_corpus)
-    filtered_list, select_case_list = example_postprocess(case_list, top_indices)
-    gen_result_2 = sql_gen_sl(table_list, filtered_list)
-    print(gen_result_1)
+    # 时间mask
+    st = time.time()
+    time_mask = time_mask_chain.invoke({"query": query, "date": f"当前时间是{datetime.now().year}年, {datetime.now().month}月，{datetime.now().day}日，{datetime.now().hour}时，{datetime.now().minute}分，{datetime.now().second}秒"})
+    print("TIME:", time_mask, query)
+    ft = time.time()
+    print(ft - st)
+
+    # schema关联
+    # linking = schema_linking_chain.invoke({"query": query, "schema": content, "samples": samples})
+
+    
 
     # 选择
-    choice = choose_sql(query, [gen_result_1, gen_result_2])
+    
 
-    return gen_result_1
+    # return gen_result_1
 
 
 
@@ -81,5 +92,5 @@ if __name__ == '__main__':
     # InitChatHistory.update_history(session_id, message_id_2, 'AI: 2024年的一审判决案件中，嫌疑人是男性的案件有15起')
     '''retrieved = InitChatHistory.retrieve_history(session_id)
     print(retrieved)'''
-    query = '近1个月虹口区发生了多少起城市管理类的投诉事件'
-    print(main(query))
+    # query = '近1个月虹口区发生了多少起城市管理类的投诉事件'
+    main("近1个月虹口区发生了多少起城市管理类的投诉事件")
