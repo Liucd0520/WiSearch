@@ -153,7 +153,32 @@ def assumption_model(model):
     return chain
 
 def time_mask_model(model):
-    prompt = PromptTemplate(template=time_mask_prompt, variables=["query", "date"])
+    prompt = PromptTemplate(template=time_mask_prompt, variables=["query"])
     chain = create_json_chain(model=model, prompt=prompt)
     
     return chain
+
+def time_process_model(model):
+    prompt = PromptTemplate(template=time_process_prompt, variables=["query"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def sql_gen_sl_model(model):
+    prompt = PromptTemplate(template=sql_gen_sl_prompt, variables=["query", "table", "time"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def sql_gen_mask_model(model):
+    prompt = PromptTemplate(template=sql_gen_mask_prompt, variables=["query", "table", "time"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def choose_para_model(model):
+    prompt = PromptTemplate(template=choose_para_prompt, variables=["query", "values"])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+

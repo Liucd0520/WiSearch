@@ -8,37 +8,18 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 
-from models.langchain_models import llm_qwen_7B
-from utils.util import *
-from langchain.prompts import PromptTemplate
-
 from configs import config as config
-from offline_initial_file import init
-from langchain_community.utilities import SQLDatabase
 
-from sql_processing.text2sql import schema_linking, sql_gen, sql_gen_without_sl, sql_gen_sl, chat
-from sql_processing.choose_sql import choose_sql
-from sql_processing.poimask import poi_mask
-from sql_processing.timemask import datetime_retriever
-from sql_processing.rewrite_check import rewrite
-from sql_processing.search import online_search
-from sql_processing.sql_assumption import assumption_sql
-from sql_processing.view_manager import create_temp_view, sql_replace_view, drop_view
-
-from schema_linking.chain_link import chain_link
-from schema_linking.case_retrieval import retrieve_cases
-
-# from tools.metadata_gen import sql_create, update
-
-from chathistory.history import ChatHistory, history_preprocess
 
 import uuid
 import json
 import pymysql
 
-from apps.app_full import main
+from apps.app_full import *
+from models.langchain_models import embedding_bge
+from sklearn.metrics.pairwise import cosine_similarity
 
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 
 
 class Dataset:
@@ -51,10 +32,10 @@ class Dataset:
             if row[0] is not None:
                 self.query.append(row[0])
 
-        self.result = []
+        '''self.result = []
         for row in sheet.iter_rows(min_row=2, min_col=2, max_col=2, max_row=sheet.max_row, values_only=True):
             if row[0] is not None:
-                self.result.append(row[0])
+                self.result.append(row[0])'''
 
         self.sql = []
         for row in sheet.iter_rows(min_row=2, min_col=3, max_col=3, max_row=sheet.max_row, values_only=True):
@@ -65,29 +46,91 @@ def eval(dataset, pipeline, conn):
 
     cursor = conn.cursor()
     
-    sql_list = []
-    result_list = []
+    result = {}
 
-    for item in dataset.query:
-        sql = pipeline(item)
-        sql_list.append(sql)
-        result = cursor.execute(sql)
-        result_list.append(result)
+    std_query = dataset.query
+    # std_result = dataset.result
+    std_sql = dataset.sql
 
-    accuracy = ''
-    sql_list = []
-    result_list = []
+    correct = 0
+
+    total = 0
+    poi = 0
+    time_mask = 0
+    time_process = 0
+    schema_link = 0
+    generate = 0
+
+
+    for i in range(len(std_query)):
+
+        # sql
+        sql, time_dict = pipeline(std_query[i])
+        total += time_dict['total']
+        poi += time_dict['poi_time']
+        time_mask += time_dict['time_mask_time']
+        time_process += time_dict['time_process_time']
+        schema_link += time_dict['schema_link_time']
+        generate += time_dict['generate_time']
+        
+        emb_pipeline = embedding_bge(sql).reshape(1, -1)
+        emb_std = embedding_bge(std_sql[i])
+        # sql相似度
+        sql_similarity = cosine_similarity(emb_pipeline, emb_std)
+        
+
+        cursor.execute(sql)
+        print("SQL:", sql)
+        result_pipeline = cursor.fetchall()
+        print("STD:", std_sql[i])
+        cursor.execute(std_sql[i])
+        result_std = cursor.fetchall()
+
+        # 结果
+        if result_pipeline == result_std:
+            correct += 1
+            correctness = "CORRECT"
+        else:
+            correctness = "INCORRECT"
+
+        result_list = []
+        std_list = []
+        print(result_pipeline)
+        for item in result_pipeline:
+            print("ITEM:", item)
+            try:
+                result_list.append(f"{item[0]} {item[1]}")
+            except:
+                result_list.append(f"{item[0]}")
+        final_result = '\n'.join(result_list)
+
+        print(result_std)
+        for item in result_std:
+            print("STD ITEM:", item)
+            try:
+                result_list.append(f"{item[0]} {item[1]}")
+            except:
+                result_list.append(f"{item[0]}")
+        final_std = '\n'.join(std_list)
+
+        result[f'{i}'] = {"QUERY": std_query[i], "CORRECTNESS": correctness, "RESULT": final_result, "RESULT_STD": final_std, "SQL SIMILARITY": sql_similarity, "SQL": sql, "SQL_STD": std_sql[i]}
+
+    total_number = len(std_query)
+    result['avg_time'] = {'total': f'总耗时: {total / total_number}', 'poi_time': f'关键点抽取: {poi / total_number}', 'time_mask_time': f'时间掩码: {time_mask / total_number}', 'time_process_time': f'时间处理: {time_process / total_number}', 'schema_link_time': f'元数据关联: {schema_link / total_number}', 'generate_time': f'生成: {generate / total_number}'}
+
+    accuracy = correct / len(std_query) * 100
 
 
 
 
-    return {"accuracy": accuracy, "sql": sql_list, "result": result_list}
+    return accuracy, result
 
 
 
 
 if __name__ == "__main__":
     dataset = Dataset()
+    pipeline_type = '完整流程'
     # print(dataset.query)
     # print(dataset.result)
     # print(dataset.sql)
@@ -101,12 +144,37 @@ if __name__ == "__main__":
     charset='utf8mb4',
     )
 
-    cursor = db_conn.cursor()
+    # cursor = db_conn.cursor()
 
-    cursor.execute('SHOW CREATE TABLE shanghai')
+    # cursor.execute("SELECT `诉求区域`, COUNT(*) AS 总数 FROM shanghai_ad_time WHERE `工单类型`='投诉举报类' AND `四级分类`='网上购物' AND `工单生成时间`> DATE_SUB(CURDATE(), INTERVAL 6 MONTH) GROUP BY `诉求区域` ORDER BY 总数 DESC")
+    # emb_1 = embedding_bge("7").reshape(1, -1)
+    # emb_2 = embedding_bge("6.9999").reshape(1, -1)
 
-    eval(dataset, main, db_conn)
+    # result = cosine_similarity(emb_1, emb_2)
+    # print(result)
 
-    # print(cursor.fetchall()[0])
+    accuracy, result = eval(dataset, main, db_conn)
+    # accuracy = 50
+    # result = {"1": {"QUERY": "TEST1", "CORRECTNESS": "TEST2", "RESULT": "TEST3", "RESULT_STD": "TEST4", "SQL SIMILARITY": "TEST5", "SQL": "TEST6", "SQL_STD": "TEST7"}, "2": {"QUERY": "TEST8", "CORRECTNESS": "TEST9", "RESULT": "TEST10", "RESULT_STD": "TEST11", "SQL SIMILARITY": "TEST12", "SQL": "TEST13", "SQL_STD": "TEST14"}}
+    # 表头
+    wb = Workbook()
+    ws = wb.active
+    ws['A1'] = f'模型：{pipeline_type}'
+    ws['B1'] = f'数据集：12345-shanghai_ad_time'
+    ws['C1'] = f'准确率：{accuracy}%'
+    ws['A2'] = '用户提问'
+    ws['B2'] = '结果是否正确'
+    ws['C2'] = '模型生成结果'
+    ws['D2'] = '标准结果'
+    ws['E2'] = 'SQL相似度'
+    ws['F2'] = '模型生成SQL'
+    ws['G2'] = '标准SQL'
+
+    # 内容
+    for key, value in result.items():
+        ws.append(list(value.values()))
+    if os.path.exists(f'./eval/{pipeline_type}.xlsx'):
+        os.remove(f'./eval/{pipeline_type}.xlsx')
+    wb.save(f'./eval/{pipeline_type}.xlsx')
 
 

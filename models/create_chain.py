@@ -30,3 +30,8 @@ rewrite_chain = rewrite_model(llm_qwen_7B)
 abstract_chain = abstract_model(llm_qwen_7B)
 assumption_chain = assumption_model(llm_qwen_7B)
 time_mask_chain = time_mask_model(llm_qwen_7B)
+time_process_chain = time_process_model(llm_qwen_7B)
+
+sql_gen_sl_chain = sql_gen_sl_model(llm_qwen_7B)
+sql_gen_mask_chain = sql_gen_mask_model(llm_qwen_7B)
+choose_para_chain = choose_para_model(llm_qwen_7B)

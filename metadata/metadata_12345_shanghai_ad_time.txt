@@ -1,4 +1,4 @@
-CREATE TABLE `shanghai` (
+CREATE TABLE `shanghai_ad_time` (
   `工单编号` bigint DEFAULT NULL,
   `工号` bigint DEFAULT NULL,
   `工单生成时间` datetime DEFAULT NULL,
