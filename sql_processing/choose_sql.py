@@ -9,10 +9,11 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
 def choose_sql(query, candidates):
     """
@@ -27,7 +28,7 @@ def choose_sql(query, candidates):
     
     """
     prompt = PromptTemplate(template=choice_prompt, variables=["query", "candi"])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     candi = ''
     for i in range(len(candidates)):
         item = candidates[i]

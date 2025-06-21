@@ -21,7 +21,8 @@ from utils.util import *
 import json 
 import copy 
 from langchain.schema.runnable import Runnable
-from models.langchain_models import llm_qwen_14B, embedding_bge
+from models.langchain_models import llm_qwen_7B, embedding_bge
+from module.structured_output import *
 import json 
 import os 
 
@@ -61,7 +62,7 @@ def schema_linking(query: str,
 
 def schema_linking_nochain(query, schema, related_columns, values_dict, examples):
     prompt = PromptTemplate(template=schema_link_prompt, input_variables=['schema', 'samples', 'query'])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
 
     output = chain.invoke({"schema":schema, "samples": examples, "query":query})
     old_output = copy.deepcopy(output)
@@ -119,14 +120,14 @@ def sql_gen_sl(schema_list, filtered_list):
         multi_schema_dict += f'### 表名：{table_name}\n### 表结构\n{pattern_string}\n### 查询数据列：{json.dumps(columns_dict, ensure_ascii=False)}\n'
 
     prompt = PromptTemplate(template=sql_gen_sl_prompt, input_variables=['query','table','input'])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     output = chain.invoke({"query":query,"table":schema_string,"input":multi_schema_dict})
     sql = output['SQL']
     return sql
 
 def sql_gen_without_sl(query: str, columns: list):
     prompt = PromptTemplate(template=sql_gen_without_sl_prompt, input_variables=['query','tables','columns'])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     tables = []
     for i in range(len(columns)):
         table, para = columns[i].split('.',1 )
@@ -138,7 +139,7 @@ def sql_gen_without_sl(query: str, columns: list):
 
 def chat(query: str, sql_result: str):
     prompt = PromptTemplate(template=chat_prompt, input_variables=['query','sql_result'])
-    chain = create_str_chain(llm_qwen_14B, prompt)
+    chain = create_str_chain(model=llm_qwen_7B, prompt=prompt)
 
     chat_response = chain.invoke({"query":query, "sql_result":sql_result})
 

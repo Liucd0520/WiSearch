@@ -28,6 +28,8 @@ import datetime
 from models.langchain_models import embedding_bge
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import json
+from models.create_chain import *
 
 
 def create_path(_path):
@@ -92,6 +94,49 @@ def retrieve_cases(query, embedding_corpus, top_k=3):
     # 返回TOP3词条及其相似度分数
 
     return top_indices
+
+def retrieve_cases_full(query, related_values, top_k=3):
+    """
+    根据输入问题从词库中检索最相似的TOP3词条。
+
+    参数:
+        query (str): 输入的问题。
+        corpus (dict): 词库，包含多个词条。
+        embedding_func (function): 嵌入模型函数，用于将文本转化为向量。
+
+    返回:
+        list of tuple: TOP3相似词条及其相似度分数。
+    """
+    # 将输入问题转化为向量
+
+    sim_key = ''
+    similarity = 0
+    sim_item = ''
+    query_embedding = embedding_bge(query).reshape(1, -1)
+    for key, value in related_values.items():
+        corpus_embedding = embedding_bge(value)
+
+        similarities = cosine_similarity(query_embedding, corpus_embedding).flatten()
+        max_sim = np.max(similarities)
+        max_sim_index = np.argmax(similarities)
+        # print(max_sim, max_sim_index)
+        if max_sim > 0.8:
+            if max_sim >= similarity:
+                similarity = max_sim
+                sim_key = key
+                sim_item = value[max_sim_index]
+    # print(sim_key, sim_item)
+        
+    
+
+    if sim_key == '':
+        sim_key = choose_para_chain.invoke({"query": query, "values": str(related_values)})['decision']
+        sim_item = choose_para_chain.invoke({"query": query, "values": str(related_values)})['value']
+        # print(key, top_indices)
+
+    # print(sim_key, sim_item)
+
+    return sim_key, sim_item
 
 
 def split_metadata(mysql_schema_with_samples):
@@ -556,5 +601,11 @@ if __name__ == '__main__':
     # enum_values, _ = get_enum_values(param_db, search_table_name, config.max_distinct_values_num, config.max_combined_values_length)
     # print(enum_values)
 
-    mysql_db = SQLDatabase.from_uri(config.mysql_uri,)  
-    get_distinct_values(mysql_db, 'hongkou', ['事项大类', '事项小类', '事项标签'])
+    '''mysql_db = SQLDatabase.from_uri(config.mysql_uri,)  
+    get_distinct_values(mysql_db, 'hongkou', ['事项大类', '事项小类', '事项标签'])'''
+
+    query = '城市管理类'
+    with open('./metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
+        related_values = json.loads(f.read())
+    key, value = retrieve_cases_full(query=query, related_values=related_values)
+    print(key, value)

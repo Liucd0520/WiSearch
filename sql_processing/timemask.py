@@ -9,13 +9,15 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 # from models.model import LLM
 from langchain.prompts import PromptTemplate
 # from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
-from initialization.initialize import Config
+
+# from initialization.initialize import Config
 
 from langchain_tavily import TavilySearch
 os.environ["TAVILY_API_KEY"] = "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"
@@ -36,7 +38,7 @@ def datetime_retriever(query, search_tool):
         final_result: 查询结果
     """
     prompt = PromptTemplate(template=time_mask_prompt, variables=["query"])
-    chain = create_json_chain(llm_qwen_14B, prompt)
+    chain = create_json_chain(model=llm_qwen_7B, prompt=prompt)
     output = chain.invoke({"query":query, "date":f"当前是{datetime.now().year}年, {datetime.now().month}月，{datetime.now().day}日"})
     masked_query, time_mask = output['masked_query'], output['time_mask']
 
@@ -45,7 +47,7 @@ def datetime_retriever(query, search_tool):
     for i in range(len(search_result)):
         item = search_result[i]
         output_result += f'\n查询结果{i+1} 标题:{item['title']} 内容:{item['content']}\n'
-    final_result = llm_qwen_14B.invoke(f'{time_mask}的确切时间范围, {output_result}')
+    final_result = llm_qwen_7B.invoke(f'{time_mask}的确切时间范围, {output_result}')
 
     return masked_query, time_mask, final_result
 

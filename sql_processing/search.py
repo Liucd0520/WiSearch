@@ -9,10 +9,11 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from prompts.prompt import *
-from models.langchain_models import llm_qwen_14B
+from models.langchain_models import llm_qwen_7B
 from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import Runnable
 from utils.util import *
+from module.structured_output import *
 
 from langchain_tavily import TavilySearch
 os.environ["TAVILY_API_KEY"] = "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"
@@ -36,7 +37,7 @@ def online_search(query, search_tool):
 
     print("SEARCH RESULT:", output_result)
     prompt = PromptTemplate(template=abstract_prompt, variables=["query", "content"])
-    chain = create_str_chain(llm_qwen_14B, prompt)
+    chain = create_str_chain(model=llm_qwen_7B, prompt=prompt)
     output = chain.invoke({"query":query,"content":output_result})
     return output
 
