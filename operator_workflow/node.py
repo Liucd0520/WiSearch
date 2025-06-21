@@ -14,6 +14,7 @@ import random
 from models.langchain_models import llm_qwen_14B, llm_qwen_7B
 from utils.util import *
 import numpy as np 
+from more_itertools import collapse
 
 class KeywordExtraction(BaseModel):
     extracted_keyword: List[str] = Field(
@@ -58,7 +59,7 @@ async def retrieve(state):
     unstructured_value = state['unstr_value']
     documents, dense_emb = retrieve_document_milvus(unstructured_value,milvus_opt, filter_exp, limit=config.limit)
     logger.info(f'检索到的文档总数量为：{len(documents)}')
-   
+    
     return {"documents": documents, "outputs": np.array(dense_emb)}
 
 
@@ -92,7 +93,7 @@ async def relevance_grade(state):
     if unstructured_value == '': # 没有非结构化字段，是四级分类里的信息，上一步的过滤查询已经获取到了
         return {'documents': documents}
 
-
+    # grade_chain.batch([{"document": doc, "query": query} for doc in steped_documents], )
     idx = await index_search(unstructured_value, documents, grade_chain)
     window_size = min(config.window_size, 100)  # 与阈值的idx有关，最多不超过100个
     logger.info(f"阈值索引为：{idx}, 窗口大小为: {window_size} ")
@@ -105,8 +106,8 @@ async def relevance_grade(state):
 
     # 对剩余的分类
     scores_list = await grade_chain.abatch([{"document": doc, 
-                                            "query": f"与 <{unstructured_value}> 相关的{config.unstructrued_column}"
-                                            } for doc in condidate_document], )
+                                            "query": unstructured_value
+                                            } for doc in condidate_document], ) # f"与 <{unstructured_value}> 相关的{config.unstructrued_column}
     
     filtered_docs = []
     filtered_embs = []
@@ -168,11 +169,12 @@ async def ENR_with_extension(state):
     # [{"诉求地址": xxx, "内容描述": xxx, }, {}, {}]
 
     output_ner = await enr_ext_chain.abatch([{"key_word_json": key_word_format, "query": query, 'document_with_address': d} for d in ext_dicts])
-    print(len(output_ner), output_ner)
+    # print(len(output_ner), output_ner)
 
     outputs = []
     new_documents = []
     for ext_dict, each_output in zip(ext_dicts, output_ner):
+        
         if len(each_output) == 0:  # output_output = {}
             continue 
         if [each_output[key_word] for key_word in key_words] == [''] * len(key_words): # value 均为""
@@ -192,7 +194,8 @@ async def ENR_with_extension(state):
     
     # 按照第一个抽取的信息的数量进行排序
     key_word = key_words[0]
-    new_output = sorted(Counter(d[key_word] for d in outputs if key_word in d).items(), key=lambda x: x[1], reverse=True)
+    extracted_entities = list(collapse([d[key_word] for d in outputs if key_word in d])) # collapse 操作是为了让其中某些元素是列表的情况展平为实体，为了解决存在抽取了多个实体的问题
+    new_output = sorted(Counter(extracted_entities).items(), key=lambda x: x[1], reverse=True)
     new_output = dict(new_output)    
     output_list =  [{key_word: key, '数量': value} for key, value in new_output.items()]
     

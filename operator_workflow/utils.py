@@ -16,13 +16,21 @@ def retrieve_document_milvus(query: str, milvus_opt: object,  filter_exp='', lim
     unstructured_field = config.columns_map[config.unstructrued_column] 
 
     if query: # query 非空
+<<<<<<< HEAD
+=======
+    
+>>>>>>> origin/update
         search_result = milvus_opt.search_hybrid(
             query=query, 
             output_fields=[unstructured_field, 'dense'],  # 除了`内容描述`之外选择使用哪些字段应该由query解析的结果决定
             filter_exp=filter_exp, 
             limit = limit)
         result = search_result[0]  # 因为query只有一个，而milvus支持若干个
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/update
         return [retr_result['entity'][unstructured_field] for retr_result in result], \
                [retr_result['entity']['dense'] for retr_result in result]
     

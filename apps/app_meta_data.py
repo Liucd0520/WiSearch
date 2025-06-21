@@ -102,9 +102,5 @@ async def meta_data_gen(request: InitProjectRequest):
 
 if __name__ == '__main__':
     
-    
-
-    db_info = '这是上海12333的人社局（人力资源和社会保障局）的热线工单系统数据库'
-    
+    db_info = '这是上海12345的热线工单系统数据库'    
     uvicorn.run(app=app, host='0.0.0.0', port=8077,) 
-
