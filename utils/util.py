@@ -95,7 +95,7 @@ def retrieve_cases(query, embedding_corpus, top_k=3):
 
     return top_indices
 
-def retrieve_cases_full(query, related_values, top_k=3):
+def retrieve_cases_full(query, related_values, key, top_k=3):
     """
     根据输入问题从词库中检索最相似的TOP3词条。
 
@@ -120,18 +120,42 @@ def retrieve_cases_full(query, related_values, top_k=3):
         max_sim = np.max(similarities)
         max_sim_index = np.argmax(similarities)
         # print(max_sim, max_sim_index)
-        if max_sim > 0.8:
+        
+        if max_sim > 0.85:
             if max_sim >= similarity:
+                print("MATCHED:", max_sim, key, value[max_sim_index])
                 similarity = max_sim
                 sim_key = key
                 sim_item = value[max_sim_index]
+
+    '''if sim_key == '':
+        corpus_embedding_advice = embedding_bge(related_values[key])
+        similarities_advice = cosine_similarity(query_embedding, corpus_embedding_advice).flatten()
+        max_sim = np.max(similarities_advice)
+        max_sim_index = np.argmax(similarities_advice)
+        # print(max_sim, max_sim_index)
+        if max_sim > 0.7:
+            if max_sim >= similarity:
+                similarity = max_sim
+                sim_key = key
+                sim_item = value[max_sim_index]'''
     # print(sim_key, sim_item)
         
     
 
     if sim_key == '':
-        sim_key = choose_para_chain.invoke({"query": query, "values": str(related_values)})['decision']
-        sim_item = choose_para_chain.invoke({"query": query, "values": str(related_values)})['value']
+        sim_result = choose_para_chain.invoke({"query": query, "values": str(related_values), "key": key})
+        sim_key = sim_result['decision']
+        '''if sim_key != '时间字段' and sim_key != '不属于任何字段':
+            value = related_values[f'{sim_key}']
+            corpus_embedding = embedding_bge(value)
+
+            similarities = cosine_similarity(query_embedding, corpus_embedding).flatten()
+            max_sim = np.max(similarities)
+            max_sim_index = np.argmax(similarities)
+            sim_item = value[max_sim_index]'''
+
+        sim_item = sim_result['value']
         # print(key, top_indices)
 
     # print(sim_key, sim_item)
