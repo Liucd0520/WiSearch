@@ -10,6 +10,7 @@ if project_root not in sys.path:
 
 from models.langchain_models import llm_qwen_7B, embedding_bge
 from utils.util import *
+
 from langchain.prompts import PromptTemplate
 
 from configs import config as config
@@ -18,6 +19,7 @@ from langchain_community.utilities import SQLDatabase
 
 from models.create_chain import *
 
+from sql_processing.text2sql import schema_linking
 from schema_linking.chain_link import chain_link
 from schema_linking.case_retrieval import retrieve_cases
 
@@ -62,7 +64,9 @@ def main(query):
     st = time.time()
     with open("metadata/table_list_12345.txt", 'r', encoding='utf-8') as f:
         content = f.read()
-    poi = poi_mask_chain.invoke({"query": query, "metadata": content})
+    with open('metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
+            related_values = json.loads(f.read())
+    poi = poi_mask_chain.invoke({"query": query, "metadata": content, "values": related_values})
     # 没办法很好的进行多级分类，需要手动replace
     '''replace_list = ['一级分类', '二级分类', '三级分类', '四级分类', '新一级分类', '新二级分类', '新三级分类', '新四级分类', '新五级分类']
     masked_query = poi['masked_query']
@@ -97,15 +101,40 @@ def main(query):
         link_result = f"工单生成时间: {time_p}"
     except:
         link_result = ''
+
+    '''with open(f'metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f_json:
+        values_dict = json.load(f_json)
+    related_field = list(values_dict.keys())
+
+    samples = ''
+    for i in range(len(poi['masks'])):
+         samples += f'{poi['masks'][i]}: {poi['mask_map'][i]}'
+
+    _, columns_dict = schema_linking(query=time_mask_query, 
+                   schema=content, 
+                   related_columns=related_field, 
+                   values_dict=values_dict,
+                   examples=samples, 
+                   chain=schema_linking_chain)
     
-    for mask in poi['mask_map']:
+    print("SCHEMA LINKING:", _, columns_dict)
+
+    link_result += f"查询数据列: {json.dumps(columns_dict, ensure_ascii=False)}"'''
+
+
+    # linking = schema_linking_chain.invoke({"query": query, "schema": content, "samples": samples})
+    for i in range(len(poi['mask_map'])):
+        mask = poi['mask_map'][i]
+        key = poi['masks'][i]
         with open('./metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
             related_values = json.loads(f.read())
-        # linking = schema_linking_chain.invoke({"query": query, "schema": content, "samples": samples})
-        linking = retrieve_cases_full(query=mask, related_values=related_values)
-        print("SL:", linking, mask)
-        if linking[0] != '不属于任何字段' or linking[0] != '时间字段':
+        
+        linking = retrieve_cases_full(query=mask, related_values=related_values, key=key)
+        print("SL:", linking, mask, key)
+        if linking[0] != '不属于任何字段' or linking[0] != '时间字段' or linking[0] != '询问字段':
             link_result += f' {linking[0]}: {linking[1]}'
+        elif linking[0] == '不属于任何字段':
+            link_result += f' 内容描述: {linking[1]}'
     ft = time.time()
     print(ft - st)
     schema_link_time = ft - st

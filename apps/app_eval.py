@@ -53,6 +53,7 @@ def eval(dataset, pipeline, conn):
     std_sql = dataset.sql
 
     correct = 0
+    avg_similarity = 0
 
     total = 0
     poi = 0
@@ -76,8 +77,8 @@ def eval(dataset, pipeline, conn):
         emb_pipeline = embedding_bge(sql).reshape(1, -1)
         emb_std = embedding_bge(std_sql[i])
         # sql相似度
-        sql_similarity = cosine_similarity(emb_pipeline, emb_std)
-        
+        sql_similarity = cosine_similarity(emb_pipeline, emb_std)[0][0]
+        avg_similarity += sql_similarity
 
         cursor.execute(sql)
         print("SQL:", sql)
@@ -108,29 +109,32 @@ def eval(dataset, pipeline, conn):
         for item in result_std:
             print("STD ITEM:", item)
             try:
-                result_list.append(f"{item[0]} {item[1]}")
+                std_list.append(f"{item[0]} {item[1]}")
             except:
-                result_list.append(f"{item[0]}")
+                std_list.append(f"{item[0]}")
         final_std = '\n'.join(std_list)
 
         result[f'{i}'] = {"QUERY": std_query[i], "CORRECTNESS": correctness, "RESULT": final_result, "RESULT_STD": final_std, "SQL SIMILARITY": sql_similarity, "SQL": sql, "SQL_STD": std_sql[i]}
 
     total_number = len(std_query)
-    result['avg_time'] = {'total': f'总耗时: {total / total_number}', 'poi_time': f'关键点抽取: {poi / total_number}', 'time_mask_time': f'时间掩码: {time_mask / total_number}', 'time_process_time': f'时间处理: {time_process / total_number}', 'schema_link_time': f'元数据关联: {schema_link / total_number}', 'generate_time': f'生成: {generate / total_number}'}
+    result['avg_time'] = {'total': f'总耗时: {round(total / total_number, 2)}', 'poi_time': f'关键点抽取: {round(poi / total_number, 2)}', 'time_mask_time': f'时间掩码: {round(time_mask / total_number, 2)}', 'time_process_time': f'时间处理: {round(time_process / total_number, 2)}', 'schema_link_time': f'元数据关联: {round(schema_link / total_number, 2)}', 'generate_time': f'生成: {round(generate / total_number, 2)}'}
 
-    accuracy = correct / len(std_query) * 100
+    accuracy = round(correct / len(std_query) * 100, 2)
+    similarity = round(avg_similarity / len(std_query) * 100, 2)
 
 
 
+    print("RESULT:", result)
 
-    return accuracy, result
+
+    return accuracy, similarity, result
 
 
 
 
 if __name__ == "__main__":
-    dataset = Dataset()
-    pipeline_type = '完整流程'
+    dataset = Dataset(path='/data/liyiru/WiSearch/eval/Query.xlsx')
+    pipeline_type = 'app_full'
     # print(dataset.query)
     # print(dataset.result)
     # print(dataset.sql)
@@ -147,13 +151,13 @@ if __name__ == "__main__":
     # cursor = db_conn.cursor()
 
     # cursor.execute("SELECT `诉求区域`, COUNT(*) AS 总数 FROM shanghai_ad_time WHERE `工单类型`='投诉举报类' AND `四级分类`='网上购物' AND `工单生成时间`> DATE_SUB(CURDATE(), INTERVAL 6 MONTH) GROUP BY `诉求区域` ORDER BY 总数 DESC")
-    # emb_1 = embedding_bge("7").reshape(1, -1)
-    # emb_2 = embedding_bge("6.9999").reshape(1, -1)
+    emb_1 = embedding_bge("投诉事件").reshape(1, -1)
+    emb_2 = embedding_bge("投诉举报类").reshape(1, -1)
 
-    # result = cosine_similarity(emb_1, emb_2)
-    # print(result)
+    result = cosine_similarity(emb_1, emb_2)[0][0]
+    print(result)
 
-    accuracy, result = eval(dataset, main, db_conn)
+    accuracy, similarity, result = eval(dataset, main, db_conn)
     # accuracy = 50
     # result = {"1": {"QUERY": "TEST1", "CORRECTNESS": "TEST2", "RESULT": "TEST3", "RESULT_STD": "TEST4", "SQL SIMILARITY": "TEST5", "SQL": "TEST6", "SQL_STD": "TEST7"}, "2": {"QUERY": "TEST8", "CORRECTNESS": "TEST9", "RESULT": "TEST10", "RESULT_STD": "TEST11", "SQL SIMILARITY": "TEST12", "SQL": "TEST13", "SQL_STD": "TEST14"}}
     # 表头
@@ -162,6 +166,7 @@ if __name__ == "__main__":
     ws['A1'] = f'模型：{pipeline_type}'
     ws['B1'] = f'数据集：12345-shanghai_ad_time'
     ws['C1'] = f'准确率：{accuracy}%'
+    ws['D1'] = f'SQL相似度: {similarity}%'
     ws['A2'] = '用户提问'
     ws['B2'] = '结果是否正确'
     ws['C2'] = '模型生成结果'
