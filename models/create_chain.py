@@ -31,6 +31,7 @@ abstract_chain = abstract_model(llm_qwen_14B)
 assumption_chain = assumption_model(llm_qwen_14B)
 time_mask_chain = time_mask_model(llm_qwen_14B)
 time_process_chain = time_process_model(llm_qwen_14B)
+intention_mask_chain = intention_mask_model(llm_qwen_14B)
 
 sql_gen_sl_chain = sql_gen_sl_model(llm_qwen_14B)
 sql_gen_mask_chain = sql_gen_mask_model(llm_qwen_14B)

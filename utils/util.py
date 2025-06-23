@@ -629,7 +629,10 @@ if __name__ == '__main__':
     get_distinct_values(mysql_db, 'hongkou', ['事项大类', '事项小类', '事项标签'])'''
 
     query = '城市管理类'
-    with open('./metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
-        related_values = json.loads(f.read())
-    key, value = retrieve_cases_full(query=query, related_values=related_values)
-    print(key, value)
+    emb_1 = embedding_bge("投诉类、咨询类、建议类").reshape(1, -1)
+    emb_2 = embedding_bge("咨询类").reshape(1, -1)
+    '''with open('./metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
+        related_values = json.loads(f.read())'''
+    # key, value = retrieve_cases_full(query=query, related_values=related_values)
+    result = cosine_similarity(emb_1, emb_2)[0][0]
+    print(result)

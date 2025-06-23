@@ -111,7 +111,7 @@ def choose_sql_model(model):
     return chain
 
 def error_rewrite_model(model):
-    prompt = PromptTemplate(template=error_rewrite_prompt, input_variables=['query','columns','schema','generated_sql','error_message'])
+    prompt = PromptTemplate(template=error_rewrite_prompt, input_variables=['query','table','time','intention','generated_sql','error_message'])
     chain = create_json_chain(model=model, prompt=prompt)
 
     return chain
@@ -130,6 +130,12 @@ def poi_mask_model(model):
 
 def rewrite_check_model(model):
     prompt = PromptTemplate(template=check_prompt, variables=['query', 'history'])
+    chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def intention_mask_model(model):
+    prompt = PromptTemplate(template=intention_mask_prompt, variables=['query'])
     chain = create_json_chain(model=model, prompt=prompt)
 
     return chain
@@ -171,7 +177,7 @@ def sql_gen_sl_model(model):
     return chain
 
 def sql_gen_mask_model(model):
-    prompt = PromptTemplate(template=sql_gen_mask_prompt, variables=["query", "table", "time"])
+    prompt = PromptTemplate(template=sql_gen_mask_prompt, variables=["query", "table", "time", "intention"])
     chain = create_json_chain(model=model, prompt=prompt)
 
     return chain

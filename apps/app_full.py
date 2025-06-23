@@ -29,6 +29,7 @@ import uuid
 import json
 import time
 from datetime import datetime
+import pymysql
 
 InitChatHistory = ChatHistory()
 
@@ -62,7 +63,7 @@ def main(query):
     st_main = time.time()
 
     st = time.time()
-    with open("metadata/table_list_12345.txt", 'r', encoding='utf-8') as f:
+    with open("metadata/metadata_12345_shanghai_ad_time.txt", 'r', encoding='utf-8') as f:
         content = f.read()
     with open('metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
             related_values = json.loads(f.read())
@@ -94,6 +95,15 @@ def main(query):
     ft = time.time()
     print(ft - st)
     time_process_time = ft - st
+
+    # 询问意图理解
+    st = time.time()
+    intention_process = intention_mask_chain.invoke({"query": query})
+    print("INTENTION:", intention_process, query)
+    intention = intention_process['intention']
+    ft = time.time()
+    print(ft - st)
+    intention_process_time = ft - st
 
     # schema link
     st = time.time()
@@ -141,15 +151,44 @@ def main(query):
 
     # 生成
     st = time.time()
-    generate = sql_gen_mask_chain.invoke({"query": query, "table": content, "time": link_result})
+    generate = sql_gen_mask_chain.invoke({"query": query, "table": content, "time": link_result, "intention": intention})
     print(generate)
     ft = time.time()
+    print(ft - st)
     generate_time = ft - st
+
+    # 错误重写
+    st = time.time()
+
+    db_conn = pymysql.connect(
+        host='172.31.24.111',
+        user='root',
+        password='liucd123',
+        database='12345',
+        port=3307,
+        charset='utf8mb4'
+        )
+    
+    cursor = db_conn.cursor()
+
+    is_runnable = False
+    while not is_runnable:
+        try:
+            cursor.execute(generate['SQL'])
+            is_runnable = True
+        except Exception as e:
+            generate = error_rewrite_chain.invoke({"query": query, "table": content, "time": link_result, "intention": intention, "generated_sql": generate['SQL'], "error_message": e})
+    
+    print(generate)
+    ft = time.time()
+    print(ft - st)
+    error_time = ft - st
+
 
     ft_main = time.time()
     total_time = ft_main - st_main
 
-    return generate['SQL'], {'total': total_time, 'poi_time': poi_time, 'time_mask_time': time_mask_time, 'time_process_time': time_process_time, 'schema_link_time': schema_link_time, 'generate_time': generate_time}
+    return generate['SQL'], {'total': total_time, 'poi_time': poi_time, 'time_mask_time': time_mask_time, 'time_process_time': time_process_time, 'intention_process_time': intention_process_time, 'schema_link_time': schema_link_time, 'generate_time': generate_time, 'error_time': error_time}
 
     
 
@@ -178,4 +217,16 @@ if __name__ == '__main__':
     print(retrieved)'''
     # query = '近1个月虹口区发生了多少起城市管理类的投诉事件'
     # main("今年上半年企业服务工单里工单类型分别有那些，占比如何")
-    main("近1个月虹口区发生了多少起城市管理类的投诉事件")
+    # main("近1个月虹口区发生了多少起城市管理类的投诉事件")
+
+
+    '''query = '小区居改非的工单中，投诉的比例是多少'
+    with open("metadata/metadata_12345_shanghai_ad_time.txt", 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    link_result = '四级分类: 居改非 工单类型: 投诉举报类'
+    generate = sql_gen_mask_chain.invoke({"query": query, "table": content, "time": link_result})
+
+    print(generate)'''
+
+    main("违章建筑相关的工单中，各类工单（诉求类、投诉类、咨询类、建议类、其他类）的比例是多少")
