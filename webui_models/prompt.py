@@ -82,6 +82,6 @@ query_explanation_prompt = """
 # 与查询问题关联的列
 {columns_dict}
 
-# 输出解读(以 DONE 作为输出的结尾标识符)：
+# 输出解读：
 
 """

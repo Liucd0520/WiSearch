@@ -11,12 +11,10 @@ from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from langchain.schema.runnable import Runnable
 import logging 
 import time 
-from configs import config as config
 import re 
 import sqlparse
 from langchain.schema.runnable import Runnable
 from langchain_community.utilities import SQLDatabase
-from configs import config as config
 # from datetime import datetime
 from configs import config
 import random 
@@ -28,6 +26,11 @@ import datetime
 from models.langchain_models import embedding_bge
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Util.strxor import strxor
+import base64
+from pymilvus import MilvusClient, DataType
 
 
 def create_path(_path):
@@ -64,9 +67,72 @@ def get_log(log_dir):
 
     return logger
 
-log_dir = config.log_dir
+log_dir = os.path.join(config.data_save_dir, config.log_dir_name)
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
 logger = get_log(log_dir)
 
+
+
+from typing import Literal
+def obtain_database_config(param_uri, milvus_uri, db_id: int, ):
+    
+    param_db = SQLDatabase.from_uri(param_uri)
+
+    sql_command = f'SELECT * FROM database_info where id = {db_id}'
+    conf_field = param_db.run(sql_command, include_columns=True)
+    conf_field = eval(conf_field)
+    
+    primary_key_name = conf_field[0]['primary_key_name']
+    unstr_field = conf_field[0]['unstructrued_column']
+    target_table =  conf_field[0]['target_table']
+    is_semantic_analysis = conf_field[0]['is_semantic_analysis']
+    selected_tables = conf_field[0]['selected_tables']
+
+    if is_semantic_analysis:
+        semtantic_params_dict = {
+        'large_step': conf_field[0]['large_step'],
+        'small_step': conf_field[0]['small_step'],
+        'window_size': conf_field[0]['window_size'],
+        'min_samples': conf_field[0]['min_samples'],
+        'max_samples': conf_field[0]['max_samples'],
+        }
+    else:
+        semtantic_params_dict = {}  
+   
+
+    # 业务库的连接
+    host = conf_field[0]['host']
+    port = conf_field[0]['port']
+    user_name = conf_field[0]['user_name']
+    password = decrypt(conf_field[0]['password'])
+    database_name = conf_field[0]['database_name']
+    mysql_uri =  f'mysql+mysqlconnector://{user_name}:{password}@{host}:{port}/{database_name}'  # ！！！！如果不是mysql呢
+    mysql_db = SQLDatabase.from_uri(mysql_uri)
+
+    if is_semantic_analysis:
+        client = MilvusClient(uri=milvus_uri)
+    else:
+        client = None 
+        
+    return mysql_db, param_db, client, primary_key_name, unstr_field, target_table, selected_tables, semtantic_params_dict
+
+
+
+def decrypt(encrypted_text: str, key: str = 'xingchenhuisoupd', iv: str = 'abcdef0123456789') -> str:
+    """
+    AES-CBC 解密，填充 PKCS7，输入 Base64 密文
+    :param encrypted_text: Base64 编码的密文
+    :param key: 16 字节密钥
+    :param iv: 16 字节初始化向量
+    :return: 明文字符串
+    """
+
+    encrypted_data = base64.b64decode(encrypted_text)
+    cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv=iv.encode('utf-8'))
+    decrypted_padded = cipher.decrypt(encrypted_data)
+    decrypted = unpad(decrypted_padded, AES.block_size)
+    return decrypted.decode('utf-8')
 
 
 def retrieve_cases(query, embedding_corpus, top_k=3):
@@ -154,8 +220,9 @@ def unstructured_clause(sql_query, special_column):
 
         # 查找包含 `内容描述` 字段的条件
         for condition in all_conditions:
-            if special_column in condition: # special_column = related_columns[-1]
-                conditions.append(condition.strip().replace('(', '').replace(')', ''))
+            if special_column in condition: # 这是个BUG, 不仅要要求IN，还要列名匹配上 例如：special_column: 部门  condition:  '部门岗位=项目经理岗'
+                # conditions.append(condition.strip().replace('(', '').replace(')', ''))
+                conditions.append(condition.strip())
         
         return conditions
     else:
@@ -164,9 +231,27 @@ def unstructured_clause(sql_query, special_column):
 
 
 
-def unstructure_value_extract(sql_query, unstructured_column):
-    conditions = unstructured_clause(sql_query, unstructured_column)
+def extract_in_values(input_str):
+    # 第一步：匹配IN(...)中的括号内容（忽略IN大小写）
+    # 正则说明：\bin\b匹配完整单词IN，\s*匹配空格，\(匹配左括号，(.*?)非贪婪捕获括号内内容，\)匹配右括号
+    in_pattern = re.compile(r'\bin\b\s*\(\s*(.*?)\s*\)', re.IGNORECASE)
+    match = in_pattern.search(input_str)
+    if not match:
+        return []  # 未找到IN子句，返回空列表
+    
+    inner_content = match.group(1)  # 获取括号内的原始内容（如：'大数据事业部', '金融数智事业部'）
+    
+    # 第二步：提取单引号内的所有值（忽略项之间的逗号和空格）
+    # 正则说明：'([^']+)'匹配单引号内的非单引号字符，捕获组1为目标值
+    value_pattern = re.compile(r"'([^']+)'")
+    values = value_pattern.findall(inner_content)  # 提取所有匹配的单引号内字符串
+    
+    return values
 
+def unstructure_value_extract(sql_query, unstructured_column):
+    
+    conditions = unstructured_clause(sql_query, unstructured_column)
+    
     value_dict = {}
     for condintion in conditions:
         if 'LIKE' in condintion or 'like' in condintion:
@@ -180,6 +265,9 @@ def unstructure_value_extract(sql_query, unstructured_column):
             match = re.search(pattern, condintion)
             
             value = match.group(2)
+        
+        elif ' in ' in condintion or ' IN ' in condintion:
+            value = extract_in_values(condintion)
         
         value_dict.update({condintion: value})  
     
@@ -272,16 +360,35 @@ def keyword_matching(substring, main_strings):
     :param main_strings: 主字符串列表
     :return: 包含所有匹配成功的主字符串的列表
     """
+    continuous_numbers_list = re.findall(r'\d{2,}', substring)
+
+
+    # 如果直接有完全相同的子串，就直接返回
+    full_match_string = [main_string for main_string in main_strings if substring == main_string]
+    if full_match_string:  # main_strings的列表中包含了substring
+        return full_match_string
+    
+    semimatch_string = [main_string for main_string in main_strings if substring in main_string]
+    if semimatch_string:  # main_strings的列表中的main_string包含了substring
+        return semimatch_string
+
     def check_all_chars_in_string(substring, main_string):
         for char in substring:
             if char not in main_string:
                 return False
         return True
 
+    # 满足每个字符，且每个连续数字均在main_string中
     matching_strings = []
     for main_string in main_strings:
         if check_all_chars_in_string(substring, main_string):
-            matching_strings.append(main_string)
+            
+            if continuous_numbers_list: # 还如果存在连续数字，要满足连续数字在main_string
+                for continuous_numbers in continuous_numbers_list:
+                    if continuous_numbers in main_string:
+                        matching_strings.append(main_string)
+            else: # 如果没有连续数字
+                matching_strings.append(main_string)
 
     return matching_strings
 
@@ -292,12 +399,19 @@ async def sql_abbr_rewrite(sql_command: str,  abbr_dict: dict, abbreviation_colu
     """
     parameters = {}
     
-    for ori_cmd, abbr_str in abbr_dict.items():  
+    for ori_cmd, abbr_content in abbr_dict.items():  
         # 对非结构化的值判断是否为命名实体，如果是的话就不必执行非结构化检索了
     
-        print(abbr_str, full_abbr_values)
-        abbr_values = keyword_matching(abbr_str, full_abbr_values)
-        print(f'缩写字段值{abbr_str} match 的全文为： {abbr_values}')
+        # print(abbr_str, full_abbr_values)
+        if isinstance(abbr_content, list): # 可能是list 比如 column IN (str1, str2)
+            abbr_values = []
+            for abbr_str in abbr_content:
+                print('!!!!!!', abbr_str, full_abbr_values, keyword_matching(abbr_str, full_abbr_values))
+                abbr_values.extend(keyword_matching(abbr_str, full_abbr_values))
+        else:  # 可能是字符串，比如 column LIKE '%str%' 或者 column = 'str'
+            abbr_values = keyword_matching(abbr_content, full_abbr_values)
+        print(f'缩写字段值{abbr_content} match 的全文为： {abbr_values}')
+        
         placeholders = ', '.join([f":val{i + total_len}" for i in range(len(abbr_values))]) 
         sql_command = sql_command.replace(ori_cmd, f""" `{abbreviation_column}` IN ({placeholders})""")
         
@@ -307,8 +421,6 @@ async def sql_abbr_rewrite(sql_command: str,  abbr_dict: dict, abbreviation_colu
         total_len += len(abbr_values)
     
     return sql_command, parameters
-
-
 
 def sql_execute(mysql_db, sql_command: str, schema: str,  params: dict, sql_rewrite_chain: Runnable,):
 
@@ -323,11 +435,16 @@ def sql_execute(mysql_db, sql_command: str, schema: str,  params: dict, sql_rewr
                 sql_result = ''
                 logger.error(f'execute sql with seme wrong: {e}', exc_info=True)
         else:
+            print('sql_command', sql_command)
             sql_result = mysql_db.run(sql_command, include_columns=True)
             
     except Exception as e:
-        if config.is_semantic_analysis or config.is_abbr_analysis:
-            print('sql 执行错误，语义分析/缩写分析不支持sql重写')
+        print('error:', e)
+        # if config.is_semantic_analysis or config.is_abbr_analysis:
+        #     print('sql 执行错误，语义分析/缩写分析不支持sql重写')
+        #     return ''
+        if len(sql_command) > 100:
+            print('sql 很长，不支持重写')
             return ''
         new_sql_command_result = sql_rewrite_chain.invoke({"schema": schema, "old_sql": sql_command, 'error': e})
         new_sql_command = new_sql_command_result.sql
@@ -358,7 +475,19 @@ def datetime_parser(query: str, text2datetime_chain: Runnable):
     return start_time, end_time 
 
 
-def generation_filter_expr(milvus_field_type: dict, condition_columns: dict, unstructured_column: str, ner_clf_chain: Runnable, text2datetime_chain: Runnable):
+# 判断字符串是不是时间类型
+def is_valid_datetime(s):
+    formats = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M','%Y-%m-%d %H','%Y-%m-%d',]
+    for date_format in formats:
+        try:
+            datetime.datetime.strptime(s, date_format)
+            return True
+        except ValueError:
+            continue
+    return False
+
+def generation_filter_expr(milvus_field_type: dict, condition_columns: dict, unstructured_column: str, ner_clf_chain: Runnable, text2datetime_chain: Runnable):    
+    
 
     # 确定非结构化字段的查询
     unstructrued_value = condition_columns[unstructured_column] if \
@@ -407,6 +536,7 @@ def params_parser(param_db, metadata_table_name, data_table_name):
     # 获取对应表的元数据
     full_meta_data_list = eval(result) 
     meta_data_list = [i for i in full_meta_data_list if i['table_name'] == data_table_name]
+    
     # 生成Schema信息
     schema_list = []
     
@@ -542,19 +672,6 @@ def get_distinct_values(
                 
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    # param_db = SQLDatabase.from_uri(config.param_uri,)
-    # metadata_table_name = config.param_table_metadata
-    # search_table_name = config.param_table_search
-
-    # data_table_name = config.data_table_names[0]
-
-    # # schema, abbr_columns, related_columns, field_mapping = params_parser(param_db, metadata_table_name, data_table_name)
-    # # print(schema, abbr_columns, related_columns, field_mapping)
-
-    # enum_values, _ = get_enum_values(param_db, search_table_name, config.max_distinct_values_num, config.max_combined_values_length)
-    # print(enum_values)
-
-    mysql_db = SQLDatabase.from_uri(config.mysql_uri,)  
-    get_distinct_values(mysql_db, 'hongkou', ['事项大类', '事项小类', '事项标签'])
+    

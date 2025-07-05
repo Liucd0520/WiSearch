@@ -32,6 +32,12 @@ def schema_linking_model(model):
     return linking_chain
 
 
+def table_linking_model(model):  
+    prompt_table_linking = PromptTemplate(template=table_linking_prompt, input_variables=["table_list", "schema", "question", ])
+    table_linking_chain = create_json_chain(prompt_table_linking, model )
+
+    return table_linking_chain
+
 def sql_gen_model(model):
     prompt_sql_gen = PromptTemplate(template=sql_gen_prompt, input_variables=["schema", "query", 'columns'])
     sql_gen_chain = create_json_chain(prompt_sql_gen, model)

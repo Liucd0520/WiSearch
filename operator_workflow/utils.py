@@ -13,10 +13,9 @@ from configs import config
 def retrieve_document_milvus(query: str, milvus_opt: object,  filter_exp='', limit=5000):
     """query 是非结构化内容"""
     
-    unstructured_field = config.columns_map[config.unstructrued_column] 
+    unstructured_field = config.columns_map[config.unstructured_column] 
 
-    if query: # query 非空
-    
+    if query: # query 非空        
         search_result = milvus_opt.search_hybrid(
             query=query, 
             output_fields=[unstructured_field, 'dense'],  # 除了`内容描述`之外选择使用哪些字段应该由query解析的结果决定

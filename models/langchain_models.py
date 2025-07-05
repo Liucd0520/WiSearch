@@ -38,8 +38,8 @@ def embedding_bge(query_list):
 # embedding_bge(['你好'])
 result = llm_qwen_14B.invoke('你好') 
 print(result)
-# result = llm_qwen_7B.invoke('你好') 
-# print(result)
+result = llm_qwen_7B.invoke('你好') 
+print(result)
 
 if __name__ == '__main__':
     query = ['你好', 'hello']

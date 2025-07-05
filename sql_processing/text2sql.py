@@ -27,18 +27,16 @@ import os
 
 
 
-def schema_linking(query: str, 
+async def schema_linking(query: str, 
                    schema: str, 
-                   related_columns: list = [], 
-                   values_dict: dict = {},
+                   full_values_dict: dict = {}, #  #{table1: {column1: distinct_values, ...}, table2: {}, ...}
                    examples: list = [], 
                    chain: Runnable = None):
+    col_values_list =  list(full_values_dict.values())
+    values_dict = {k:v for d in col_values_list for k, v in d.items()} # {column1: distincut_values1, columns2:xx ...}
+    related_columns = list(values_dict.keys())
     
-
-    import time 
-    start_time = time.time()
-    output = chain.invoke({"schema": schema, "query": query, "samples": examples})
-    print('schema linking cost',  time.time() - start_time)
+    output = await chain.ainvoke({"schema": schema, "query": query, "samples": examples})
     
     old_output = copy.deepcopy(output)
     cond_columns = copy.deepcopy(output['condition_columns'])
@@ -60,12 +58,13 @@ def schema_linking(query: str,
             output['condition_columns'].update(renew_dict)
         else:    
             # 意味着四级分类里的值没有与之对应的，则扔给非结构化字段
-            unstructured_field = config.unstructrued_column
-            output['condition_columns'].pop(condition_field)
-            output['condition_columns'].update({unstructured_field: condition_value})
+            unstructured_field = config.unstructured_column
+            if unstructured_field in related_columns:  # 只有非结构化字段在关联字段内时才更新
+                output['condition_columns'].pop(condition_field)
+                output['condition_columns'].update({unstructured_field: condition_value})
         
 
-    return  output
+    return old_output, output
 
 
 def sql_gen(query: str, columns: dict, schema: str, chain: Runnable):

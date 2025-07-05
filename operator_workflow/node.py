@@ -25,10 +25,10 @@ class ExtractTargetModel(BaseModel):
 
 
 grade_prompt = PromptTemplate(template=create_documentgrade_prompt_template, input_variables=["document", "query"])
-grade_chain = create_str_chain(grade_prompt, llm_qwen_14B)
+grade_chain = create_str_chain(grade_prompt, llm_qwen_7B)
 
 kw_prompt = PromptTemplate(template=obtain_keyword_list_prompt, input_variables=["query",]) #  obtain_keyword_prompt
-keyword_chain =  create_structured_chain(kw_prompt, llm_qwen_14B, structured_data=ExtractTargetModel)
+keyword_chain =  create_structured_chain(kw_prompt, llm_qwen_7B, structured_data=ExtractTargetModel)
 
 # 单个关键词
 # extraction_prompt = PromptTemplate(template=create_extraction_prompt_template, 
@@ -38,10 +38,10 @@ keyword_chain =  create_structured_chain(kw_prompt, llm_qwen_14B, structured_dat
 # 多个关键词
 IE_prompt = PromptTemplate(template=create_extraction_list_prompt_template,
                         input_variables=["key_word_json", "document_with_address",  "query"])
-enr_ext_chain =  create_json_chain(IE_prompt, llm_qwen_14B) #create_structured_chain(prompt, EntityExtraction)
+enr_ext_chain =  create_json_chain(IE_prompt, llm_qwen_7B) #create_structured_chain(prompt, EntityExtraction)
 
 summary_prompt = PromptTemplate(template=create_summary_prompt_template, input_variables=["docs_list"])
-summary_chain = create_str_chain(summary_prompt, llm_qwen_14B)
+summary_chain = create_str_chain(summary_prompt, llm_qwen_7B)
 
 async def retrieve(state):
     """
@@ -57,7 +57,7 @@ async def retrieve(state):
     filter_exp = state['filter_exp']
     milvus_opt = state['milvus_opt']
     unstructured_value = state['unstr_value']
-    documents, dense_emb = retrieve_document_milvus(unstructured_value,milvus_opt, filter_exp, limit=config.limit)
+    documents, dense_emb = retrieve_document_milvus(unstructured_value, milvus_opt, filter_exp, limit=config.limit)
     logger.info(f'检索到的文档总数量为：{len(documents)}')
     
     return {"documents": documents, "outputs": np.array(dense_emb)}
@@ -151,7 +151,7 @@ async def ENR_with_extension(state):
     logger.info('关键词json输出格式 --> {}'.format(key_word_format))
 
 
-    unstr_filed = config.unstructrued_column
+    unstr_filed = config.unstructured_column
     unstr_field_en = config.columns_map[unstr_filed]  # 向量数据库中的非结构化字段的英文列名
     extend_field_en = config.columns_map[config.extend_field] if config.extend_field else None  
 

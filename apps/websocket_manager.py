@@ -8,7 +8,7 @@ clients: List[WebSocket] = []
 async def send_to_clients(message: str):
     if len(message) < 20:
         logger.info(f'websocket发送的数据为：{message}')
-        
+
     for client in clients:
         await client.send_text(message)
 

@@ -12,7 +12,7 @@ from langchain_community.utilities import SQLDatabase
 from module.prompt import *
 from utils.util import *
 from typing import Dict, List
-from configs import config
+
 from models.create_chain import each_meta_data_chain, translate_chain
 import uvicorn
 from fastapi import FastAPI
@@ -25,6 +25,7 @@ from typing import Optional
 # 表里需添加table_name
 class InitProjectItem(BaseModel):
     fieldId: int = 1
+    databaseId: int = 15
     tableId: int = 1
     tableName: Optional[str] = 'hongkou'
     fieldName: Optional[str] = '案件编号'
@@ -33,7 +34,7 @@ class InitProjectItem(BaseModel):
     dataExample: Optional[str] = None
     # isSearchDim: Optional[bool] = None  # 只允许其中一个表有
     # isAbbrDim: Optional[bool] = None
-    EnglishName: Optional[str] = None 
+    englishName: Optional[str] = None 
 
     # 其他字段可以继续添加
 
@@ -50,14 +51,20 @@ async def meta_data_gen(request: InitProjectRequest):
     
     data = [item.model_dump() for item in request.data]
     table_name = data[0]['tableName']
+    database_id = data[0]['databaseId']
+   
 
-    mysql_db = SQLDatabase.from_uri(config.mysql_uri, sample_rows_in_table_info=3)
+    # 获取配置信息
+    mysql_db, param_db, client, _, unstructured_column, dumped_table_name, selected_tables, _ \
+          = obtain_database_config(config.param_uri, config.milvus_uri, db_id=database_id,)
+    
+    
     full_schema = mysql_db.get_table_info(table_names=[table_name],)  
     logger.info(f"full_schema: {full_schema}")
 
     # 获取枚举值的类型
     enum_values, sample_values = get_enum_values(mysql_db, table_name, config.max_distinct_values_num, config.max_combined_values_length)
-    print(enum_values, sample_values)
+    
     # 重新获取字段描述信息
     input_params = []
     for each_data in data:
@@ -78,13 +85,13 @@ async def meta_data_gen(request: InitProjectRequest):
     english_name_gens = await translate_chain.abatch([each_data['fieldName'] for each_data in data])
 
     # 重新组装信息
-    for each_data, field_schema, English_name in zip(data, field_schema_gens, english_name_gens):
+    for each_data, field_schema, english_name in zip(data, field_schema_gens, english_name_gens):
         field_name = each_data['fieldName']
         # 重新获取字段描述信息
         each_data['fieldComment'] = field_schema
 
         # 获取英文名
-        each_data['EnglishName'] = English_name
+        each_data['englishName'] = english_name
 
         # 重新获取枚举值
         enum_value = enum_values.get(field_name, [])
@@ -95,7 +102,6 @@ async def meta_data_gen(request: InitProjectRequest):
         if sample_value:
             each_data['dataExample'] = '样例值：' + ', '.join([str(i) for i in sample_value])
         
-
     return {'data': data}
 
 

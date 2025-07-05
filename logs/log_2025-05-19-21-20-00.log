@@ -1,4 +1,0 @@
-2025-05-19 21:20:10,034 ChatBI->     INFO     Found enum field: 事项名称 with 204 values
-2025-05-19 21:20:10,037 ChatBI->     INFO     Found enum field: 事项小类 with 55 values
-2025-05-19 21:20:10,039 ChatBI->     INFO     Found enum field: 事项标签 with 104 values
-2025-05-19 21:20:10,666 ChatBI->     INFO     Found enum field: 事项大类 with 22 values

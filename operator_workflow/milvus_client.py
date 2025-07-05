@@ -17,9 +17,9 @@ class MilvusOperation(object):
         self.collection_name = collection_name
         self.embedding_bge = embedding_bge
         self.dimension = self.embedding_bge(['obtain embedding dimension']).shape[-1]
+        
         self.bm25_ef = self.bm25_init(bm25_ef_path)
         self.bm25_ef.encode_documents(['load jieba cache'])
-
         self.ranker = RRFRanker(100)
         
 
@@ -27,7 +27,7 @@ class MilvusOperation(object):
         analyzer = build_default_analyzer(language="zh")
         bm25_ef = BM25EmbeddingFunction(analyzer)
         bm25_ef.load(bm25_ef_path)
-
+        
         return bm25_ef
 
 
@@ -48,10 +48,8 @@ class MilvusOperation(object):
     
     # 混合检索
     def search_hybrid(self, query: str, filter_exp: str = '', output_fields: list = [], limit: int = 5000):
-
         # 事项作为查询向量
         query_dense_vector = self.embedding_bge([query])[0]
-
         search_param_1 = {
             "data": [query_dense_vector],
             "anns_field": "dense",

@@ -80,10 +80,11 @@ def build_schema(mysql_db, mysql_table_name, primary_key_name, columns_map):
     
     for field_name_mysql, field_type in zip(field_list, type_list):
         print(field_name_mysql, field_type)
-
+        if 'varchar' in field_type:
+            field_type = 'varchar'
         field_name = columns_map[field_name_mysql]
         milvus_type = type_mapping[field_type]
-        print('==>', milvus_type)
+        print('==>', field_name, milvus_type)
 
         # 检查是否需要设置 max_length 参数
         extra_params = {}
