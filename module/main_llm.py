@@ -123,7 +123,7 @@ def check_query_model(model):
     return chain
 
 def poi_mask_model(model):
-    prompt = PromptTemplate(template=mask_prompt, variables=["query", "metadata", "values"])
+    prompt = PromptTemplate(template=mask_prompt, variables=["query", "metadata", "values", "intention", "key_point"])
     chain = create_json_chain(model=model, prompt=prompt)
 
     return chain
@@ -183,8 +183,14 @@ def sql_gen_mask_model(model):
     return chain
 
 def choose_para_model(model):
-    prompt = PromptTemplate(template=choose_para_prompt, variables=["query", "values", "key"])
+    prompt = PromptTemplate(template=choose_para_prompt, variables=["query", "metadata", "values", "key"])
     chain = create_json_chain(model=model, prompt=prompt)
+
+    return chain
+
+def chat_model(model):
+    prompt = PromptTemplate(template=chat_prompt, variables=["query", "sql_result"])
+    chain = create_str_chain(model=model, prompt=prompt)
 
     return chain
 

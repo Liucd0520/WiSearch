@@ -1,7 +1,9 @@
 
 from langchain_openai import  ChatOpenAI
 from openai import OpenAI
-import numpy as np 
+import numpy as np
+
+import dspy
 
 llm_qwen_14B = ChatOpenAI(model="text2sql2",  
                     # base_url='http://192.168.0.11:8012/v1', 

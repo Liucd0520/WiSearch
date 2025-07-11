@@ -30,6 +30,9 @@ import json
 import time
 from datetime import datetime
 import pymysql
+import ast
+
+
 
 InitChatHistory = ChatHistory()
 
@@ -59,26 +62,16 @@ def main(query):
 
     # print(ft - st)
 
-    # 关键点mask
     st_main = time.time()
 
-    st = time.time()
+    # SQL元数据
     with open("metadata/metadata_12345_shanghai_ad_time.txt", 'r', encoding='utf-8') as f:
         content = f.read()
+    # SQL枚举值
     with open('metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
             related_values = json.loads(f.read())
-    poi = poi_mask_chain.invoke({"query": query, "metadata": content, "values": related_values})
-    # 没办法很好的进行多级分类，需要手动replace
-    '''replace_list = ['一级分类', '二级分类', '三级分类', '四级分类', '新一级分类', '新二级分类', '新三级分类', '新四级分类', '新五级分类']
-    masked_query = poi['masked_query']
-    for replace_element in replace_list:
-        masked_query = masked_query.replace(replace_element, "多级分类")'''
-    print("POI:", poi, query)
-    ft = time.time()
-    poi_time = ft - st
-    print(ft - st)
 
-    # 时间mask
+    # 1. 时间mask
     st = time.time()
     time_mask = time_mask_chain.invoke({"query": query})
     print("TIME:", time_mask, query)
@@ -87,7 +80,7 @@ def main(query):
     time_mask_time = ft - st
     print(ft - st)
 
-    # 时间处理
+    # 2. 时间处理
     st = time.time()
     time_process = time_process_chain.invoke({"query": time_mask['time_mask']})
     print("TIME P:", time_process, query)
@@ -96,68 +89,57 @@ def main(query):
     print(ft - st)
     time_process_time = ft - st
 
-    # 询问意图理解
+    # 3. 询问意图理解
     st = time.time()
     intention_process = intention_mask_chain.invoke({"query": query})
     print("INTENTION:", intention_process, query)
     intention = intention_process['intention']
+    key_point = intention_process['key_point']
     ft = time.time()
     print(ft - st)
     intention_process_time = ft - st
 
-    # schema link
+    # 4. 关键点识别
+    st = time.time()
+    poi = poi_mask_chain.invoke({"query": time_mask_query, "metadata":content, "values":related_values, "intention": intention_process['intention'], "key_point": intention_process['key_point']})
+    print("POI:", poi)
+    if type(poi['key_information']) == str:
+        key_information_list = ast.literal_eval(poi['key_information'])
+    else:
+        key_information_list = poi['key_information']
+    print("KEY INFORMATION:", key_information_list)
+    ft = time.time()
+    print(ft - st)
+    poi_process_time = ft - st
+
+    # 5. schema link
     st = time.time()
     try:
         link_result = f"工单生成时间: {time_p}"
     except:
         link_result = ''
 
-    '''with open(f'metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f_json:
-        values_dict = json.load(f_json)
-    related_field = list(values_dict.keys())
-
-    samples = ''
-    for i in range(len(poi['masks'])):
-         samples += f'{poi['masks'][i]}: {poi['mask_map'][i]}'
-
-    _, columns_dict = schema_linking(query=time_mask_query, 
-                   schema=content, 
-                   related_columns=related_field, 
-                   values_dict=values_dict,
-                   examples=samples, 
-                   chain=schema_linking_chain)
-    
-    print("SCHEMA LINKING:", _, columns_dict)
-
-    link_result += f"查询数据列: {json.dumps(columns_dict, ensure_ascii=False)}"'''
-
-
     # linking = schema_linking_chain.invoke({"query": query, "schema": content, "samples": samples})
-    for i in range(len(poi['mask_map'])):
-        mask = poi['mask_map'][i]
-        key = poi['masks'][i]
-        with open('./metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
-            related_values = json.loads(f.read())
+    for i in range(len(key_information_list)):
+        mask = key_information_list[i]
         
-        linking = retrieve_cases_full(query=mask, related_values=related_values, key=key)
-        print("SL:", linking, mask, key)
-        if linking[0] != '不属于任何字段' or linking[0] != '时间字段' or linking[0] != '询问字段':
-            link_result += f' {linking[0]}: {linking[1]}'
-        elif linking[0] == '不属于任何字段':
-            link_result += f' 内容描述: {linking[1]}'
+        linking = retrieve_cases_full(query=query, metadata=content, related_values=related_values, key=mask)
+        print("SL:", linking, mask)
+        link_result += f' {linking[0]}: {linking[1]}'
+
     ft = time.time()
     print(ft - st)
     schema_link_time = ft - st
 
-    # 生成
+    # 6. 生成
     st = time.time()
-    generate = sql_gen_mask_chain.invoke({"query": query, "table": content, "time": link_result, "intention": intention})
+    generate = sql_gen_mask_chain.invoke({"query": query, "table": content, "time": link_result, "intention": key_point + intention})
     print(generate)
     ft = time.time()
     print(ft - st)
     generate_time = ft - st
 
-    # 错误重写
+    # 7. 错误重写，没有关联数据库则不需要这步
     st = time.time()
 
     db_conn = pymysql.connect(
@@ -182,13 +164,15 @@ def main(query):
     print(generate)
     ft = time.time()
     print(ft - st)
+
+    # 8. 处理输出结果
     error_time = ft - st
 
 
     ft_main = time.time()
     total_time = ft_main - st_main
 
-    return generate['SQL'], {'total': total_time, 'poi_time': poi_time, 'time_mask_time': time_mask_time, 'time_process_time': time_process_time, 'intention_process_time': intention_process_time, 'schema_link_time': schema_link_time, 'generate_time': generate_time, 'error_time': error_time}
+    return generate['SQL'], {'total': total_time, 'poi_process_time': poi_process_time, 'time_mask_time': time_mask_time, 'time_process_time': time_process_time, 'intention_process_time': intention_process_time, 'schema_link_time': schema_link_time, 'generate_time': generate_time, 'error_time': error_time}
 
     
 
@@ -205,6 +189,16 @@ def main(query):
 
     # return gen_result_1
 
+from flask import Flask, request, jsonify, Response
+import requests
+
+app = Flask(__name__)
+@app.route('/gen', methods=['POST'])
+def nl2sql():
+    input_data = request.get_data()
+    query = json.loads(input_data)['query']
+    sql, time = main(query=query)
+    return jsonify({"SQL": sql})
 
 
 if __name__ == '__main__':
@@ -229,4 +223,71 @@ if __name__ == '__main__':
 
     print(generate)'''
 
-    main("违章建筑相关的工单中，各类工单（诉求类、投诉类、咨询类、建议类、其他类）的比例是多少")
+    # main("近半年医保相关的咨询事件有多少起")
+    # app.run(host='0.0.0.0', debug=False, port=33072)
+
+
+    from openpyxl import load_workbook, Workbook
+
+    wb = load_workbook('/data/liyiru/WiSearch/eval/Query.xlsx')
+    sheet = wb['结构化查询']
+
+    query = []
+    intentions = []
+    key_points = []
+    key_informations = []
+    # masked = []
+    # masks = []
+    # mask_map = []
+
+    with open("metadata/metadata_12345_shanghai_ad_time.txt", 'r', encoding='utf-8') as f:
+        content = f.read()
+        print("METADATA:", content)
+
+    with open('metadata/related_values_shanghai_ad_time.json', 'r', encoding='utf-8') as f:
+        related_values = json.loads(f.read())
+        print("VALUES:", related_values)
+
+    for row in sheet.iter_rows(min_row=2, min_col=1, max_col=1, max_row=sheet.max_row, values_only=True):
+        if row[0] is not None:
+            query.append(row[0])
+            print("QUERY:", row[0])
+            time_mask = time_mask_chain.invoke({"query": row[0]})
+            print("TIME:", time_mask)
+            time_mask_query = time_mask['masked_query']
+            intention_process = intention_mask_chain.invoke({"query": time_mask_query})
+            print("INTENTION:", intention_process)
+            intentions.append(intention_process['intention'])
+            key_points.append(intention_process['key_point'])
+            poi = poi_mask_chain.invoke({"query": time_mask_query, "metadata":content, "values":related_values, "intention": intention_process['intention'], "key_point": intention_process['key_point']})
+            print("POI:", poi)
+            if type(poi['key_information']) == str:
+                key_information_list = ast.literal_eval(poi['key_information'])
+            else:
+                key_information_list = poi['key_information']
+            print("KEY INFORMATION:", key_information_list)
+            key_informations.append(','.join(key_information_list))
+            # masked.append(poi['masked_query'])
+            # masks.append(','.join(poi['masks'][:10]))
+            # mask_map.append(','.join(poi['mask_map'][:10]))
+            # print("POI:", poi)
+
+            for i in range(len(key_information_list)):
+                mask = key_information_list[i]
+                
+                linking = retrieve_cases_full(query=row[0], metadata=content, related_values=related_values, key=mask)
+                print("SL:", linking, mask)
+
+    new_wb = Workbook()
+    ws = new_wb.active
+    ws['A1'] = 'query'
+    ws['B1'] = 'intention'
+    ws['C1'] = 'key_point'
+    ws['D1'] = 'key_information'
+
+    for i in range(len(query)):
+        print("SAVING:", [query[i],intentions[i],key_points[i],key_informations[i]])
+        ws.append([query[i],intentions[i],key_points[i],key_informations[i]])
+    if os.path.exists(f'./eval/poi2.xlsx'):
+        os.remove(f'./eval/poi2.xlsx')
+    new_wb.save(f'./eval/poi2.xlsx')

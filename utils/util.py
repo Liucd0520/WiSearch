@@ -95,7 +95,7 @@ def retrieve_cases(query, embedding_corpus, top_k=3):
 
     return top_indices
 
-def retrieve_cases_full(query, related_values, key, top_k=3):
+def retrieve_cases_full(query, related_values, metadata, key, top_k=3):
     """
     根据输入问题从词库中检索最相似的TOP3词条。
 
@@ -109,23 +109,23 @@ def retrieve_cases_full(query, related_values, key, top_k=3):
     """
     # 将输入问题转化为向量
 
-    sim_key = ''
+    sim_para = ''
     similarity = 0
     sim_item = ''
-    query_embedding = embedding_bge(query).reshape(1, -1)
-    for key, value in related_values.items():
+    key_embedding = embedding_bge(key).reshape(1, -1)
+    for para, value in related_values.items():
         corpus_embedding = embedding_bge(value)
 
-        similarities = cosine_similarity(query_embedding, corpus_embedding).flatten()
+        similarities = cosine_similarity(key_embedding, corpus_embedding).flatten()
         max_sim = np.max(similarities)
         max_sim_index = np.argmax(similarities)
         # print(max_sim, max_sim_index)
         
         if max_sim > 0.85:
-            if max_sim >= similarity:
-                print("MATCHED:", max_sim, key, value[max_sim_index])
+            if max_sim > similarity:
+                print("MATCHED:", max_sim, para, value[max_sim_index])
                 similarity = max_sim
-                sim_key = key
+                sim_para = para
                 sim_item = value[max_sim_index]
 
     '''if sim_key == '':
@@ -143,9 +143,10 @@ def retrieve_cases_full(query, related_values, key, top_k=3):
         
     
 
-    if sim_key == '':
-        sim_result = choose_para_chain.invoke({"query": query, "values": str(related_values), "key": key})
-        sim_key = sim_result['decision']
+    if sim_para == '':
+        sim_result = choose_para_chain.invoke({"query": query, "metadata": metadata,"values": str(related_values), "key": key})
+        print("SIM RESULT:", sim_result)
+        sim_para = sim_result['decision']
         '''if sim_key != '时间字段' and sim_key != '不属于任何字段':
             value = related_values[f'{sim_key}']
             corpus_embedding = embedding_bge(value)
@@ -160,7 +161,7 @@ def retrieve_cases_full(query, related_values, key, top_k=3):
 
     # print(sim_key, sim_item)
 
-    return sim_key, sim_item
+    return sim_para, sim_item
 
 
 def split_metadata(mysql_schema_with_samples):

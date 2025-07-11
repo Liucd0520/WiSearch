@@ -1,1 +1,6 @@
 **/*.log
+**/*.pyc
+apps/sql_parse.py
+apps/app_liaoyuan.py
+metadata/metadata_liaoyuan_12345.txt
+metadata/related_values_liaoyuan_12345.json

@@ -70,7 +70,7 @@ def eval(dataset, pipeline, conn):
         # sql
         sql, time_dict = pipeline(std_query[i])
         total += time_dict['total']
-        poi += time_dict['poi_time']
+        poi += time_dict['poi_process_time']
         time_mask += time_dict['time_mask_time']
         time_process += time_dict['time_process_time']
         intention_process += time_dict['intention_process_time']
@@ -121,7 +121,7 @@ def eval(dataset, pipeline, conn):
         result[f'{i}'] = {"QUERY": std_query[i], "CORRECTNESS": correctness, "RESULT": final_result, "RESULT_STD": final_std, "SQL SIMILARITY": sql_similarity, "SQL": sql, "SQL_STD": std_sql[i]}
 
     total_number = len(std_query)
-    result['avg_time'] = {'total': f'总耗时: {round(total / total_number, 2)}', 'poi_time': f'关键点抽取: {round(poi / total_number, 2)}', 'time_mask_time': f'时间掩码: {round(time_mask / total_number, 2)}', 'time_process_time': f'时间处理: {round(time_process / total_number, 2)}', 'intention_time': f'时间处理: {round(intention_process / total_number, 2)}', 'schema_link_time': f'元数据关联: {round(schema_link / total_number, 2)}', 'generate_time': f'生成: {round(generate / total_number, 2)}', 'error_time': f'错误重写: {round(error / total_number, 2)}'}
+    result['avg_time'] = {'total': f'总耗时: {round(total / total_number, 2)}', 'poi_process_time': f'关键点抽取: {round(poi / total_number, 2)}', 'time_mask_time': f'时间掩码: {round(time_mask / total_number, 2)}', 'time_process_time': f'时间处理: {round(time_process / total_number, 2)}', 'intention_time': f'询问意图: {round(intention_process / total_number, 2)}', 'schema_link_time': f'元数据关联: {round(schema_link / total_number, 2)}', 'generate_time': f'生成: {round(generate / total_number, 2)}', 'error_time': f'错误重写: {round(error / total_number, 2)}'}
 
     accuracy = round(correct / len(std_query) * 100, 2)
     similarity = round(avg_similarity / len(std_query) * 100, 2)
@@ -138,7 +138,7 @@ def eval(dataset, pipeline, conn):
 
 if __name__ == "__main__":
     dataset = Dataset(path='/data/liyiru/WiSearch/eval/Query.xlsx')
-    pipeline_type = 'app_full_with_intention'
+    pipeline_type = 'app_full_new_pipeline'
     # print(dataset.query)
     # print(dataset.result)
     # print(dataset.sql)
