@@ -1,16 +1,279 @@
 nohup: ignoring input
 None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
-INFO:     Started server process [1386723]
+INFO:     Started server process [1769853]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8078 (Press CTRL+C to quit)
-content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--b88870d8-1666-46e7-a8ab-e992a38aac24-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
-log_2025-07-02-13-38-00.log
-INFO:     172.31.112.34:57334 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
+2025-07-08 06:54:06,191 [ERROR][_create_connection]: Failed to create new connection using: 25ba04ef8ed243258b438c953e012982 (milvus_client.py:916)
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--3869511f-069b-4262-b60b-9a50dac0c57a-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+content='你好！有什么问题或者需要帮助的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 30, 'total_tokens': 41, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'Qwen2.5-7B-Instruct', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--adad0e22-b176-4b35-9a19-62ad4f518450-0' usage_metadata={'input_tokens': 30, 'output_tokens': 11, 'total_tokens': 41, 'input_token_details': {}, 'output_token_details': {}}
+log_2025-07-08-06-27-42.log
+INFO:     172.31.112.34:44352 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_mysql2milvus.py", line 185, in dump_timeline
+    mysql_db, _, _, client, _, unstr_field, dumped_table_name, _, _ = obtain_database_config(param_uri, milvus_uri, db_id)
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/utils/util.py", line 115, in obtain_database_config
+    client = MilvusClient(uri=milvus_uri)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/milvus_client/milvus_client.py", line 64, in __init__
+    self._using = self._create_connection(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/milvus_client/milvus_client.py", line 917, in _create_connection
+    raise ex from ex
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/milvus_client/milvus_client.py", line 914, in _create_connection
+    connections.connect(using, user, password, db_name, token, uri=uri, **kwargs)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/orm/connections.py", line 461, in connect
+    connect_milvus(**kwargs, user=user, password=password, token=token, db_name=db_name)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/orm/connections.py", line 411, in connect_milvus
+    gh._wait_for_channel_ready(timeout=timeout)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 160, in _wait_for_channel_ready
+    raise MilvusException(
+pymilvus.exceptions.MilvusException: <MilvusException: (code=2, message=Fail connecting to server on 172.31.24.111:19534, illegal connection params or server unavailable)>
+INFO:     172.31.112.34:53112 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
 Building prefix dict from the default dictionary ...
 Loading model from cache /tmp/jieba.cache
-Loading model cost 0.822 seconds.
+Loading model cost 0.851 seconds.
 Prefix dict has been built successfully.
+SHOW FIELDS FROM HongKouDemo;
+('案件编号', 'bigint', 'YES', '', None, '')
+('原编号', 'bigint', 'YES', '', None, '')
+('案件来源/信息来源', 'text', 'YES', '', None, '')
+('工单类型', 'text', 'YES', '', None, '')
+('发现时间', 'text', 'YES', '', None, '')
+('状态', 'text', 'YES', '', None, '')
+('事项类别', 'text', 'YES', '', None, '')
+('事项大类', 'text', 'YES', '', None, '')
+('事项小类', 'text', 'YES', '', None, '')
+('事项名称', 'text', 'YES', '', None, '')
+('事项标签', 'text', 'YES', '', None, '')
+('案件描述/内容描述', 'text', 'YES', '', None, '')
+('上报地址', 'text', 'YES', '', None, '')
+('实际地址', 'text', 'YES', '', None, '')
+('联系人', 'double', 'YES', '', None, '')
+('联系电话', 'double', 'YES', '', None, '')
+('所属街道', 'text', 'YES', '', None, '')
+('主责部门', 'text', 'YES', '', None, '')
+('协同部门', 'text', 'YES', '', None, '')
+('主处置部门', 'text', 'YES', '', None, '')
+('协同处置部门', 'text', 'YES', '', None, '')
+('办理描述', 'text', 'YES', '', None, '')
+('结案时间', 'text', 'YES', '', None, '')
+('结案期限(是否超时)', 'text', 'YES', '', None, '')
+('市紧急程度', 'text', 'YES', '', None, '')
+('收单时间', 'text', 'YES', '', None, '')
+('紧急程度', 'text', 'YES', '', None, '')
+('所属片区', 'text', 'YES', '', None, '')
+('所属居委', 'text', 'YES', '', None, '')
+('派遣时间', 'text', 'YES', '', None, '')
+('案件期限', 'bigint', 'YES', '', None, '')
+('处置计时', 'text', 'YES', '', None, '')
+('案件整体计时', 'text', 'YES', '', None, '')
+('事实认定', 'text', 'YES', '', None, '')
+('诉求认定', 'text', 'YES', '', None, '')
+('是否解决区回访', 'text', 'YES', '', None, '')
+('是否满意区回访', 'text', 'YES', '', None, '')
+案件编号 bigint
+==> case_number 5
+原编号 bigint
+==> original_number 5
+案件来源/信息来源 text
+==> case_source_information_source 21
+工单类型 text
+==> work_order_type 21
+发现时间 text
+==> discovery_time 21
+状态 text
+==> status 21
+事项类别 text
+==> matter_category 21
+事项大类 text
+==> matters_category 21
+事项小类 text
+==> matter_subcategory 21
+事项名称 text
+==> matter_name 21
+事项标签 text
+==> matter_label 21
+案件描述/内容描述 text
+==> case_description_content_description 21
+上报地址 text
+==> report_address 21
+实际地址 text
+==> actual_address 21
+联系人 double
+==> contact_person 11
+联系电话 double
+==> contact_number 11
+所属街道 text
+==> belonging_street 21
+主责部门 text
+==> responsible_department 21
+协同部门 text
+==> collaboration_department 21
+主处置部门 text
+==> main_disposal_department 21
+协同处置部门 text
+==> cooperative_disposal_department 21
+办理描述 text
+==> processing_description 21
+结案时间 text
+==> case_closure_time 21
+结案期限(是否超时) text
+==> case_closure_deadline__is_overdue 21
+市紧急程度 text
+==> emergency_level_of_city 21
+收单时间 text
+==> collection_time 21
+紧急程度 text
+==> urgency_level 21
+所属片区 text
+==> belonging_district 21
+所属居委 text
+==> belonging_resident_committee 21
+派遣时间 text
+==> dispatch_time 21
+案件期限 bigint
+==> case_deadline 5
+处置计时 text
+==> disposal_timing 21
+案件整体计时 text
+==> case_overall_timing 21
+事实认定 text
+==> fact_recognition 21
+诉求认定 text
+==> appeal_recognition 21
+是否解决区回访 text
+==> is_resolved_area_follow_up 21
+是否满意区回访 text
+==> satisfied_with_area_follow_up 21
+{'案件编号': 202408317745200116, '原编号': 20240831030597, '案件来源/信息来源': '12345热线', '工单类型': '投诉举报类', '发现时间': '2024-08-31 22:20', '状态': '待接单处置', '事项类别': '公共管理', '事项大类': '环境保护', '事项小类': '噪声污染', '事项名称': '夜间施工扰民', '事项标签': None, '案件描述/内容描述': '市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需回复）', '上报地址': '虹口区衡水路89弄小区附近', '实际地址': '衡水路89弄小区附近', '联系人': None, '联系电话': None, '所属街道': '四川北路街道', '主责部门': '虹口区建设和管理委员会', '协同部门': None, '主处置部门': '虹口区建设和管理委员会/市政和水务管理中心5', '协同处置部门': None, '办理描述': None, '结案时间': None, '结案期限(是否超时)': '正常', '市紧急程度': '普通', '收单时间': '2024-09-01 11:12:36', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '四川居委', '派遣时间': '2024-09-01 11:53:06', '案件期限': 7, '处置计时': '0天15小时50分钟14秒', '案件整体计时': '0天15小时50分钟14秒', '事实认定': None, '诉求认定': None, '是否解决区回访': None, '是否满意区回访': None}
+(1000, 11625)
+(1000, 1024)
+1000
+case_description_content_description
+{'case_number': 202408317745200116, 'original_number': 20240831030597, 'case_source_information_source': '12345热线', 'work_order_type': '投诉举报类', 'discovery_time': '2024-08-31 22:20', 'status': '待接单处置', 'matter_category': '公共管理', 'matters_category': '环境保护', 'matter_subcategory': '噪声污染', 'matter_name': '夜间施工扰民', 'matter_label': None, 'case_description_content_description': '市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需回复）', 'report_address': '虹口区衡水路89弄小区附近', 'actual_address': '衡水路89弄小区附近', 'contact_person': None, 'contact_number': None, 'belonging_street': '四川北路街道', 'responsible_department': '虹口区建设和管理委员会', 'collaboration_department': None, 'main_disposal_department': '虹口区建设和管理委员会/市政和水务管理中心5', 'cooperative_disposal_department': None, 'processing_description': None, 'case_closure_time': None, 'case_closure_deadline__is_overdue': '正常', 'emergency_level_of_city': '普通', 'collection_time': '2024-09-01 11:12:36', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '四川居委', 'dispatch_time': '2024-09-01 11:53:06', 'case_deadline': 7, 'disposal_timing': '0天15小时50分钟14秒', 'case_overall_timing': '0天15小时50分钟14秒', 'fact_recognition': None, 'appeal_recognition': None, 'is_resolved_area_follow_up': None, 'satisfied_with_area_follow_up': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
+	with 33 stored elements and shape (1, 11625)>, 'dense': array([ 0.0080719 ,  0.0062561 ,  0.01852417, ..., -0.00895691,
+       -0.05923462, -0.03924561], shape=(1024,))}
+{'案件编号': 202408249755900045, '原编号': 20240824009914, '案件来源/信息来源': '12345热线', '工单类型': '求助类', '发现时间': '2024-08-24 11:39', '状态': '已结案', '事项类别': '公共管理', '事项大类': '房屋保障', '事项小类': '房屋管理', '事项名称': '房屋产权', '事项标签': None, '案件描述/内容描述': '市民来电反映:市民需要办理上述地址公租房转为产权房的手续，市民一开始咨询街道和物业，对方一开始称厨卫统一改建还未完成，故无法办理公租房转为产权的手续，现在已经完成改建还是无法办理相应手续，只告知市民需要等上级指示，市民表示不解，故来电求助，诉求：希望管理部门核实具体情况，帮助市民解决公租房转为产权房的手续。（需回复）', '上报地址': '虹口区车站西路307弄4号201室', '实际地址': '车站西路307弄4号201室', '联系人': None, '联系电话': None, '所属街道': '江湾镇街道', '主责部门': '虹口区住房保障和房屋管理局', '协同部门': None, '主处置部门': '虹口区住房保障和房屋管理局/案件审理科', '协同处置部门': None, '办理描述': '经调查，车站西路307弄4号属于车西三期成套改造项目。未办理产证主要为两个问题，一是项目手续问题，当时由于使用修缮平台进行报建无法进行综合验收，此问题现已明确解决路径，在补充验收文件后可予以办理。二是设计图纸与现场实际不符需重新进行审核，现已完成图纸确认，需报规划进行变更。已督促虹房集团按照产证办理问题协调会会议纪要加快办理手续。\n于8月29日早10:30联系居民，向居民解释了情况，居民已知晓。居民提出其原房屋为车站西路307弄4号201室，原房屋面积约40平，改造后由于布局调整规划面积不足，实际归还了原房屋（约30平）及另一套车站西路305弄2号504室（原二期加层房屋），其中504室...', '结案时间': '2024-08-30 14:26:59', '结案期限(是否超时)': '过半', '市紧急程度': '普通', '收单时间': '2024-08-24 15:30:09', '紧急程度': '一般', '所属片区': '第五片区', '所属居委': '车站居委', '派遣时间': '2024-08-26 09:17:37', '案件期限': 7, '处置计时': '4天0小时26分钟59秒', '案件整体计时': '4天14小时26分钟59秒', '事实认定': '属实', '诉求认定': '诉求过高', '是否解决区回访': '解释说明', '是否满意区回访': '满意'}
+(1000, 11625)
+(1000, 1024)
+1000
+case_description_content_description
+{'case_number': 202408249755900045, 'original_number': 20240824009914, 'case_source_information_source': '12345热线', 'work_order_type': '求助类', 'discovery_time': '2024-08-24 11:39', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '房屋保障', 'matter_subcategory': '房屋管理', 'matter_name': '房屋产权', 'matter_label': None, 'case_description_content_description': '市民来电反映:市民需要办理上述地址公租房转为产权房的手续，市民一开始咨询街道和物业，对方一开始称厨卫统一改建还未完成，故无法办理公租房转为产权的手续，现在已经完成改建还是无法办理相应手续，只告知市民需要等上级指示，市民表示不解，故来电求助，诉求：希望管理部门核实具体情况，帮助市民解决公租房转为产权房的手续。（需回复）', 'report_address': '虹口区车站西路307弄4号201室', 'actual_address': '车站西路307弄4号201室', 'contact_person': None, 'contact_number': None, 'belonging_street': '江湾镇街道', 'responsible_department': '虹口区住房保障和房屋管理局', 'collaboration_department': None, 'main_disposal_department': '虹口区住房保障和房屋管理局/案件审理科', 'cooperative_disposal_department': None, 'processing_description': '经调查，车站西路307弄4号属于车西三期成套改造项目。未办理产证主要为两个问题，一是项目手续问题，当时由于使用修缮平台进行报建无法进行综合验收，此问题现已明确解决路径，在补充验收文件后可予以办理。二是设计图纸与现场实际不符需重新进行审核，现已完成图纸确认，需报规划进行变更。已督促虹房集团按照产证办理问题协调会会议纪要加快办理手续。\n于8月29日早10:30联系居民，向居民解释了情况，居民已知晓。居民提出其原房屋为车站西路307弄4号201室，原房屋面积约40平，改造后由于布局调整规划面积不足，实际归还了原房屋（约30平）及另一套车站西路305弄2号504室（原二期加层房屋），其中504室...', 'case_closure_time': '2024-08-30 14:26:59', 'case_closure_deadline__is_overdue': '过半', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-24 15:30:09', 'urgency_level': '一般', 'belonging_district': '第五片区', 'belonging_resident_committee': '车站居委', 'dispatch_time': '2024-08-26 09:17:37', 'case_deadline': 7, 'disposal_timing': '4天0小时26分钟59秒', 'case_overall_timing': '4天14小时26分钟59秒', 'fact_recognition': '属实', 'appeal_recognition': '诉求过高', 'is_resolved_area_follow_up': '解释说明', 'satisfied_with_area_follow_up': '满意', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
+	with 34 stored elements and shape (1, 11625)>, 'dense': array([-0.00310326,  0.01766968, -0.01222229, ...,  0.01005554,
+       -0.01364136, -0.05755615], shape=(1024,))}
+{'案件编号': 202408175022800018, '原编号': 20240817002907, '案件来源/信息来源': '12345热线', '工单类型': '求助类', '发现时间': '2024-08-17 09:02', '状态': '已结案', '事项类别': '公共管理', '事项大类': '绿化市容', '事项小类': '市容环境', '事项名称': '文明施工措施不落实', '事项标签': None, '案件描述/内容描述': '市民来电反映:市民是居住在上述地址的居民，现在水电路261弄进行旧区改造，出现扬尘和噪音问题。并且在拆除建筑的时候产生振动，导致自己房屋墙面开裂，诉求：请管理部门派人查看，并针对旧区改造造成的影响给予处理方案。', '上报地址': '虹口区广中支路24弄2号', '实际地址': '广中支路24弄', '联系人': None, '联系电话': None, '所属街道': '广中路街道', '主责部门': '虹房集团', '协同部门': None, '主处置部门': '虹房集团/处置部门1', '协同处置部门': None, '办理描述': '8月21日上午虹建公司负责人上门了解情况，杭女士反映前期拆房时虽然作了事先告知、防尘等防护措施，但还是会影响其生活。目前拆房已结束，已无扬尘及噪音、振动等情况。8月22日9:20虹房集团工作人员回访市民了解处理情况，市民表示其反映的扬尘及噪音等情况已解决，对施工单位及时上门处理表示满意。', '结案时间': '2024-08-26 16:18:50', '结案期限(是否超时)': '正常', '市紧急程度': '普通', '收单时间': '2024-08-17 16:03:00', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '商一居委', '派遣时间': '2024-08-20 09:35:13', '案件期限': 7, '处置计时': '2天22小时41分钟18秒', '案件整体计时': '5天16小时18分钟50秒', '事实认定': '属实', '诉求认定': '诉求合理', '是否解决区回访': '实际解决', '是否满意区回访': '满意'}
+(1000, 11625)
+(1000, 1024)
+1000
+case_description_content_description
+{'case_number': 202408175022800018, 'original_number': 20240817002907, 'case_source_information_source': '12345热线', 'work_order_type': '求助类', 'discovery_time': '2024-08-17 09:02', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '绿化市容', 'matter_subcategory': '市容环境', 'matter_name': '文明施工措施不落实', 'matter_label': None, 'case_description_content_description': '市民来电反映:市民是居住在上述地址的居民，现在水电路261弄进行旧区改造，出现扬尘和噪音问题。并且在拆除建筑的时候产生振动，导致自己房屋墙面开裂，诉求：请管理部门派人查看，并针对旧区改造造成的影响给予处理方案。', 'report_address': '虹口区广中支路24弄2号', 'actual_address': '广中支路24弄', 'contact_person': None, 'contact_number': None, 'belonging_street': '广中路街道', 'responsible_department': '虹房集团', 'collaboration_department': None, 'main_disposal_department': '虹房集团/处置部门1', 'cooperative_disposal_department': None, 'processing_description': '8月21日上午虹建公司负责人上门了解情况，杭女士反映前期拆房时虽然作了事先告知、防尘等防护措施，但还是会影响其生活。目前拆房已结束，已无扬尘及噪音、振动等情况。8月22日9:20虹房集团工作人员回访市民了解处理情况，市民表示其反映的扬尘及噪音等情况已解决，对施工单位及时上门处理表示满意。', 'case_closure_time': '2024-08-26 16:18:50', 'case_closure_deadline__is_overdue': '正常', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-17 16:03:00', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '商一居委', 'dispatch_time': '2024-08-20 09:35:13', 'case_deadline': 7, 'disposal_timing': '2天22小时41分钟18秒', 'case_overall_timing': '5天16小时18分钟50秒', 'fact_recognition': '属实', 'appeal_recognition': '诉求合理', 'is_resolved_area_follow_up': '实际解决', 'satisfied_with_area_follow_up': '满意', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
+	with 31 stored elements and shape (1, 11625)>, 'dense': array([ 0.01605225,  0.0294342 ,  0.00228119, ..., -0.0140686 ,
+       -0.02677917, -0.06027222], shape=(1024,))}
+{'案件编号': 202408101409200042, '原编号': 20240810007230, '案件来源/信息来源': '12345热线', '工单类型': '投诉举报类', '发现时间': '2024-08-10 11:02', '状态': '已结案', '事项类别': '公共管理', '事项大类': '房屋保障', '事项小类': '物业服务', '事项名称': '小区公共区域维护', '事项标签': None, '案件描述/内容描述': '【投诉】市民来电反映：市民表示上述地址的消防门不应该锁住，只能装控制装置使得门只能从里面推开不能从外面推开的办法解决，业委会表示是市民进出不随手关门的但是没有任何证据，市民认为极大可能是楼里的做工人员进出不关门造成的，市民就此问题向物业反映多次未得到解决。诉求：投诉物业不作为，请管理部门核实整改给到解释至12345，市民会来电查询。关联的前工单编号:20240727025866', '上报地址': '虹口区瑞虹新城一期2号楼1楼后门', '实际地址': '瑞虹新城一期2号楼1楼后门', '联系人': None, '联系电话': None, '所属街道': '嘉兴路街道', '主责部门': '嘉兴路街道办事处', '协同部门': None, '主处置部门': '嘉兴路街道办事处/嘉兴路街道城运中心', '协同处置部门': None, '办理描述': '经了解，居民反映大门为消防通道门。万科物业入驻前，该门处常开状态，物业入驻后，已装上消防通道锁，从小区内部推动消防门，门锁自动打开，即为通道；从小区外面无法打开消防门。保障应急情况下安全疏散和消防救援需要，同时保证小区外来人员进出的管理。', '结案时间': '2024-08-19 14:00:50', '结案期限(是否超时)': '过半', '市紧急程度': '普通', '收单时间': '2024-08-10 14:42:04', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '瑞虹第一居委', '派遣时间': '2024-08-10 14:43:22', '案件期限': 7, '处置计时': '5天11小时15分钟17秒', '案件整体计时': '5天14小时0分钟50秒', '事实认定': '部分属实', '诉求认定': '诉求过高', '是否解决区回访': '未评价', '是否满意区回访': '未评价'}
+(143, 11625)
+(143, 1024)
+143
+case_description_content_description
+{'case_number': 202408101409200042, 'original_number': 20240810007230, 'case_source_information_source': '12345热线', 'work_order_type': '投诉举报类', 'discovery_time': '2024-08-10 11:02', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '房屋保障', 'matter_subcategory': '物业服务', 'matter_name': '小区公共区域维护', 'matter_label': None, 'case_description_content_description': '【投诉】市民来电反映：市民表示上述地址的消防门不应该锁住，只能装控制装置使得门只能从里面推开不能从外面推开的办法解决，业委会表示是市民进出不随手关门的但是没有任何证据，市民认为极大可能是楼里的做工人员进出不关门造成的，市民就此问题向物业反映多次未得到解决。诉求：投诉物业不作为，请管理部门核实整改给到解释至12345，市民会来电查询。关联的前工单编号:20240727025866', 'report_address': '虹口区瑞虹新城一期2号楼1楼后门', 'actual_address': '瑞虹新城一期2号楼1楼后门', 'contact_person': None, 'contact_number': None, 'belonging_street': '嘉兴路街道', 'responsible_department': '嘉兴路街道办事处', 'collaboration_department': None, 'main_disposal_department': '嘉兴路街道办事处/嘉兴路街道城运中心', 'cooperative_disposal_department': None, 'processing_description': '经了解，居民反映大门为消防通道门。万科物业入驻前，该门处常开状态，物业入驻后，已装上消防通道锁，从小区内部推动消防门，门锁自动打开，即为通道；从小区外面无法打开消防门。保障应急情况下安全疏散和消防救援需要，同时保证小区外来人员进出的管理。', 'case_closure_time': '2024-08-19 14:00:50', 'case_closure_deadline__is_overdue': '过半', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-10 14:42:04', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '瑞虹第一居委', 'dispatch_time': '2024-08-10 14:43:22', 'case_deadline': 7, 'disposal_timing': '5天11小时15分钟17秒', 'case_overall_timing': '5天14小时0分钟50秒', 'fact_recognition': '部分属实', 'appeal_recognition': '诉求过高', 'is_resolved_area_follow_up': '未评价', 'satisfied_with_area_follow_up': '未评价', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
+	with 43 stored elements and shape (1, 11625)>, 'dense': array([-0.03167725, -0.00790405,  0.0199585 , ..., -0.00174427,
+       -0.03564453, -0.01003265], shape=(1024,))}
+INFO:     172.31.112.34:53120 - "POST /milvus_dump?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53156 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
+SHOW FIELDS FROM gjw;
+('编号', 'bigint', 'YES', '', None, '')
+('年份', 'bigint', 'YES', '', None, '')
+('区局', 'text', 'YES', '', None, '')
+('姓名', 'text', 'YES', '', None, '')
+('年龄', 'bigint', 'YES', '', None, '')
+('姓名拼音', 'text', 'YES', '', None, '')
+('性别', 'text', 'YES', '', None, '')
+('工作单位', 'text', 'YES', '', None, '')
+('工种或工作头衔', 'text', 'YES', '', None, '')
+('领域', 'text', 'YES', '', None, '')
+('行业', 'text', 'YES', '', None, '')
+('工匠介绍', 'text', 'YES', '', None, '')
+编号 bigint
+==> id_number 5
+年份 bigint
+==> year 5
+区局 text
+==> bureau 21
+姓名 text
+==> name 21
+年龄 bigint
+==> age 5
+姓名拼音 text
+==> xing_ming_pinyin 21
+性别 text
+==> gender 21
+工作单位 text
+==> work_unit 21
+工种或工作头衔 text
+==> job_type_or_title 21
+领域 text
+==> field 21
+行业 text
+==> industry 21
+工匠介绍 text
+==> craftsman_introduction 21
+{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
+(891, 12599)
+(891, 1024)
+891
+craftsman_introduction
+{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
+	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
+        0.02241516, -0.00159359], shape=(1024,))}
+INFO:     172.31.112.34:53214 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53242 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53344 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53358 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53696 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53956 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
 SHOW FIELDS FROM tmp2;
 ('工单编号', 'varchar(255)', 'YES', '', None, '')
 ('工号', 'varchar(255)', 'YES', '', None, '')
@@ -986,8 +1249,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250109026456', 'employee_id': '4209', 'work_order_generation_time': '2025-01-09 14:53:38', 'appeal_address': '长宁区仙霞街道虹桥路1765弄锦苑公寓', 'appeal_area': '长宁区', 'content_description': '【重新交办，要求：答复要点不明确，管理部门未解释为何“商品房小区无法纳入精品小区改造范围”，且仙霞别墅同为商品房小区，却完成了精品小区改造，诉求：请管理部门回电解释。（市民要求信息保密，需要回复）最近办结的工单编号：20241211016462，工单内容：市民反映：仙霞街道锦苑公寓是1990年代的初批外销房，毗邻西郊国宾馆，现在已经房屋老化严重，需要整修美化改造。且2024年3月已经经过全体业务投票并公示结果，小区居民同意对小区的整体美化方案。过去8个月，仙霞街道却并未将美化事宜相关工作进一步推进，也并未上报房管局报备（详见附件）。诉求：请管理部门敦促仙霞街道积极作为，切实提升居民生活幸...', 'work_order_category': '一般', 'processing_description': '仙霞新村街道于2024年1月9日下午15时51分接单，于2024年1月9日下午15时51分先行联系来电人，告知其问题已收悉，正在办理。仙霞新村街道管理办于1月9日接单，正在办理。经査，情况不属实。此前已向来电人解释，街道辖区内部分商品房小区由于建筑时间久远存在诸多房屋问题，街道已在历年申报工作中进行申报。精品小区改造项目仅限小区性质为售后公房，因此由于锦苑公寓小区性质属于商品房，无法纳入改造范围。仙霞别墅系因为存在雨污混接现象，特此申报纳入精品小区进行应急修缮。后续若有其余改造机会，街道将积极争取。以上情况已电话回复来电人，来电人已知晓。经办人：王宏瑞。', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '住房保障', 'third_level_category': '旧房改造', 'fourth_level_category': '房屋老化', 'hosting_unit': '长宁区人民政府', 'is_anonymous': '是', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '住房保障', 'new_third_level_category': '房屋安全管理', 'new_fourth_level_category': '旧住房改造', 'new_five_level_classification': '旧住房修缮改造', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 72 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00990295,  0.04922485, -0.00664902, ..., -0.01100159,
-       -0.0291748 , -0.02645874], shape=(1024,))}
+	with 72 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00988007,  0.04922485, -0.0066452 , ..., -0.01098633,
+       -0.0291748 , -0.02644348], shape=(1024,))}
 {'工单编号': '20250109029608', '工号': '3245', '工单生成时间': datetime.datetime(2025, 1, 9, 15, 38, 18), '诉求地址': '宝山区', '诉求区域': '宝山区', '内容描述': '市民来电反映:市民在随申请办上想要向宝山区教育局申请校外培训民办机构体育培训设立申请，但发现无向关申请内容。诉求：请宝山区教育局核实告知现在是否还可以申请。', '工单类别': '一般', '处理描述': '与市民联系，告知目前平台已回复正常，如操作有不明白的地方可以拨打31197390找周老师咨询。', '客户类型': '个人', '一级分类': '科教文卫类', '二级分类': '教育', '三级分类': '培训市场', '四级分类': '市场监管', '主办单位': '宝山区人民政府', '是否匿名': None, '服务类型': '一网通办', '通话编号': '1736407925-2111259', '工单类型': '求助类', '新一级分类': '科教文卫类', '新二级分类': '教育', '新三级分类': '校外教育培训', '新四级分类': '体育类培训', '新五级分类': '办学资质', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -1290,8 +1553,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250113001602', 'employee_id': '3819', 'work_order_generation_time': '2025-01-13 08:27:28', 'appeal_address': '浦东新区高行镇政府', 'appeal_area': '浦东新区', 'content_description': '【重新交办，要求：答复要点与实际情况不符，其认为教育部门不顾进才森兰试验中学红头文件规划的的要求，私自将不属于森兰仁恒雅苑相关小区的学校，划给了森兰雅苑不合理。诉求：建议重新规划学区。最近办结的工单编号：20241219041982，工单内容：市民咨询：按照2018年浦东新区规划（红头文件），进才森兰试验中学高杰校区，是为了解决G片区居民孩子初中就读问题，批复建立的学校，然而高行镇政府副镇长顾建飞一手主导更改了区政府的规划，将新建学校授权教育局划分给了森兰H片区。近几个月来，浦东新区各级别领导都先后被查出受贿徇私舞弊等严重政治经济问题（详见附件）。诉求：请管理部门核实告知初中规划的相关信...', 'work_order_category': '一般', 'processing_description': '市民您好：浦东教育局已收悉您反映的情况。严格按照规划服务范围划定新开办配套学校招生区域。招生地段一经划定，保持稳定。教育部门将依法保障适龄儿童接受义务教育的权利。', 'customer_type': '个人', 'first_level_category': '科教文卫类', 'secondary_category': '教育', 'third_level_category': '入学入托', 'fourth_level_category': '入学政策', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '意见建议类', 'new_level_category': '科教文卫类', 'new_subcategory': '教育', 'new_third_level_category': '入学入园', 'new_fourth_level_category': '入学管理', 'new_five_level_classification': '学区划分', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 77 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00721359,  0.01473236,  0.00884247, ..., -0.00831604,
-       -0.04086304, -0.05819702], shape=(1024,))}
+	with 77 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00720596,  0.01470184,  0.00889587, ..., -0.008255  ,
+       -0.04083252, -0.05831909], shape=(1024,))}
 {'工单编号': '20250113004574', '工号': '1659', '工单生成时间': datetime.datetime(2025, 1, 13, 9, 29, 59), '诉求地址': '宝山区上大路1270号（大场镇兽医站门口）', '诉求区域': '宝山区', '内容描述': '市民来电反映:宝山区上大路1270号大场镇兽医站门口马路边的护栏本来是固定的，现在被变成了可拆卸的，拆掉后车可以停上来。诉求：希望管理部门核实要求将该处的护栏固定好，不要让车停上来。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '经现场核实上大路1270号附近护栏固定无问题，有两根红白杆可随意拆卸，已于14日完成固定。核实人顾晓静13818627293。', '客户类型': '个人', '一级分类': '公安政法类', '二级分类': '公安（治安、交通）', '三级分类': '交通管理', '四级分类': '交通设施', '主办单位': '宝山区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1736731501-279882', '工单类型': '求助类', '新一级分类': '公共安全类', '新二级分类': '公安事务', '新三级分类': '交警业务', '新四级分类': '交通管理', '新五级分类': '交通设施', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -1306,8 +1569,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250113007838', 'employee_id': '2963', 'work_order_generation_time': '2025-01-13 10:13:29', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:金山铁路S1642，从2025年开始，在06：40-08：10时间断叶榭站不停靠了，在2024年的时候还停靠的。诉求：希望在该时间段内能在叶榭站进行停靠。', 'work_order_category': '一般', 'processing_description': '同意', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '交通港口', 'third_level_category': '铁路客运', 'fourth_level_category': '车次信息', 'hosting_unit': '上海铁路局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1736734108-331256', 'work_order_type': '意见建议类', 'new_level_category': '交通运输类', 'new_subcategory': '铁路', 'new_third_level_category': '客运管理', 'new_fourth_level_category': '列车线路', 'new_five_level_classification': '列车线路', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 24 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01396942,  0.03512573,  0.00661087, ...,  0.01824951,
-       -0.02114868, -0.05847168], shape=(1024,))}
+	with 24 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01395416,  0.03515625,  0.00656509, ...,  0.01828003,
+       -0.02116394, -0.05841064], shape=(1024,))}
 {'工单编号': '20250113011406', '工号': '2875', '工单生成时间': datetime.datetime(2025, 1, 13, 10, 55, 57), '诉求地址': '无', '诉求区域': '本市', '内容描述': '【办不成事】市民反映：失业登记（本市户籍）/（非本市户籍），显示个人信息读取出错，无法线上办理该项业务【勾选内容】页面报错、显示信息有误上海市人力资源和社会保障局', '工单类别': '一般', '处理描述': '尊敬的市民，您好！您通过12345反映的问题我们已收悉。我中心工作人员于2025年1月16日与您电话联系了解问题详细信息，得知您的来电诉求已解决。感谢您对我们工作一如既往的支持，祝您生活愉快！', '客户类型': '个人', '一级分类': '其他类', '二级分类': '电子政务', '三级分类': '一网通办', '四级分类': '服务质量', '主办单位': '上海市大数据中心', '是否匿名': '否', '服务类型': '一网通办', '通话编号': None, '工单类型': '求助类', '新一级分类': '公共服务类', '新二级分类': '电子政务', '新三级分类': '一网通办', '新四级分类': '网站使用', '新五级分类': '网站使用', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -2866,8 +3129,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250204008692', 'employee_id': '3631', 'work_order_generation_time': '2025-02-04 14:41:59', 'appeal_address': '浦东新区三林镇林展路267弄城林雅苑', 'appeal_area': '浦东新区', 'content_description': '市民来电反映: 上述小区10号楼电梯内抽烟严重，经常电梯走进去一股烟味，居委会对此不作为，诉求：要求管理部门加强电梯内禁烟监管。（市民要求信息保密，需要回复）', 'work_order_category': '一般', 'processing_description': '三林镇五违办于2025年2月5日接单后执法队员范敏、张盛超立即到达林展路267弄城林雅苑10号楼电梯现场进行检查。经查现场未发现抽烟人员及烟蒂、电梯厢内禁烟标志完好，后续执法队员将严格督促物业加强管理与宣传并留存相关证据。', 'customer_type': '个人', 'first_level_category': '科教文卫类', 'secondary_category': '卫生计生', 'third_level_category': '禁烟控烟', 'fourth_level_category': '禁烟控烟', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1738651111-2369702', 'work_order_type': '投诉举报类', 'new_level_category': '科教文卫类', 'new_subcategory': '卫生', 'new_third_level_category': '公共卫生监管', 'new_fourth_level_category': '公共场所卫生监督', 'new_five_level_classification': '公共场所吸烟', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 23 stored elements and shape (1, 1451727)>, 'dense': array([-0.01334381, -0.02243042, -0.00450516, ...,  0.01620483,
-       -0.02790833, -0.01683044], shape=(1024,))}
+	with 23 stored elements and shape (1, 1451727)>, 'dense': array([-0.01334381, -0.02249146, -0.00452042, ...,  0.01618958,
+       -0.02790833, -0.01679993], shape=(1024,))}
 {'工单编号': '20250204012675', '工号': '3832', '工单生成时间': datetime.datetime(2025, 2, 4, 17, 38, 26), '诉求地址': '闵行区浦江镇谈中路113号光明果业', '诉求区域': '闵行区', '内容描述': '市民反映：上述地址光明果业跨门营业且阁楼上商铺住人，存在严重的消防安全问题，长达数月一直没有处理（详见附件）。诉求：请管理部门核实整治。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '浦江镇城管中队于2月5日对诉求信息进行确认。经现场查看，已将该处跨门经营行为处置。后续我中队将加强日常巡查力度，做好长效管理。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '绿化市容', '三级分类': '城市管理', '四级分类': '跨门经营', '主办单位': '闵行区人民政府', '是否匿名': '是', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '住房和城乡建设类', '新二级分类': '绿化市容', '新三级分类': '市容', '新四级分类': '市容市貌', '新五级分类': '跨门经营', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -3562,8 +3825,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250213012715', 'employee_id': '1252', 'work_order_generation_time': '2025-02-13 12:06:12', 'appeal_address': '杨浦区民府路678号T1号楼7层（实际楼层6层）708室上海格物致品网络科技有限公司', 'appeal_area': '杨浦区', 'content_description': '【重新交办，告知市民答复要点，答复要点与实际情况不符合，管理部门没有和其电话联系过，也没有调解过，其反映的问题也没有不属实的情况，要求尽快核查处理，协商退货退款。（需回复）最近办结的工单编号:20250115013220，工单内容:市民来电反映:其表示自己在抖音商城上购买了商品黄龙玉手镯，但市民收到货物后不过一个月发生小擦碰就出现开裂，联系平台，平台推送退货退款信息，但商家拒绝，平台就关闭市民退款渠道。订单编号：6936895939827864736，金额：368元，诉求：投诉抖音商城不落实售后承诺，请管理部门核实协商退货退款。】', 'work_order_category': '一般', 'processing_description': '经核实，被诉企业抖音平台已联系消费者解释说明，投诉人不认可，经沟通双方无法达成调解协议。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '商业服务', 'fourth_level_category': '售后服务', 'hosting_unit': '市市场监管局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1739419295-2701945', 'work_order_type': '投诉举报类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '消费维权', 'new_fourth_level_category': '消费纠纷', 'new_five_level_classification': '售后服务纠纷', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 61 stored elements and shape (1, 1451727)>, 'dense': array([-0.02922058,  0.02589417,  0.02224731, ..., -0.03594971,
-       -0.05502319, -0.00990295], shape=(1024,))}
+	with 61 stored elements and shape (1, 1451727)>, 'dense': array([-0.0292511 ,  0.02592468,  0.02223206, ..., -0.03591919,
+       -0.05499268, -0.00986481], shape=(1024,))}
 {'工单编号': '20250213016048', '工号': '2940', '工单生成时间': datetime.datetime(2025, 2, 13, 13, 28, 35), '诉求地址': '浦东新区宣夏路526号 ', '诉求区域': '浦东新区', '内容描述': '市民来电反映:2月13日13:20左右在3号窗口办理违章扣分，询问违章是谁开的车，男性工作人员给其看照片的时候态度差，说不是其开的车，声音很大的把电脑转过来。诉求：请管理部门对窗口工作人员态度差进行处理。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '上海市公安局浦东分局交警支队事故审理大队民警欲与匿名市民取得联系。现根据您的诉求回复如下:接待过程中，民警无态度差的表现，声音大是民警个人习惯。', '客户类型': '个人', '一级分类': '其他类', '二级分类': '纪检监察', '三级分类': '政风行风', '四级分类': '服务态度', '主办单位': '市公安局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1739424277-2706649', '工单类型': '投诉举报类', '新一级分类': '党政机关类', '新二级分类': '党风政风', '新三级分类': '作风问题', '新四级分类': '服务态度', '新五级分类': '服务态度', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -4178,8 +4441,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250219041645', 'employee_id': '2614', 'work_order_generation_time': '2025-02-19 21:53:57', 'appeal_address': '浦东新区张江高科技园区金科路2966号', 'appeal_area': '浦东新区', 'content_description': '市民反映：【商家地址/名称:上海市浦东新区张江高科技园区金科路2966号,时间:2024/11/11...', 'work_order_category': '一般', 'processing_description': '经核实，投诉所述抖音平台“数娱充值中心”营业执照信息为深圳兴鑫运通贸易有限公司，金科路2966号无该公司，非我局管辖，故不予受理。建议按上述名称向其所在地市场监管部门反馈。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '商业服务', 'fourth_level_category': '售后服务', 'hosting_unit': '市市场监管局', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '求助类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '消费维权', 'new_fourth_level_category': '消费纠纷', 'new_five_level_classification': '售后服务纠纷', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 15 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00251389,  0.02993774,  0.00178623, ...,  0.0173645 ,
-       -0.02770996, -0.02102661], shape=(1024,))}
+	with 15 stored elements and shape (1, 1451727)>, 'dense': array([ 0.0024662 ,  0.02993774,  0.0018425 , ...,  0.0174408 ,
+       -0.02774048, -0.02096558], shape=(1024,))}
 {'工单编号': '20250220001857', '工号': '2339', '工单生成时间': datetime.datetime(2025, 2, 20, 8, 42), '诉求地址': '闵行区七宝镇航华二村79号', '诉求区域': '闵行区', '内容描述': '市民来电反映:闵行区七宝镇航华二村79号的路灯坏了，灯罩也掉下来了，诉求：请管理部门尽快修复。', '工单类别': '次紧急', '处理描述': '2025年3月1日09:58:40 联系物业，物业表示该问题已经解决。 2025年3月1日10:03:50 回访居民关机 2025年3月1日14:04:41回访居民关机 2025年3月2日07:12:39 回访居民关机 三次回访未接通。', '客户类型': '个人', '一级分类': '公用事业类', '二级分类': '电力', '三级分类': '故障报修', '四级分类': '路灯供电', '主办单位': '市房屋管理局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1740011952-659281', '工单类型': '求助类', '新一级分类': '住房和城乡建设类', '新二级分类': '城乡建设', '新三级分类': '路灯设备维护', '新四级分类': '设备故障', '新五级分类': '路灯不亮', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -4250,8 +4513,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250220026228', 'employee_id': '1685', 'work_order_generation_time': '2025-02-20 15:42:16', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:2025年1月4日在拼多多购买木梳美容仪价格759元，只用了几天就无法充电了寄回商家检测后商家为其更换一台再次使用还是存在质量问题没电，下单手机号15867787145。诉求：希望退货退款（需回复）', 'work_order_category': '一般', 'processing_description': '经查，被投诉人表示投诉人的诉求无法满足，双方无法达成调解协议，依据《市场监督管理投诉举报处理暂行办法》第二十一条规定，现我局决定依法终止调解。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '商业服务', 'fourth_level_category': '售后服务', 'hosting_unit': '市市场监管局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1740037073-2822596', 'work_order_type': '求助类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '企业监管', 'new_fourth_level_category': '企业直通车', 'new_five_level_classification': '拼多多绿色通道', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 39 stored elements and shape (1, 1451727)>, 'dense': array([-0.03887939,  0.04644775, -0.01160431, ..., -0.02830505,
-       -0.00527954, -0.00183296], shape=(1024,))}
+	with 39 stored elements and shape (1, 1451727)>, 'dense': array([-0.03887939,  0.04647827, -0.01163483, ..., -0.02833557,
+       -0.00530243, -0.00180721], shape=(1024,))}
 {'工单编号': '20250220029120', '工号': '2974', '工单生成时间': datetime.datetime(2025, 2, 20, 16, 27, 24), '诉求地址': '青浦区夏阳街道城南新路村11队184号', '诉求区域': '青浦区', '内容描述': '市民来电咨询:青浦区夏阳街道城南新路村11队184号在1994建造的，现在联系村里申请改建告知现在不允许翻建，但是周边其他地方都能翻建的，村里也给不了明确时间，就说上面不允许。诉求：请管理部门核实并确认不让翻建改建的原因，并明确什么时候可以申请翻建，解决居民实际困难。', '工单类别': '一般', '处理描述': '夏阳街道城运中心于2025年02月20日接单，并于2月21日9时47分首次通过电话先行联系诉求人，告知其问题已经收悉，正在夏阳街道城运中心进行办理。 2025年2月24日，由夏阳街道管理办对诉求人反映情况进行核实。办理情况：根据核实，许先生房屋位于城南村11组184号，属于撤并村，原则上不翻建，以鼓励修缮为主。关于翻建并没有具体时间。已将处理结果告知来电人，该问题已经实际解决。经办人：沈杰锴。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '住房保障', '三级分类': '房屋权属', '四级分类': '宅基地', '主办单位': '青浦区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1740039684-787724', '工单类型': '咨询类', '新一级分类': '经济综合类', '新二级分类': '农业', '新三级分类': '农村经营管理', '新四级分类': '农村土地管理', '新五级分类': '农村宅基地管理', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -5018,8 +5281,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250228012999', 'employee_id': '4238', 'work_order_generation_time': '2025-02-28 11:42:07', 'appeal_address': '浦东新区书院镇首善街99弄玖里书香二期1幢170号702室', 'appeal_area': '浦东新区', 'content_description': '市民来电反映:2025年2月23日其家中再次反水，物业联系开发商来处理，表示看不到堵塞物，开发商把市民家里墙砸开了，马桶拆掉了清理掉堵塞物了，承诺三天复原，至今没有复原。市民表示其找不到开发商，但是联系物业一直不回消息。诉求：要求开发商尽快复原市民家里墙体等物品。', 'work_order_category': '一般', 'processing_description': '尊敬的市民，您好！您所反映的事项现由临港新片区城市建设交通运输事务中心回复您：接到您反映的事项后，经与开发商及物业核实，目前瓷砖和马桶已于3月5日当天完成安装恢复；浸水墙面现已铲除，待晾干后恢复；室内门套泡水，已向供货单位下单，备货周期约一个月，待到货后进行更换；如未能按期完成恢复，您可拨打电话021-68283550，我中心将继续跟进。感谢您对我们工作的支持，祝您生活愉快!', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '城乡建设', 'third_level_category': '工程管理', 'fourth_level_category': '工程质量', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1740713701-2960651', 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '城乡建设', 'new_third_level_category': '工程管理', 'new_fourth_level_category': '工程质量', 'new_five_level_classification': '渗漏', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 34 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01557159,  0.02374268, -0.00557327, ..., -0.00771332,
-       -0.03381348, -0.0369873 ], shape=(1024,))}
+	with 34 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01555634,  0.02372742, -0.00560379, ..., -0.00767899,
+       -0.03378296, -0.03695679], shape=(1024,))}
 {'工单编号': '20250228016253', '工号': '4074', '工单生成时间': datetime.datetime(2025, 2, 28, 12, 48, 32), '诉求地址': '本市', '诉求区域': '本市', '内容描述': '市民来电咨询:东方卫视里面有播放了一个2024年重庆乒乓球冠军赛的新闻，市民表示其报道的新闻不属实为什么还要进行报道，市民不认可，诉求：请管理部门核实给市民一个答复。', '工单类别': '一般', '处理描述': '同意', '客户类型': '个人', '一级分类': '科教文卫类', '二级分类': '新闻出版', '三级分类': '其他', '四级分类': '其他', '主办单位': '上海广播电视台', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1740717757-867871', '工单类型': '咨询类', '新一级分类': '科教文卫类', '新二级分类': '文化宣传', '新三级分类': '出版发行', '新四级分类': '新闻报道', '新五级分类': '新闻内容', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -5106,8 +5369,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250301004756', 'employee_id': '2693', 'work_order_generation_time': '2025-03-01 09:48:36', 'appeal_address': '杨浦区周家嘴路', 'appeal_area': '杨浦区', 'content_description': '【重新交办，要求：答复要点不明确，市民表示至今没有给到明确结果，家中马桶堵住不畅通，原诉求不变。（需回复）最近办结的工单编号:20250219015279，工单内容：市民来电反映:市民是杨浦区友谊新村居民，小区边上周家嘴路有个建筑工地总包北京城建，1月下旬工地施工时把小区的污水管弄坏了，至今没有彻底修好，市民家的马桶无法正常排水，诉求： 要求尽快维修，保证市民家正常排水（需回复）】', 'work_order_category': '一般', 'processing_description': '你单位转来的工单已收悉，我办在接单后立即转派区建管委进行处理。据区建管委回复：先行联系：已联。事实认定：部分属实，诉求认定：诉求合理合法。处置过程及回访：来电人所反映的项目为杨浦区长白社区H2-17地块（延吉新村街道201街坊）商品住宅项目，其反映的情况部分属实，毛地未清理导致施工过程中污水管被截断属实，没有给到明确结果不属实，尽快维修的诉求合理合法。经核查，项目红线内一根在用排水管道未在土地移交前搬迁，该管道用于输送友谊新村生活污水至南侧周家嘴路市政管道。2024年1月，项目工程桩施工过程中截断了上述管道，导致小区内污水排水不畅，但小区内管道仍可排水，并未堵住。目前，建设单位采取了临排...', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '水务', 'third_level_category': '排水排污管理', 'fourth_level_category': '排水工程', 'hosting_unit': '杨浦区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1740793377-264386', 'work_order_type': '求助类', 'new_level_category': '环境与资源类', 'new_subcategory': '水务', 'new_third_level_category': '排水排污', 'new_fourth_level_category': '阻塞积水', 'new_five_level_classification': '排水管道', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 47 stored elements and shape (1, 1451727)>, 'dense': array([-0.0118866 , -0.00796509, -0.02230835, ..., -0.02032471,
-       -0.04431152, -0.0083847 ], shape=(1024,))}
+	with 47 stored elements and shape (1, 1451727)>, 'dense': array([-0.01190948, -0.00796509, -0.02230835, ..., -0.02033997,
+       -0.04431152, -0.00836945], shape=(1024,))}
 {'工单编号': '20250301005524', '工号': '3527', '工单生成时间': datetime.datetime(2025, 3, 1, 10, 48, 50), '诉求地址': '长宁区水城南路51弄宝石公寓', '诉求区域': '长宁区', '内容描述': '【国办转办件-中国政府网(须上传盖章版附件)】市民反映：由于小区始终没有安装充电桩，导致居民近一年都没办法合法充电，和居委会反映多次仍然无法解决，一方面法律规定不能在室内或飞线充电，另一方面小区没有充电桩，这样就导致使用电动车的居民非常困扰。诉求：请管理部门帮助解决小区充电事宜。【网民选择公开留言】', '工单类别': '一般', '处理描述': '虹桥街道于3月1日接单，于3月3日15时先行联系来电人，告知其问题已经收悉，正在我单位进行办理。经现场核实情况如下： 1、该小区原始建设未设置非机动车充电桩及车棚。 2、相关文件下发后，居委及街道管理部门已对接可免费安装非机动车充电桩的企业进行现场勘察并出具相关安装方案，居委于2024年3月14日牵头召开业主大会，对增设非机动车充电桩车棚进行征询。根据《民法典》相关规定，此次征询参与业主未达占比三分之二以上，征询结果不通过，相关征询结果居委已于4月2日在小区公示栏内进行了公示。...', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '住房保障', '三级分类': '物业服务管理', '四级分类': '物业维修添置', '主办单位': '长宁区人民政府', '是否匿名': '否', '服务类型': '综合服务', '通话编号': None, '工单类型': '求助类', '新一级分类': '经济综合类', '新二级分类': '发改', '新三级分类': '发改规划', '新四级分类': '新能源汽车', '新五级分类': '充（换）电设施安装', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -5170,8 +5433,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250301028506', 'employee_id': '4317', 'work_order_generation_time': '2025-03-01 19:46:29', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:工地地址：虹桥机场2号航站楼旁边的东航保障房项目，上海二建，机电安装工作。施工单位：上海乾升建设发展有限公司，拖欠金额5-6万，4个人，有劳动合同，原本承诺年前给工资，但一直没有给。诉求：请管理部门协助讨薪。', 'work_order_category': '一般', 'processing_description': '接件后联系信访人了解情况，随后督促项目负责人处置，3月7日经新虹街道派出所、总包单位及劳务单位负责人协调、协商下达成一致意见，3月份支付部分欠款，余款在6月份结清，其表示认可。', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '城乡建设', 'third_level_category': '工程管理', 'fourth_level_category': '建筑工程欠薪', 'hosting_unit': '市住房城乡建设管理委', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1740829051-335372', 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '城乡建设', 'new_third_level_category': '工程管理', 'new_fourth_level_category': '拖欠农民工工资', 'new_five_level_classification': '其他工程拖欠工资', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 40 stored elements and shape (1, 1451727)>, 'dense': array([-0.01531219,  0.00261497,  0.01181793, ...,  0.01660156,
-       -0.04626465, -0.04837036], shape=(1024,))}
+	with 40 stored elements and shape (1, 1451727)>, 'dense': array([-0.01530457,  0.00256729,  0.01180267, ...,  0.0165863 ,
+       -0.04623413, -0.04837036], shape=(1024,))}
 {'工单编号': '20250301031923', '工号': '3850', '工单生成时间': datetime.datetime(2025, 3, 1, 23, 11, 21), '诉求地址': '浦东新区杨新路201号', '诉求区域': '浦东新区', '内容描述': '市民来电反映:上述地址路边有水管爆了，水很大，诉求：希望尽快帮维修（市民要求信息保密，无需回复）', '工单类别': '次紧急', '处理描述': '您好，三林镇精细办接单后，赶往现场查看，已联系作业单位进行处理，现已修复完成。匿名故无法联系。', '客户类型': '个人', '一级分类': '公用事业类', '二级分类': '供水', '三级分类': '供水报修', '四级分类': '水管维修', '主办单位': '浦东新区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1740841635-2640732', '工单类型': '求助类', '新一级分类': '公共服务类', '新二级分类': '供水', '新三级分类': '供水报修', '新四级分类': '水管维修', '新五级分类': '地下水管漏水报修', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -6002,8 +6265,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250310010425', 'employee_id': '2325', 'work_order_generation_time': '2025-03-10 10:46:56', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电咨询:随申办的登录密码遗忘，绑定的手机号码18355027597也不使用，无法接受验证码，人脸识别认证后依旧要求提供验证码，姓名：柏广林，身份证号码：341125198710204875。诉求：希望管理部门尽快协助帮助正常登录。', 'work_order_category': '一般', 'processing_description': '&nbsp;2025年3月11日16:15市民云已联系用户，已在线协助用户改绑手机问题已经解决', 'customer_type': '个人', 'first_level_category': '其他类', 'secondary_category': '电子政务', 'third_level_category': '一网通办', 'fourth_level_category': '网站使用', 'hosting_unit': '上海市大数据中心', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1741574389-731377', 'work_order_type': '咨询类', 'new_level_category': '公共服务类', 'new_subcategory': '电子政务', 'new_third_level_category': '一网通办', 'new_fourth_level_category': '网站使用', 'new_five_level_classification': '网站使用', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 30 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01148224,  0.04110718, -0.00051546, ..., -0.0052948 ,
-       -0.0105896 , -0.0614624 ], shape=(1024,))}
+	with 30 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01151276,  0.04110718, -0.00048828, ..., -0.00529861,
+       -0.01056671, -0.0614624 ], shape=(1024,))}
 {'工单编号': '20250310013549', '工号': '1650', '工单生成时间': datetime.datetime(2025, 3, 10, 11, 26, 3), '诉求地址': '静安区彭浦镇老年食堂', '诉求区域': '静安区', '内容描述': '市民来电反映:彭浦镇开了老年食堂，市民发现食堂，今天的菜和昨天相同，怀疑是昨天的菜，担心食品安全问题，诉求：希望管理部门加强管理。（需回复）', '工单类别': '一般', '处理描述': '【彭浦镇】不属实。2025年3月11日8:50联系诉求人王先生，王先生告知永和路社区食堂每日为其母亲送餐上门，其母亲告知食堂周日和周一送的同样的菜，怀疑是剩菜。经与永和路社区长者核实情况，王先生母亲是永和路食堂重点关爱的服务对象，食堂对老人的喜好进行了备注，老人家不吃鸡肉、鱼肉、海鲜。由于周日套餐有黄焖鸡腿，食堂为老人把鸡腿更换为咕咾肉。周一根据菜单是水晶咕咾肉和花菜肉片，老人怀疑咕咾肉是剩菜。永和路食堂已向老人进行了解释。经与诉求人解释以上情况，告知永和路社区食堂每日菜单经彭浦播报公示，每日菜均为新鲜现制，绝非剩菜。诉求人不接受解释。经办人：严蓓，联系电话：56659950。', '客户类型': '个人', '一级分类': '安全监管类', '二级分类': '食品药品安全', '三级分类': '安全管理', '四级分类': '食品安全', '主办单位': '静安区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1741576834-135285', '工单类型': '投诉举报类', '新一级分类': '社会管理类', '新二级分类': '市场监管', '新三级分类': '企业监管', '新四级分类': '食品安全监管', '新五级分类': '食品质量', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -6098,7 +6361,7 @@ content_description
 1000
 content_description
 {'work_order_number': '20250311001087', 'employee_id': '2438', 'work_order_generation_time': '2025-03-11 08:04:11', 'appeal_address': '普陀区真南路822弄521支弄8号旁边', 'appeal_area': '普陀区', 'content_description': '【重新交办，要求：按答复市民要点告知市民，市民表示答复市民要点与实际情况明显不符，不符内容：市民表示现在有施工队进入施工，诉求：管理部门核实查实谁批准在居民区建造游乐场，要求改址。最近办结的工单编号：20241025004219，工单内容：市民来电反映:其为上述地址居民，现看到小区贴出告示在其小区隔壁，即其楼下的这块空地要搞一个游乐场。市民表示游乐场一旦搞起来肯定是从早吵到晚的，也不明白居民区这边为何可以搞游乐场。诉求：反对搞游乐场，要求改址】', 'work_order_category': '一般', 'processing_description': '亲爱的市民朋友，您好！感谢您的来电，桃浦镇在3月11日接单，并于8时先行联系，3月18日答复，确认不属实。经查，2024年12月经桃浦镇多部门会议通过了关于李子园村822弄455支弄打造无动力乐园项目，施工已向桃浦镇备案，合法合规。同时已至现场和施工负责人沟通施工时间是早8点-晚6点，负责人表示会按照施工时间施工，后续也会继续做好日常监督。戴造云 ，62841353。最后衷心感激您对桃浦发展的关注与支持，祝您生活顺利，家庭幸福！附先行联系，处置照片，处置录音。', 'customer_type': '个人', 'first_level_category': '公安政法类', 'secondary_category': '公安（治安、交通）', 'third_level_category': '特种行业管理', 'fourth_level_category': '娱乐场所管理', 'hosting_unit': '普陀区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1741651051-868681', 'work_order_type': '意见建议类', 'new_level_category': '科教文卫类', 'new_subcategory': '文化宣传', 'new_third_level_category': '文化市场', 'new_fourth_level_category': '场所监管', 'new_five_level_classification': '文化游乐场管理', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 46 stored elements and shape (1, 1451727)>, 'dense': array([-0.00216103, -0.01390839,  0.01225281, ..., -0.01531982,
+	with 46 stored elements and shape (1, 1451727)>, 'dense': array([-0.0021553 , -0.01394653,  0.01221466, ..., -0.01527405,
        -0.04452515, -0.05215454], shape=(1024,))}
 {'工单编号': '20250311003635', '工号': '4439', '工单生成时间': datetime.datetime(2025, 3, 11, 9, 7, 30), '诉求地址': '浦东新区海鹏路金钻路金群苑22号1701室', '诉求区域': '浦东新区', '内容描述': '市民来电反映:上述地址二房东将房间改造，隔了好几个小间，改变房屋原有结构。诉求：希望管理部门核实并整治。（市民要求信息保密 无需回复）', '工单类别': '一般', '处理描述': '经核实，金群苑南区22号1701室于2025年2月27日重新办理装修，工作人员上门时房屋内现为毛坯房。目前正处于装修中，后续工作人员将会持续对该户装修情况进行上门检查。不存在隔了好几个小间，改变房屋原有结构情况（', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '城管执法', '三级分类': '物业相关执法', '四级分类': '结构改建', '主办单位': '浦东新区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1741654954-2241785', '工单类型': '投诉举报类', '新一级分类': '住房和城乡建设类', '新二级分类': '城管执法', '新三级分类': '房屋违规使用执法', '新四级分类': '擅自改变房屋使用性质', '新五级分类': '擅自改变房屋原始结构功能', '诉求地址_省份': None}
 (1000, 1451727)
@@ -6770,8 +7033,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250317009830', 'employee_id': '1905', 'work_order_generation_time': '2025-03-17 10:28:42', 'appeal_address': '上海市', 'appeal_area': '本市', 'content_description': '【好差评】市民反映：开具本市房屋查询结果证明-立即办理-申报评价【勾选内容】数据更新同步不及时,跑动次数多,线上预审时间长,未在规定时限办结,材料提交便捷【评价内容】预审不及时，经他人引导需要本人去公司请假到线下排队办理[上海市规划和自然资源局]', 'work_order_category': '一般', 'processing_description': '同意', 'customer_type': '个人', 'first_level_category': '其他类', 'secondary_category': '电子政务', 'third_level_category': '一网通办', 'fourth_level_category': '服务质量', 'hosting_unit': '市规划和自然资源局', 'is_anonymous': '否', 'service_type': '一网通办', 'call_number': None, 'work_order_type': '投诉举报类', 'new_level_category': '公共服务类', 'new_subcategory': '电子政务', 'new_third_level_category': '一网通办', 'new_fourth_level_category': '网站使用', 'new_five_level_classification': '网站使用', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 40 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00548172,  0.01571655,  0.00124359, ..., -0.01681519,
-       -0.00294876, -0.07495117], shape=(1024,))}
+	with 40 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00548935,  0.01574707,  0.00123882, ..., -0.01687622,
+       -0.00295448, -0.07501221], shape=(1024,))}
 {'工单编号': '20250317012408', '工号': '2462', '工单生成时间': datetime.datetime(2025, 3, 17, 11, 3, 14), '诉求地址': '普陀区华师大一村', '诉求区域': '普陀区', '内容描述': '【重新交办，按答复市民要点告知市民，市民表示答复市民要点不明确，管理部门没有说明具体措施。华师大打市民电话时直指市民反映内容不合理，态度恶劣。诉求：要求取消该外卖放置点。最近办结的工单编号：20250305019684，工单内容： 市民来电反映:华东师范大学普陀校区因校园安全故规定外卖不能进学校，在上述地址小区内设置了外卖放置点，市民表示影响小区安全，造成小区居民进出不便，诉求：要求取消该外卖放置点。】', '工单类别': '一般', '处理描述': '归档', '客户类型': '个人', '一级分类': '科教文卫类', '二级分类': '教育', '三级分类': '其他', '四级分类': '其他', '主办单位': '市教育委员会', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1742180264-2301628', '工单类型': '求助类', '新一级分类': '科教文卫类', '新二级分类': '教育', '新三级分类': '学校管理', '新四级分类': '校园设施', '新五级分类': '后勤服务', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -6930,8 +7193,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250318020365', 'employee_id': '4492', 'work_order_generation_time': '2025-03-18 13:21:33', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:市民1984年5月份开始在建工集团工作，现在已经改为一建集团。1988年8月市民离开单位、当时有扣过养老保险费。市民也有建工集团的认定劳动合同有效的文件，市民去崇明当地申请算入工龄。工作人员说没有招工记录不给市民算入工龄。市民表示招工记录非市民个人可以保管。诉求：请管理部门告知如何将1992年前的工作工龄算入社保。', 'work_order_category': '一般', 'processing_description': '与个人联系，个人强调手上有1984年5月至1988年8月的工资表，但无当时相关录用的资料，个人表示要向法院提出行政诉讼，确认和原单位之间到底是何种性质的录用。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '人力保障', 'third_level_category': '劳动人事制度', 'fourth_level_category': '工龄核算', 'hosting_unit': '市人力资源和社会保障局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1742274457-2703102', 'work_order_type': '求助类', 'new_level_category': '社会管理类', 'new_subcategory': '人力资源和社会保障', 'new_third_level_category': '职工养老保险', 'new_fourth_level_category': '养老金计发', 'new_five_level_classification': '工龄认定', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 42 stored elements and shape (1, 1451727)>, 'dense': array([-0.02212524,  0.04824829, -0.01157379, ...,  0.00907898,
-        0.0111618 , -0.03527832], shape=(1024,))}
+	with 42 stored elements and shape (1, 1451727)>, 'dense': array([-0.02215576,  0.04818726, -0.01161957, ...,  0.00904846,
+        0.01117706, -0.0352478 ], shape=(1024,))}
 {'工单编号': '20250318023849', '工号': '4439', '工单生成时间': datetime.datetime(2025, 3, 18, 14, 9, 48), '诉求地址': '松江区中山东路298号9楼', '诉求区域': '松江区', '内容描述': '市民来电反映:其在上述地址上海源盛专修学院，报名家政服务课程，支付16800元，因一直未开班，市民希望办理退费，且同意支付退费手续费，但被机构拒绝，登记手机号：18116256159，诉求：希望管理部门协调机构尽快退费。', '工单类别': '一般', '处理描述': '2025-03-23 10:04:14致电，您反映通过上海源盛专修学院，报名家政服务课程，现存在退费争议，告知您，经查，上海源盛专修学院不是我局批准成立，未通过我局备案，无法通过我局督促退费。建议您通过司法途径维权。', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '人力保障', '三级分类': '就业创业', '四级分类': '职业培训', '主办单位': '市人力资源和社会保障局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1742277833-2102133', '工单类型': '求助类', '新一级分类': '社会管理类', '新二级分类': '人力资源和社会保障', '新三级分类': '就业创业', '新四级分类': '职业技能类培训', '新五级分类': '收退费管理', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -7130,8 +7393,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250320003108', 'employee_id': '3895', 'work_order_generation_time': '2025-03-20 08:57:01', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:其表示其乘坐3号线，8号线，广播声音上下班高峰听不到，显示屏上面放广告，不清楚下一站到哪里，想看外面站台，但是站台有很多柱子，完全看不到自己到了哪一站路。其要求参考香港和日本在柱子上立标识。诉求：希望管理部门核实在柱子上立标识并要求不要在显示屏上放广告。（需要回复）', 'work_order_category': '一般', 'processing_description': '已确认', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '交通港口', 'third_level_category': '地铁客运', 'fourth_level_category': '地铁建设', 'hosting_unit': '申通集团', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1742431842-2438393', 'work_order_type': '意见建议类', 'new_level_category': '公共安全类', 'new_subcategory': '公安事务', 'new_third_level_category': '轨交地铁', 'new_fourth_level_category': '其他（轨交）', 'new_five_level_classification': '其他（轨交）', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.01493835,  0.00833893, -0.00647736, ...,  0.00823212,
-       -0.00662231, -0.03939819], shape=(1024,))}
+	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.01486969,  0.00839233, -0.00651169, ...,  0.008255  ,
+       -0.0066185 , -0.03939819], shape=(1024,))}
 {'工单编号': '20250320005163', '工号': '1697', '工单生成时间': datetime.datetime(2025, 3, 20, 9, 40, 58), '诉求地址': '闵行区先新路1058弄35号', '诉求区域': '闵行区', '内容描述': '市民来电反映:其是上述地址居民，35号楼下本来有一个不锈钢晾衣架，去年被拆掉了，物业说以后还要装的，但至今未安装。诉求：要求在原处安装晾衣架。（需要回复）', '工单类别': '一般', '处理描述': '浦江馨都居委于3月20日与来电人先行联系并对诉求信息进行确认。由于原晾衣架附近楼栋的1、2层居民对晾衣架意见较大，故物业对晾衣架进行移位至空旷区域。并非只是拆掉晾衣架，不安装。浦江馨都居委于4月2日将解决情况答复来电人，市民表示不满意。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '住房保障', '三级分类': '物业服务管理', '四级分类': '物业维修添置', '主办单位': '闵行区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1742434374-929756', '工单类型': '求助类', '新一级分类': '住房和城乡建设类', '新二级分类': '住房保障', '新三级分类': '住宅物业服务管理', '新四级分类': '物业维修保养', '新五级分类': '共用设施', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -8674,8 +8937,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250403009590', 'employee_id': '1402', 'work_order_generation_time': '2025-04-03 10:46:11', 'appeal_address': '浦东新区祝桥镇盐朝公路1572弄88号', 'appeal_area': '浦东新区', 'content_description': '（厂房，已搭建）市民留言反映：上述地址有违法建筑，该处是厂房，从4米加高到12米。市民表示在2024年3-4月有反映过，当时拆除了一部分，但在2024年底又进行搭建了，市民对此不认可。市民诉求：希望管理部门核实是否属于违法搭建，并对违法建筑进行拆除。（市民要求信息保密，无需回复）', 'work_order_category': '一般', 'processing_description': '接诉后，2025年04月14日09时37分，祝桥镇综合行政执法队执法人员前往诉求地点盐朝公路1572弄88号（朝阳农场太阳木制品有限公司）检查，经确认，具体位置为朝阳农场7街坊2丘，该处为原上海太阳木质建筑装潢制品有限公司的厂房，现上海昕荭材料科技有限公司实际使用中，根据产证信息：占地面积19535平方米，建筑面积3573平方米，权证号为：（沪房地市字（2000）第012157号），房屋资产为光明集团所有。经现场检查，该厂区内有厂房正在修缮，但未发现有新增的违章建筑。经执法人员后期调查，该处厂房提供有《祝桥镇人民政府关于原上海太阳木质建筑装潢制品有限公司资产转型升级相关事宜报告的回复》及...', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '城乡建设', 'third_level_category': '违法建筑', 'fourth_level_category': '违法建筑', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1743484427-76233', 'work_order_type': '投诉举报类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '城管执法', 'new_third_level_category': '违建执法', 'new_fourth_level_category': '违法建筑', 'new_five_level_classification': '新增违法建筑', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 32 stored elements and shape (1, 1451727)>, 'dense': array([-0.02261353,  0.03442383,  0.0206604 , ..., -0.00350189,
-       -0.01062775, -0.01296997], shape=(1024,))}
+	with 32 stored elements and shape (1, 1451727)>, 'dense': array([-0.02258301,  0.03442383,  0.02061462, ..., -0.00353241,
+       -0.01062775, -0.01296234], shape=(1024,))}
 {'工单编号': '20250403013007', '工号': '3465', '工单生成时间': datetime.datetime(2025, 4, 3, 11, 29, 37), '诉求地址': '本市', '诉求区域': '本市', '内容描述': '市民来电反映:其在拼多多买了一个锂电池，价格：1000元左右，订单号：250113-427703714210509，收到的是三无产品，其和拼多多反映，对方让其联系商家，但商家无法提供生产日期，诉求：希望管理部门核实并让拼多多提供该商品的产品生产日期、许可证、使用说明书、产品商标、生产厂家外包装及合格证编码。（需回复）', '工单类别': '一般', '处理描述': '经查，我局于2025-04-18与消费者解释沟通，消费者表示知悉了解，故此单投诉办结。商品由商家自行销售/宣传/服务，拼多多综合服务平台不参与该商家的店铺运营，因未发现被投诉举报人存在违反市场监管部门相关法律的行为，故我局对其不予立案。', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '工商(消保)', '三级分类': '商业服务', '四级分类': '网上购物', '主办单位': '市市场监管局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1743650665-2495737', '工单类型': '求助类', '新一级分类': '社会管理类', '新二级分类': '市场监管', '新三级分类': '消费维权', '新四级分类': '消费纠纷', '新五级分类': '售后服务纠纷', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -9114,8 +9377,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250408010775', 'employee_id': '3287', 'work_order_generation_time': '2025-04-08 10:37:16', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映:松江12路，有的站不停放，就靠司机提醒，市民表示车辆吵的话根本听不到，如：人民北路期昌路。下一站南期昌路，但到了南期昌路不停的，诉求：请管理部门核实介入处理完善相关的停靠点。，更新站牌信息。（市民要求信息保密，需要回复）', 'work_order_category': '一般', 'processing_description': '1.经车队核实情况，反映人反映情况不属实。2.根据行业要求，没站牌的站点不能停靠。3.车队于2025-04-0911；00分联系反映人，经解释沟通取得理解。', 'customer_type': '个人', 'first_level_category': '公安政法类', 'secondary_category': '公安（治安、交通）', 'third_level_category': '交通管理', 'fourth_level_category': '交通设施', 'hosting_unit': '市交通委', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1744079599-2107990', 'work_order_type': '投诉举报类', 'new_level_category': '交通运输类', 'new_subcategory': '道路运输', 'new_third_level_category': '地面公交', 'new_fourth_level_category': '场站及设施管理', 'new_five_level_classification': '公交站牌', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 35 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01789856, -0.01028442, -0.002882  , ..., -0.00918579,
-       -0.0244751 , -0.05819702], shape=(1024,))}
+	with 35 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01791382, -0.01020813, -0.00284195, ..., -0.00917816,
+       -0.02444458, -0.05825806], shape=(1024,))}
 {'工单编号': '20250408013215', '工号': '2423', '工单生成时间': datetime.datetime(2025, 4, 8, 11, 13, 12), '诉求地址': '松江区嘉松南路上的:通波塘桥', '诉求区域': '松江区', '内容描述': '市民来电反映:上述地址的通波塘桥桥下，有流浪乞讨人员在此处生活、做饭，市民担心夏天到了，盲目用火会有安全隐患。市民表示流浪者有民事行为能力，无治安隐患。诉求：希望管理部门核实，并尽快对流浪者进行妥善安置。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '同意上报', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '民政', '三级分类': '生活保障', '四级分类': '流浪救助', '主办单位': '市民政局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1744081574-788698', '工单类型': '求助类', '新一级分类': '社会管理类', '新二级分类': '民政', '新三级分类': '社会救助', '新四级分类': '流浪乞讨救助', '新五级分类': '救助', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -9130,8 +9393,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250408016707', 'employee_id': 'zzpd1', 'work_order_generation_time': '2025-04-08 12:00:25', 'appeal_address': '无', 'appeal_area': '长宁区', 'content_description': '【旅行社名称:携程,旅行社地址:未提供,发生时间:2025/04/0611:42:00,涉及金额:487,未向消保委、旅游质监投诉】4/4日预约4/6门票，由于身体不适忘了退款也没收到退款提醒，也没有出行，4/7早上发现的时候联系携程客服，其拒不退款。诉求依法依规退款，并对其不合法规的侵犯消费者权益的条款和行为进行处罚。', 'work_order_category': '一般', 'processing_description': '4月21日致电投诉人，经核实，此单企业根据投诉人提供的信息查询不到订单，且投诉人不接电话无法跟进处理（9：22无人接听 13:30 无人接听），望知悉。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '旅游', 'third_level_category': '旅游纠纷', 'fourth_level_category': '旅游合同纠纷', 'hosting_unit': '市文化旅游局', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '求助类', 'new_level_category': '科教文卫类', 'new_subcategory': '旅游', 'new_third_level_category': '旅游服务', 'new_fourth_level_category': '旅游纠纷', 'new_five_level_classification': '退订退费', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 49 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01669312,  0.05404663,  0.02337646, ..., -0.02272034,
-        0.00999451, -0.01763916], shape=(1024,))}
+	with 49 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01670837,  0.05407715,  0.02337646, ..., -0.02272034,
+        0.01000214, -0.01760864], shape=(1024,))}
 {'工单编号': '20250408019366', '工号': '3177', '工单生成时间': datetime.datetime(2025, 4, 8, 13, 7, 13), '诉求地址': '青浦区北青公路9138号1幢3层A区3708室（合成汽车服务有限公司）', '诉求区域': '青浦区', '内容描述': '市民来电反映:其购买了面包车（类似货拉拉面包车），本市号牌挂靠在上述公司，车牌：沪A119685。现在车辆保险到期了，该公司不给其办理交强险。诉求：故来电投诉该公司，希望管理部门核实处理。', '工单类别': '一般', '处理描述': '2024年4月8日联系市民，经过核实，2019年1月1日起已经取消4.5吨以下的普通货运车辆营运证和驾驶员从业资格证，即总重量4.5吨及以下的普通货运车辆不用再申请办理道路运输证。市民表示该车总质量是2.7吨，所以符合上述规定，不需要办理相关许可证件，即可从事货运活动。另外该车辆所有权人是被诉公司，被诉公司有权自行决定购买哪些保险险种，其他人没有权利要求的。感谢市民的理解和支持。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '交通港口', '三级分类': '其他', '四级分类': '其他', '主办单位': '市交通委', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1744088329-2164554', '工单类型': '投诉举报类', '新一级分类': '交通运输类', '新二级分类': '道路运输', '新三级分类': '道路货运', '新四级分类': '普通货物运输', '新五级分类': '经营资质', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -10066,8 +10329,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250416020644', 'employee_id': '2823', 'work_order_generation_time': '2025-04-16 13:29:19', 'appeal_address': '长宁区锦屏路41弄1号104室', 'appeal_area': '长宁区', 'content_description': '市民来电反映:上述地址是长期2020年至今都是空关的没有住人，自己对于表上的数字有质疑，煤气公司抄表员，女，态度极差，市民表示自己没有收到账单。诉求：投诉抄表员和抄表管理员态度服务差，要求查阅账单。', 'work_order_category': '一般', 'processing_description': '市民称：承办部门已联系，已解决。', 'customer_type': '个人', 'first_level_category': '公用事业类', 'secondary_category': '燃气', 'third_level_category': '燃气服务', 'fourth_level_category': '服务质量', 'hosting_unit': '燃气热线', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1744780981-527989', 'work_order_type': '投诉举报类', 'new_level_category': '公共服务类', 'new_subcategory': '供气', 'new_third_level_category': '燃气', 'new_fourth_level_category': '燃气服务', 'new_five_level_classification': '服务质量', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 28 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01212311,  0.02149963, -0.00146961, ...,  0.03335571,
-       -0.02308655, -0.04574585], shape=(1024,))}
+	with 28 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01215363,  0.02148438, -0.00143242, ...,  0.03329468,
+       -0.02311707, -0.04574585], shape=(1024,))}
 {'工单编号': '20250416023805', '工号': '3806', '工单生成时间': datetime.datetime(2025, 4, 16, 14, 14, 40), '诉求地址': '浦东新区临港新片区环湖西二湖与紫杉路侧的临港新片区政务服务中心大楼', '诉求区域': '浦东新区', '内容描述': '市民反映：2025年4月15日上午，市民前往临港新片区政务服务中心大楼三楼送业务资料（详见附件），大楼物业为陆家嘴物业，现场负责人赵明远。市民反映大楼三楼以上外人无法直接进入，需在一楼物业保安处登记并电话联系三楼对接人，但因对接人未接听电话，保安拒绝其进入。后市民通过二楼行政窗口帮助进入大楼，但感觉受到保安跟踪监视，人格受污。诉求：希望临港新片区政务服务中心能够优化进出流程。', '工单类别': '一般', '处理描述': '尊敬的市民您好，您反映的情况现由行政服务中心答复予您：经核实，因三楼及以上业务部门为非对外服务部门，因此所有外来拜访人员按规定均需要提供对接人员联系方式，经与保安确认后方可进入。对于保安跟随您的情况，对您造成不好的感受表示歉意。因其工作职责所在，为确保大楼安全问题，对于拜访人员需要确认行踪，后续会与物业负责领导沟通，改善方式方法。也已经与中心领导报备，后续会与其他业务部门领导沟通是否能优化大楼进出流程。感谢您对我们工作的认可和支持！（先行联系与回复为同一录音）。', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '民政', '三级分类': '社区家政', '四级分类': '社区服务网点', '主办单位': '浦东新区人民政府', '是否匿名': '否', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '社会管理类', '新二级分类': '民政', '新三级分类': '基层政权', '新四级分类': '社区事务受理中心', '新五级分类': '标准化建设', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -10522,7 +10785,7 @@ content_description
 1000
 content_description
 {'work_order_number': '20250420020016', 'employee_id': '2051', 'work_order_generation_time': '2025-04-20 16:18:42', 'appeal_address': '闵行区沪闵路6666弄1号楼', 'appeal_area': '闵行区', 'content_description': '市民来电反映:2025年4月20日下午，闵行区沪闵路6666弄1号楼楼下噪音扰民，不清楚具体什么噪音，好像是割草，问题过物业并未安排作业，作业地点为小区外，请核实处理避免扰民。', 'work_order_category': '一般', 'processing_description': '市民您好，您反映的诉求区绿容局已收悉并办理，办理情况是：已通知养护单位把产生噪音的养护工作放在工作日8点以后进行。感谢您的理解', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '环境保护', 'third_level_category': '污染', 'fourth_level_category': '噪音污染', 'hosting_unit': '闵行区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1745136885-604496', 'work_order_type': '投诉举报类', 'new_level_category': '环境与资源类', 'new_subcategory': '生态环境', 'new_third_level_category': '环境污染', 'new_fourth_level_category': '噪音污染', 'new_five_level_classification': '其他噪声', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 30 stored elements and shape (1, 1451727)>, 'dense': array([-0.01212311,  0.02241516,  0.01539612, ...,  0.00592804,
+	with 30 stored elements and shape (1, 1451727)>, 'dense': array([-0.01212311,  0.02241516,  0.01535797, ...,  0.00597   ,
        -0.0453186 , -0.03964233], shape=(1024,))}
 {'工单编号': '20250420023557', '工号': '4478', '工单生成时间': datetime.datetime(2025, 4, 20, 17, 51, 56), '诉求地址': '静安区广延路350弄', '诉求区域': '静安区', '内容描述': '市民来电反映:上述地址小区在做美丽家园，周末施工敲打声音很大，严重扰民。诉求：请管理部门核实并协调周末不要施工。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '【房管局】经核：上述小区正在进行“美丽家园”改造项目。来电人所述施工行为，施工单位并未违规。施工时间及作业方式均符合相关管理规范要求。现鉴于市民反映情况，我局已督促现场管理部门合理安排施工时间并采取降噪措施，对于有较大噪音生成的相关作业适当延后或错峰实施，双休日和节假日尽量不采取有较大噪音的作业施工，尽最大程度上保障居民的正常休息。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '环境保护', '三级分类': '污染', '四级分类': '噪音污染', '主办单位': '静安区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1745142511-607764', '工单类型': '投诉举报类', '新一级分类': '环境与资源类', '新二级分类': '生态环境', '新三级分类': '环境污染', '新四级分类': '噪音污染', '新五级分类': '其他噪声', '诉求地址_省份': None}
 (1000, 1451727)
@@ -10738,8 +11001,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250422020254', 'employee_id': '4342', 'work_order_generation_time': '2025-04-22 13:03:38', 'appeal_address': '长宁区仙霞路1111号 上海交通大学医学院附属同仁医院', 'appeal_area': '长宁区', 'content_description': '【表扬】市民来电咨询:其于4月14日携带老伴在上述医院的眼科就诊看病，周欣荣主任医生接诊，市民表示该医生服务态度好特别热情，市民特此来电表扬。', 'work_order_category': '一般', 'processing_description': '十分感谢市民对医护人员给予的表扬和感谢，医院将根据奖励条例对进行适当的表扬和奖励', 'customer_type': '个人', 'first_level_category': '科教文卫类', 'secondary_category': '卫生计生', 'third_level_category': '医疗服务', 'fourth_level_category': '服务态度', 'hosting_unit': '市卫生健康委', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1745297713-69318', 'work_order_type': '其他类', 'new_level_category': '科教文卫类', 'new_subcategory': '卫生', 'new_third_level_category': '医疗机构与服务', 'new_fourth_level_category': '医护人员', 'new_five_level_classification': '服务态度', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 25 stored elements and shape (1, 1451727)>, 'dense': array([ 0.06420898,  0.001441  , -0.03759766, ..., -0.04910278,
-       -0.04653931, -0.04571533], shape=(1024,))}
+	with 25 stored elements and shape (1, 1451727)>, 'dense': array([ 0.06414795,  0.00149155, -0.03756714, ..., -0.04910278,
+       -0.04663086, -0.04574585], shape=(1024,))}
 {'工单编号': '20250422023753', '工号': '2410', '工单生成时间': datetime.datetime(2025, 4, 22, 13, 52, 19), '诉求地址': '浦东新区芳华路916弄91号202', '诉求区域': '浦东新区', '内容描述': '市民来电反映:上述地址居民家的空调外机，在使用时噪音非常响，噪音扰民严重。诉求：希望协调让其尽快维修。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '居委接单后，第一时间上门联系居民，居委根据居民所反映的地址上门查看，空调噪音确实较响。居委立即联系房东，要求对空调进行维修检查。房东立即派维修人员检查空调，成功解决噪音问题。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '环境保护', '三级分类': '污染', '四级分类': '噪音污染', '主办单位': '浦东新区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1745301021-2114205', '工单类型': '求助类', '新一级分类': '环境与资源类', '新二级分类': '生态环境', '新三级分类': '环境污染', '新四级分类': '噪音污染', '新五级分类': '其他噪声', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -12130,8 +12393,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250506031658', 'employee_id': '1905', 'work_order_generation_time': '2025-05-06 19:51:23', 'appeal_address': '青浦区青湖路1023号803室-69', 'appeal_area': '青浦区', 'content_description': '市民反映：【商家地址/名称:上海市青浦区青浦区青湖路1023号803室-69,时间:2025/04/29 16:31:00,涉及金额:】2025年4月29日通过拼多多购买富硒谷物八珍粉，商家网页宣传可以健脾养胃，到货发现只是普通食品，商家夸大宣传（详见附件），公司名称：上海奥宁电子科技有限公司，地址：青浦区青湖路1023号803室-69。诉求：请调查处理，并要求商家依法作出赔偿并整改。', 'work_order_category': '一般', 'processing_description': '投诉事项经本局调解双方达成一致，经营者已退赔消费者；举报内容经本局核查，未查见违法行为，本局不予立案，已电话回复消费者。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '违法经营', 'fourth_level_category': '不正当经营', 'hosting_unit': '市市场监管局', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '投诉举报类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '企业监管', 'new_fourth_level_category': '不正当竞争', 'new_five_level_classification': '虚假宣传', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 55 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00509262,  0.05621338,  0.04275513, ..., -0.03875732,
-       -0.02200317, -0.02204895], shape=(1024,))}
+	with 55 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00502396,  0.05621338,  0.04275513, ..., -0.03869629,
+       -0.02203369, -0.02207947], shape=(1024,))}
 {'工单编号': '20250506035022', '工号': '3172', '工单生成时间': datetime.datetime(2025, 5, 6, 21, 7, 20), '诉求地址': '长宁区天山西路267号新泾三村', '诉求区域': '长宁区', '内容描述': '市民反映：小区一辆机动车在道路上泊车（详见附件），此处未漆画停车位，妨碍通行。诉求：请整治小区乱停车。（市民要求信息保密，无需回复）', '工单类别': '一般', '处理描述': '新长宁于5月7日接单，未留联系方式，经新程物业现场核查，因加装电梯等原因减少了很多车位，业主车辆停放处不影响道路通行，新泾三村是一个综合社区，停车存在困难，只能在不影响通行的情况下尽量协调。新泾三村已经全面加装电梯，每一部电梯减少4-5个车位，业主的车辆越来越多，菜场、幼儿园、公厕、老人院等外来车辆也需要停放，在不影响停放的情况下不能保证全部在车位内，物业会加强管理及巡视因无法联系方式特此说明。经办人：新长宁新程物业', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '城管执法', '三级分类': '物业相关执法', '四级分类': '损坏侵占公用设施', '主办单位': '长宁区人民政府', '是否匿名': '是', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '住房和城乡建设类', '新二级分类': '城管执法', '新三级分类': '房屋违规使用执法', '新四级分类': '占用物业共用部分', '新五级分类': '占用物业共用部分', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -12682,8 +12945,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250512001072', 'employee_id': '2438', 'work_order_generation_time': '2025-05-12 07:59:59', 'appeal_address': '金山区张堰镇德贤路268弄40号102室', 'appeal_area': '金山区', 'content_description': '市民来电反映:2025年5月11日晚上，上述地址房屋墙壁渗漏污水，联系物业后派人上门进行了排查，初步判断从避雷针处引上来的污水，存在安全隐患，导致房屋无法居住，市民表示此处房屋还在五年质保期内，诉求：管理部门核实尽快派人维修。（需要回复）', 'work_order_category': '次紧急', 'processing_description': '接到此工单后，我站工作人员于2025年5月12日12时56分与市民姚女士先行联系，进一步了解情况，并告知了办理程序和期限。市民电话中告知：其居住的新华御府40号102室卫生间墙壁渗漏污水，要求尽快维修。我站工作人员电话中与市民约定下午15时左右上门调处。 2025年5月12日下午15时27分，我站工作人员至市民姚女士家中，现场卫生间墙地面局部瓷砖也被维修人员凿开，现场尚存一定积水，根据市民提供的视频，污水从台盆下方等电位盒处渗出。 经我站工作人员现场调处，双方达成如下协议，并签订了《住宅工程施工质量投诉处理（调解）意见书》，具体内容如下：...', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '住房保障', 'third_level_category': '物业服务管理', 'fourth_level_category': '物业维修添置', 'hosting_unit': '市住房城乡建设管理委', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1747007597-79031', 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '住房保障', 'new_third_level_category': '住宅物业服务管理', 'new_fourth_level_category': '物业维修保养', 'new_five_level_classification': '业主自用部位', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 39 stored elements and shape (1, 1451727)>, 'dense': array([-0.01625061,  0.01660156, -0.00629044, ..., -0.00390053,
-       -0.04302979,  0.00095987], shape=(1024,))}
+	with 39 stored elements and shape (1, 1451727)>, 'dense': array([-0.01618958,  0.0165863 , -0.00626373, ..., -0.00388718,
+       -0.04299927,  0.00096178], shape=(1024,))}
 {'工单编号': '20250512004019', '工号': '3990', '工单生成时间': datetime.datetime(2025, 5, 12, 9, 7, 25), '诉求地址': '浦东新区沪南路3468弄164号402', '诉求区域': '浦东新区', '内容描述': '市民反映：其浦东新区沪南路3468弄164号402业主，楼上邻居将空调外机违规安装在其家飘窗上，对生活造成困扰（详见附件）。违反了《上海市空调设备安装使用管理规定》第8条。诉求：请求城管现场处理。', '工单类别': '一般', '处理描述': '您好！经康桥镇美林居委和物业到现场查看，202、302、402室有相同情况，2025年1月居委已出面双方协调，但无法解决其实际问题，建议诉求人可走司法途径。感谢您的支持与理解。已将该反馈情况告知诉求人，其表示理解。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '住房保障', '三级分类': '物业服务管理', '四级分类': '纠纷协调', '主办单位': '浦东新区人民政府', '是否匿名': '否', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '住房和城乡建设类', '新二级分类': '住房保障', '新三级分类': '小区综合治理', '新四级分类': '不文明行为', '新五级分类': '空调安装', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -13586,7 +13849,7 @@ content_description
 1000
 content_description
 {'work_order_number': '20250519044125', 'employee_id': '1984', 'work_order_generation_time': '2025-05-19 20:06:44', 'appeal_address': '普陀区延长西路540弄7号楼', 'appeal_area': '普陀区', 'content_description': '市民来电反映:普陀区延长西路540弄7号楼，之前电梯加装，当时加装电梯部门承诺28万元，两年之后会进行返还给每户人家，但至今三年多近四年了，此笔费用没有返还，市民告知原本此笔费用应该是物业支付的，居民现垫付的，诉求：协助尽快将此笔28万元返还各业主（需回复）', 'work_order_category': '一般', 'processing_description': '接工单后，区房管局与来电人进行了一日联系。 经查，区房管局更新中心于4月8日收到延长西路540弄号楼的加梯补贴申请材料，目前正在审核过程中，待审核通过后预计最长不超过60个工作日内发放该楼号的加梯补贴款。来电人也可向属地街道加梯办（联系电话：56775778）或西部集团加梯服务工作室（联系电话：52904500）咨询了解相关详细信息。 上述情况，区房管局更新中心郭宇于2025年5月22日13:57通过电话52564588与来电人进行答复，来电人对长时间未发放表示不理解。', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '住房保障', 'third_level_category': '物业服务管理', 'fourth_level_category': '物业安保', 'hosting_unit': '普陀区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1747656102-2767881', 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '住房保障', 'new_third_level_category': '房屋安全管理', 'new_fourth_level_category': '旧住房改造', 'new_five_level_classification': '多层住宅加装电梯及管理', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.01708984,  0.03598022,  0.01507568, ...,  0.00264931,
+	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.01708984,  0.03598022,  0.0151062 , ...,  0.00269318,
        -0.01783752, -0.00424576], shape=(1024,))}
 {'工单编号': '20250520373417', '工号': '1977', '工单生成时间': datetime.datetime(2025, 5, 20, 2, 14, 22), '诉求地址': '松江区人民南路靠近醉白池地铁站3号口', '诉求区域': '松江区', '内容描述': '市民来电反映上述地址路上一路都看到小卡片，严重影响周边环境。诉求：请管理部门核实并进行整治（信息保密需回复）', '工单类别': '一般', '处理描述': '松江区12345市民热线接单后派至公安分局，市民反映情况属实。区公安分局岳阳派出所于2025年5月20日先行联系市民，并对工单问题描述进行确认。关于市民反映松江区人民南路靠近醉白池地铁站3号口附近有黄色小卡片的情况，经工作，岳阳派出所民警已抓获散布黄色小卡片人员，并于5月26日对其进行行政处罚，罚款200元。同时告知市民若后续发现相关情况，可致电岳阳派出所57818110反映。2025年5月28日电话答复市民，其表示满意。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '绿化市容', '三级分类': '城市管理', '四级分类': '城管执法', '主办单位': '松江区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '公共安全类', '新二级分类': '公安事务', '新三级分类': '治安管理', '新四级分类': '扫黑除恶', '新五级分类': '涉黄', '诉求地址_省份': None}
 (1000, 1451727)
@@ -13602,8 +13865,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250520373292', 'employee_id': '1984', 'work_order_generation_time': '2025-05-20 00:45:10', 'appeal_address': '静安区海宁路上，圣和静安公馆北面', 'appeal_area': '静安区', 'content_description': '市民来电反映：静安区海宁路上，圣和静安公馆北面，几乎每天晚上都有车辆在此处，夜间产生噪音扰民，市民不清楚是施工还是卸货，诉求：对于此处噪音来源进行核实，对于噪音扰民进行查处（市民要求信息保密，需要回复）', 'work_order_category': '一般', 'processing_description': '【建管委】市民反映关于静安区海宁路山西北路交叉口处噪音扰民的相关事宜，要求查处，接报后已将该问题反馈给北横项目部。据北横项目部反馈，接到工单后，北横项目部于2025年5月25日16:25致电市民。根据市民反映情况，了解到海宁路圣和静安公馆北侧夜间施工扰民。经了解是夜间摊铺沥青路面所致，我部严格按照夜施要求，合理安排工作计划，缩短工作时间。6月3日电话联系反映人。其表示认可。事实认定：部属实、诉求认定：其他。经办人、负责人： 孙彪13584194509', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '环境保护', 'third_level_category': '污染', 'fourth_level_category': '噪音污染', 'hosting_unit': '静安区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': None, 'work_order_type': '投诉举报类', 'new_level_category': '环境与资源类', 'new_subcategory': '生态环境', 'new_third_level_category': '环境污染', 'new_fourth_level_category': '噪音污染', 'new_five_level_classification': '其他噪声', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 26 stored elements and shape (1, 1451727)>, 'dense': array([ 0.03117371, -0.00134182,  0.01831055, ..., -0.00507355,
-       -0.0249176 , -0.0219574 ], shape=(1024,))}
+	with 26 stored elements and shape (1, 1451727)>, 'dense': array([ 0.03114319, -0.00135899,  0.01824951, ..., -0.00508499,
+       -0.02484131, -0.02197266], shape=(1024,))}
 {'工单编号': '20250520005434', '工号': '3285', '工单生成时间': datetime.datetime(2025, 5, 20, 9, 28, 9), '诉求地址': '松江区沃德隆生鲜超市叶榭店(上海双高商务广场店) 上海市松江区叶政路451弄39号双高商务广场F1', '诉求区域': '松江区', '内容描述': '市民反映：【商家地址/名称:沃德隆生鲜超市叶榭店(上海双高商务广场店) 上海市松江区叶政路451弄39号双高商务广场F1,时间:2025/05/16 09:07:00】2025年5月16号其在沃德隆生鲜超市叶榭店(上海双高商务广场店) 上海市松江区叶政路451弄39号双高商务广场F1购买了散称山竹，回家后发现该商品存在反向抹零行为，另购得散称人参果，吃的时候发现其中两个已经发霉烂了，以上商品均违反相关法律法规，故投诉。诉求：请管理部门核实处理食品安全问题。', '工单类别': '一般', '处理描述': '经联系，举报人表示人参果发霉系举报错误。关于举报人反映的被举报人涉嫌反向抹零事项我局正在调查中，因12345工单办理时限原因，故作阶段性办结。', '客户类型': '个人', '一级分类': '安全监管类', '二级分类': '食品药品安全', '三级分类': '安全管理', '四级分类': '食品安全', '主办单位': '市市场监管局', '是否匿名': '否', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '社会管理类', '新二级分类': '市场监管', '新三级分类': '企业监管', '新四级分类': '食品安全监管', '新五级分类': '食品质量', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -13738,8 +14001,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250521005936', 'employee_id': '2989', 'work_order_generation_time': '2025-05-21 09:42:27', 'appeal_address': '浦东新区川南奉公路拱极路 GOGO健身', 'appeal_area': '浦东新区', 'content_description': '市民来电反映:市民在上述地址办了会员卡支付金额3980元，其卡还有两年三个月，但现在门店关门，老板联系不到。诉求：望核实给市民说法。', 'work_order_category': '一般', 'processing_description': '因该店目前已歇业，根据《上海市单用途预付消费卡管理实施办法》第二十四条第一款的规定，将此投诉移送新区行业主管部门进一步处理。同时也建议消费者通过司法途径维护自身合法权益（可通过微信小程序人民法院在线服务进行立案维权）。', 'customer_type': '个人', 'first_level_category': '科教文卫类', 'secondary_category': '教育', 'third_level_category': '培训市场', 'fourth_level_category': '市场监管', 'hosting_unit': '市文旅局执法总队', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1747791305-3018311', 'work_order_type': '投诉举报类', 'new_level_category': '科教文卫类', 'new_subcategory': '教育', 'new_third_level_category': '校外教育培训', 'new_fourth_level_category': '体育类培训', 'new_five_level_classification': '收退费管理', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 20 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00522995,  0.01676941, -0.01379395, ...,  0.00366783,
-       -0.0213623 , -0.02436829], shape=(1024,))}
+	with 20 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00525284,  0.01673889, -0.01378632, ...,  0.00365448,
+       -0.02139282, -0.02432251], shape=(1024,))}
 {'工单编号': '20250521009337', '工号': '2385', '工单生成时间': datetime.datetime(2025, 5, 21, 10, 21, 11), '诉求地址': '宝山区聚丰园路612号  新金桥旅行社', '诉求区域': '宝山区', '内容描述': '市民来电反映:报名了山西太原、乔家大院的旅游，金额：5520元/4人，旅行社签订的2013版旅游合同上，留的旅游质量监督所2个电话： 962020  12301  都是空号。诉求：对于为何提供的电话号码是空号给予合理解释。', '工单类别': '一般', '处理描述': '告知游客，2021年起全国相关旅游投诉热线统一归并为12345', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '旅游', '三级分类': '服务质量', '四级分类': '旅行社服务', '主办单位': '市文化旅游局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1747793156-733476', '工单类型': '求助类', '新一级分类': '科教文卫类', '新二级分类': '旅游', '新三级分类': '旅游市场', '新四级分类': '旅行社', '新五级分类': '服务质量', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -13786,8 +14049,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250521024432', 'employee_id': '3908', 'work_order_generation_time': '2025-05-21 14:28:38', 'appeal_address': '长宁区天山路天山二村45号1楼', 'appeal_area': '长宁区', 'content_description': '市民反映：其为长宁区天山路天山二村45号1楼居民，邻居老人一直将捡来的废纸、空瓶堆放在公共过道上，影响市民通行。此前通过居委会和社区民警的沟通协调，老人有所收敛，，近期老人再次堆放杂物，且越来越多。诉求：要求社区民警与其联系。', 'work_order_category': '一般', 'processing_description': '市公安局长宁分局天山路派出所2025-05-22 08:59:54与来电市民取得联系。我所社区民警已联系求人，并联合居委工作人员上门对楼道进行清理，对老人进行安全告知。', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '城管执法', 'third_level_category': '物业相关执法', 'fourth_level_category': '损坏侵占公用设施', 'hosting_unit': '市公安局', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '城管执法', 'new_third_level_category': '房屋违规使用执法', 'new_fourth_level_category': '占用物业共用部分', 'new_five_level_classification': '占用物业共用部分', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 34 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01599121,  0.01853943,  0.01629639, ..., -0.04452515,
-        0.00688553, -0.01421356], shape=(1024,))}
+	with 34 stored elements and shape (1, 1451727)>, 'dense': array([ 0.01600647,  0.01856995,  0.01629639, ..., -0.04449463,
+        0.00687408, -0.01424408], shape=(1024,))}
 {'工单编号': '20250521026983', '工号': '4558', '工单生成时间': datetime.datetime(2025, 5, 21, 15, 13, 32), '诉求地址': '静安区云飞东路518弄19号', '诉求区域': '静安区', '内容描述': '市民来电反映:其是上述地址业主，小区开发商上海仁嘉房地产开发有限公司，4月25日向绿化市容局申请户外招牌，未经业主和物业允许，且未公示，在小区外立面加装广告牌。其查询了上海市户外广告设施设置规划（2023年-2027年）规定，是禁止设置的。诉求：希望管理部门核实拆除，恢复外立面，并落实外立面修复原样（市民要求信息保密，需要回复）', '工单类别': '一般', '处理描述': '【绿化市容局】经现场核实，该处招牌目前属合法合规审批，根据一网通办上申请户外招牌审批所需提供的材料有：户外招牌设计图（金属结构的户外招牌需要提交）、设置户外招牌的办公、经营场所建（构）筑物产权证书或使用协议、法定代表人（负责人）身份证、委托代理人身份证、委托代理书；营业执照、事业单位（社会团体）法人证书、民办非企业单位登记证书或其他合法主体证书等；涉及建筑物名称的相关文件、户外招牌设置效果图。由于所需材料申请人已全部提供，根据要求我局作出审批通过的决定。市民提及的需小区业主同意等情况，根据审批所需材料中并无此项要求。但现场核实过程中发现该处招牌并未按审批要求进行设置，审批提供的效果图并不...', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '绿化市容', '三级分类': '市容市貌', '四级分类': '广告牌景观灯', '主办单位': '静安区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1747810866-803508', '工单类型': '求助类', '新一级分类': '住房和城乡建设类', '新二级分类': '绿化市容', '新三级分类': '市容', '新四级分类': '景观', '新五级分类': '户外广告管理', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -13930,8 +14193,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250522033142', 'employee_id': '4814', 'work_order_generation_time': '2025-05-22 16:36:16', 'appeal_address': '闵行区龙柏三村四季花园', 'appeal_area': '闵行区', 'content_description': '市民来电反映:市民去上述地址看老人，发现该小区的停车管理很差，停车不方便，市民建议小区加强对车辆的停车管理（市民要求信息保密，无需回复）', 'work_order_category': '一般', 'processing_description': '虹桥镇城建中心（房管）收悉办理，办理情况是：经核实，我中心已告知物业后续加强停车管理，增加巡逻次数，对于外来访客车辆进入小区，门岗联动巡逻岗，由巡逻岗指引车主至临停车位停放并登记房号联系电话。', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '住房保障', 'third_level_category': '物业服务管理', 'fourth_level_category': '物业安保', 'hosting_unit': '闵行区人民政府', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1747902774-76546', 'work_order_type': '意见建议类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '住房保障', 'new_third_level_category': '住宅物业服务管理', 'new_fourth_level_category': '物业安保', 'new_five_level_classification': '公共区域巡逻', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 18 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00378418,  0.02064514, -0.0163269 , ..., -0.00142002,
-       -0.04083252, -0.03497314], shape=(1024,))}
+	with 18 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00383186,  0.02062988, -0.01628113, ..., -0.00139809,
+       -0.04089355, -0.03497314], shape=(1024,))}
 {'工单编号': '20250522035818', '工号': '2622', '工单生成时间': datetime.datetime(2025, 5, 22, 17, 28, 26), '诉求地址': '浦东新区浦明路潍坊西路', '诉求区域': '浦东新区', '内容描述': '市民来电咨询:上述地址浦明路维修了2,3年了，至今没有竣工，公示的竣工时间：2025年4月30日，已经超期快一个月了，导致交通非常拥堵。诉求：希望管理部门核实告知到底什么时候竣工。', '工单类别': '一般', '处理描述': '尊敬的市民您好！该处因涉及合计5个项目，不可同步施工，需分路段搭接施工，道路综合改造需在上述工程全部完成后进行，浦明路浦电路口已于4月19日开放交通，公示开始时间4月30日，已按公示时间完成开放。浦明路潍坊西路口预计7月底完成施工，现场已增派辅警指挥交通。我们在此施工给您带来的不便敬请您的谅解。感谢您对浦东城市管理工作的理解和支持，处置单位：上海浦东工程建设管理有限公司。（先行联系市民时已告知处理结果，故未进行双呼回复）', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '交通港口', '三级分类': '道路管理', '四级分类': '道路建设', '主办单位': '浦东新区人民政府', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1747905795-528398', '工单类型': '咨询类', '新一级分类': '交通运输类', '新二级分类': '道路运输', '新三级分类': '路政管理', '新四级分类': '道路规划设计', '新五级分类': '道路新改建', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -14106,8 +14369,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250524011284', 'employee_id': '4584', 'work_order_generation_time': '2025-05-24 12:11:06', 'appeal_address': '浦东新区潍坊街道张杨路370弄9号楼', 'appeal_area': '浦东新区', 'content_description': '市民来电反映:上述地址房屋顶楼的雨水通过缝隙到顶楼居民的遮阳板，导致不下雨的天气仍有水往下滴，影响居民晾晒。诉求：维修公共部位雨水引导系统，烦请管理部门核实处理。', 'work_order_category': '一般', 'processing_description': '上海浦东新区潍坊物业公司 13818126060 朱黎明 反馈：物业5月24日接报后，物业多次联系居民核实具体漏水位置未接通，经核实报修人是104室居民，北面顶楼楼板积水滴水到2楼雨棚溅水到1楼，已重新开单，物业5月28日已前往将漏水部位维修好。(工单好2025052800179）', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '住房保障', 'third_level_category': '物业服务管理', 'fourth_level_category': '物业维修添置', 'hosting_unit': '市房屋管理局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1748059569-340032', 'work_order_type': '求助类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '住房保障', 'new_third_level_category': '住宅物业服务管理', 'new_fourth_level_category': '物业维修保养', 'new_five_level_classification': '共用部位', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 27 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00502777,  0.00836182, -0.00419617, ...,  0.00910187,
-       -0.02949524, -0.05764771], shape=(1024,))}
+	with 27 stored elements and shape (1, 1451727)>, 'dense': array([ 0.00504303,  0.00843048, -0.00416946, ...,  0.00912476,
+       -0.02949524, -0.05767822], shape=(1024,))}
 {'工单编号': '20250524014306', '工号': '3333', '工单生成时间': datetime.datetime(2025, 5, 24, 13, 34, 32), '诉求地址': '本市', '诉求区域': '本市', '内容描述': '市民来电反映:其通过科成公共租赁租借了房屋，中介企业地址不清楚，企业电话;18369012861；13162271777（徐道若）\n，押金：2200元，其搬离后，中介方一直未退还押金，订单号：无，房屋地址：无，诉求：请管理部门核实处理市民要求退押金', '工单类别': '一般', '处理描述': '6月4日9点19分、13点11分、16点20分左右工作人员联系投诉人电话未接通，关于退押金问题，建议双方按照合同约定协商处理，如协商不成，可通过司法途径解决。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '住房保障', '三级分类': '房屋权属', '四级分类': '租赁管理', '主办单位': '市房屋管理局', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1748064409-343110', '工单类型': '求助类', '新一级分类': '住房和城乡建设类', '新二级分类': '住房保障', '新三级分类': '房屋租赁管理', '新四级分类': '代理经租企业', '新五级分类': '机构违规', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -16450,8 +16713,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250615009748', 'employee_id': '3542', 'work_order_generation_time': '2025-06-15 19:43:21', 'appeal_address': '杨浦区', 'appeal_area': '杨浦区', 'content_description': '市民来电反映:抖音商城，订单编号：6919577609506356803，酸辣椒，99元，宣传大颗椒非常饱满，实际收到是小辣椒，商品宣传和实际不符，商家拒绝处理，向商家注册地管理部门反映，问题未解决，当地管理部门建议市民向平台注册地管理部门反映，诉求：要求平台对商家进行处罚，按照消费者权益保护法赔偿，给出解决方案。', 'work_order_category': '一般', 'processing_description': '经核实，被诉企业抖音平台处理给予消费者仅退款+99元优惠券方案，投诉人不认可，经沟通双方无法达成调解协议，我局终止调解。平台违法事实不成立，不予立案，建议向商家实际经营地县级以上市场监管部门反馈。', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '商业服务', 'fourth_level_category': '网上购物', 'hosting_unit': '市市场监管局', 'is_anonymous': None, 'service_type': '综合服务', 'call_number': '1749987365-2756181', 'work_order_type': '求助类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '消费维权', 'new_fourth_level_category': '消费纠纷', 'new_five_level_classification': '售后服务纠纷', 'appeal_address_province': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 36 stored elements and shape (1, 1451727)>, 'dense': array([-0.00124741,  0.03967285,  0.0231781 , ...,  0.00501251,
-       -0.04437256, -0.01546478], shape=(1024,))}
+	with 36 stored elements and shape (1, 1451727)>, 'dense': array([-0.00123501,  0.0395813 ,  0.0231781 , ...,  0.00498581,
+       -0.04431152, -0.01546478], shape=(1024,))}
 {'工单编号': '20250616200121', '工号': 'zzpd1', '工单生成时间': datetime.datetime(2025, 6, 16, 0, 30, 31), '诉求地址': '杨浦区大桥四线 控江路隆昌路 ', '诉求区域': '杨浦区', '内容描述': '【线路名称大桥四线,车牌或运营号:null,时间:2025年06月15日21:00,下车时间:null】2025-06-1521点左右坐大桥四线往浦东方向控江路隆昌路上车刷卡后公交卡遗失,想问大桥四线车队是否有人捡到?无法找到大桥四线车队电话,只能通过12345帮忙转发诉求,谢谢!', '工单类别': '次紧急', '处理描述': '这位乘客您好！根据乘客提供的信息未找到遗失的物品。我们于2025-6-169:10分电话联系反映人，经沟通后，其表示知晓。', '客户类型': '个人', '一级分类': '建设交通类', '二级分类': '交通港口', '三级分类': '公交巴士', '四级分类': '服务规范', '主办单位': '市交通委', '是否匿名': '否', '服务类型': '综合服务', '通话编号': None, '工单类型': '求助类', '新一级分类': '交通运输类', '新二级分类': '道路运输', '新三级分类': '地面公交', '新四级分类': '失物查询', '新五级分类': '失物查询', '诉求地址_省份': '本市'}
 (1000, 1451727)
 (1000, 1024)
@@ -16618,8 +16881,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250617218167', 'employee_id': '4433', 'work_order_generation_time': '2025-06-17 10:57:30', 'appeal_address': '浦东新区本市', 'appeal_area': '浦东新区', 'content_description': '【重新交办,要求：按答复要点告知市民,市民表示答复要点与实际情况不符，市民表示上述地址烧烤摊等问题依然存在。诉求：请管理部门进一步处理解决该问题最近办结的工单编号:20250525009406，工单内容:市民来电反映:市民表示上述地址是私人住宅用途，但是现在违规开了一家烧烤摊，且无证无照。诉求：请管理部门核实处理上述地址居改非违规开店经营的问题。】（市民要求信息保密，需要回复）', 'work_order_category': '一般', 'processing_description': '尊敬的市民，您好，宣桥镇季桥村工作人员接单后，并告知相关工作人员去现场查看，经工作人员核实，501号宅基地房屋违规开烧烤摊且无证无照的问题，我们村委会已收到。我们第一时间安排工作人员与城管前往现场核实情况，已于屋主沟通了解，在自家场地上搭建的烧烤摊，未发现居改非的现象，因村委会作为基层群众性自治组织，不具备行政处罚权，因此无权对摆摊行为进行罚款，但是村委会会积极配合城管部门，有情况及时上报，之后会密切关注此事，感谢您对我们工作的支持与理解', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '城管执法', 'third_level_category': '物业相关执法', 'fourth_level_category': '居改非', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': '是', 'service_type': '综合服务', 'call_number': '1750128731-140692', 'work_order_type': '投诉举报类', 'new_level_category': '住房和城乡建设类', 'new_subcategory': '城管执法', 'new_third_level_category': '房屋违规使用执法', 'new_fourth_level_category': '擅自改变房屋使用性质', 'new_five_level_classification': '擅自改变物业使用性质开店经营', 'appeal_address_province': '本市', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.00639725,  0.01532745,  0.01150513, ..., -0.01663208,
-       -0.01084137, -0.07391357], shape=(1024,))}
+	with 38 stored elements and shape (1, 1451727)>, 'dense': array([-0.00638199,  0.01535034,  0.01157379, ..., -0.0166626 ,
+       -0.01088715, -0.07391357], shape=(1024,))}
 {'工单编号': '20250617222082', '工号': '3405', '工单生成时间': datetime.datetime(2025, 6, 17, 11, 35, 28), '诉求地址': '浦东新区周市路周祝公路路口宝燕商城四楼v8桌球馆', '诉求区域': '浦东新区', '内容描述': '【重新交办,要求：按答复要点告知市民,市民表示答复要点不明确,市民表示至今钱没有给到市民，并且老板现在有钱也不给，恶意拖欠。诉求：请管理部门协调给到拖欠工资。最近办结的工单编号:20250106036325，工单内容:市民来电反映:浦东新区周市路周祝公路路口，市民在宝燕商城四楼v8桌球馆做服务员，工作时间2024年4月-11月底，现在拖欠10月11月工资10000元左右，老板一直拖延，签过劳动合同。诉求： 要求尽快支付工资（需回复）】', '工单类别': '一般', '处理描述': '受理中心工作人员接单后展开了协调，浦东新区周市路周祝公路路口宝燕商城四楼v8桌球馆老板没钱，无法支付高先生工资，高先生可以申请仲裁，高先生已经知晓。', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '人力保障', '三级分类': '劳动保护', '四级分类': '拖欠工资', '主办单位': '浦东新区人民政府', '是否匿名': '否', '服务类型': '综合服务', '通话编号': '1750130971-2311074', '工单类型': '求助类', '新一级分类': '社会管理类', '新二级分类': '人力资源和社会保障', '新三级分类': '劳动保护', '新四级分类': '拖欠工资', '新五级分类': '拖欠工资', '诉求地址_省份': '本市'}
 (1000, 1451727)
 (1000, 1024)
@@ -17250,8 +17513,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250623200866', 'employee_id': 'zzpd1', 'work_order_generation_time': '2025-06-23 09:00:35', 'appeal_address': '其他', 'appeal_area': '本市', 'content_description': '【寄件地址:本市~平台无法选择外省地址，故随便选择，先反馈诉求,收件地址:本市~平台无法选择外省地址，故随便选择，先反馈诉求,寄件日期:2025年06月12日08:55,收件日期:2025年06月17日08:55,单号:300614573948】6.12本人从茂名高州昌大昌超市委托安能物流寄了三个冰柜到山东青岛，运单号为300614573948，运费为1000元，6.17京东卖家（收件人）反馈三个柜都不同程度的磕碰变形，其中一个轮子还不见了(拆包装的时候物流跟收件人拍了视频)，然后拒收了这三个冰柜，经沟通需要补500元给收件人才同意收货。我把情况反馈给发件网点，网点以发货时告知了“包丢不...', 'work_order_category': '一般', 'processing_description': '于2025年6月29日联系反映人。1、联系反映情况不属实2、经核查：此单客户然后拒收了这三个冰柜，经沟通需要补500元给收件人才同意收货。我把情况反馈给发件网点，网点以发货时告知了“包丢不包损”为由，拒不理赔！“包丢不包损”，导致不满。3、经沟通：市民您好，您反映的是广东发往山东，单号:300614573948，按照:信访属地管理原则和道路运输服务质量管理规定，应向发货地和注册地反映，感谢您的理解与谅解。由于违法行为发生在广东，因此最直接和有效的投诉渠道是向广东交通委进行投诉。广东交通委将依法对违法行为进行调查处理。', 'customer_type': '个人', 'first_level_category': '公用事业类', 'secondary_category': '邮政通信', 'third_level_category': '邮政服务', 'fourth_level_category': '快递服务', 'hosting_unit': '市交通委', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': None, 'work_order_type': '投诉举报类', 'new_level_category': '公共服务类', 'new_subcategory': '邮政', 'new_third_level_category': '快递服务', 'new_fourth_level_category': '收寄服务', 'new_five_level_classification': '收寄服务', 'appeal_address_province': '本市', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 77 stored elements and shape (1, 1451727)>, 'dense': array([-0.0087738 ,  0.04281616, -0.00319481, ..., -0.03704834,
-       -0.02961731, -0.03973389], shape=(1024,))}
+	with 77 stored elements and shape (1, 1451727)>, 'dense': array([-0.00875854,  0.04281616, -0.00322342, ..., -0.03701782,
+       -0.02961731, -0.0397644 ], shape=(1024,))}
 {'工单编号': '20250623005267', '工号': '3506', '工单生成时间': datetime.datetime(2025, 6, 23, 9, 46, 38), '诉求地址': '本市', '诉求区域': '本市', '内容描述': '【表扬】市民来电表扬：6月23日市民家中装中国电信的ip电视，周红年师傅非常认真仔细，想市民所想，线路安排合理，市民特来电表扬表示感谢 ', '工单类别': '一般', '处理描述': '受理', '客户类型': '个人', '一级分类': '公用事业类', '二级分类': '邮政通信', '三级分类': '其他', '四级分类': '其他', '主办单位': '中国电信上海分公司', '是否匿名': None, '服务类型': '综合服务', '通话编号': '1750642965-2297577', '工单类型': '其他类', '新一级分类': '公共服务类', '新二级分类': '通信', '新三级分类': '通信服务', '新四级分类': '通信业务', '新五级分类': '业务办理', '诉求地址_省份': None}
 (1000, 1451727)
 (1000, 1024)
@@ -18234,8 +18497,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250701207359', 'employee_id': '4338', 'work_order_generation_time': '2025-07-01 12:54:18', 'appeal_address': '虹口区', 'appeal_area': '虹口区', 'content_description': '【投诉】市民来电反映：之前通过12345向虹口科经委投诉企业退税问题，但科经委没有回复自己，要求投诉科经委不作为的问题，但管理部门回复告知科经委不存在不作为，同时区里无退税政策，企业属于商贸类，无社保，也不能享受区内产业政策。诉求：要求投诉虹口区人民政府不作为。（需回复）关联工单号：20250616020483。', 'work_order_category': '一般', 'processing_description': '【重复单号】20250616020483,【说明补充】该市民因企业退税问题重复投诉科经委不作为。经区科经委核实，答复：我区委未收到过市民关于相关内容的诉求，不存在不作为。同时区里无退税政策。企业属于商贸类，无社保，也不能享受区内产业政策。结合办理描述，于6月20日上午10点左右电话联系刘先生。相关工单20250616020483，答复明确。故申请退单归档。虹口热线办25052252蔡;', 'customer_type': '个人', 'first_level_category': '其他类', 'secondary_category': '纪检监察', 'third_level_category': '政风行风', 'fourth_level_category': '不作为', 'hosting_unit': '虹口区人民政府', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': '1751344857-17345', 'work_order_type': '投诉举报类', 'new_level_category': '党政机关类', 'new_subcategory': '党风政风', 'new_third_level_category': '作风问题', 'new_fourth_level_category': '不作为', 'new_five_level_classification': '不作为', 'appeal_address_province': '本市', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 32 stored elements and shape (1, 1451727)>, 'dense': array([-0.02661133,  0.02874756,  0.00162983, ..., -0.02270508,
-        0.00040102, -0.03265381], shape=(1024,))}
+	with 32 stored elements and shape (1, 1451727)>, 'dense': array([-0.02661133,  0.02877808,  0.00163651, ..., -0.02270508,
+        0.00041914, -0.03271484], shape=(1024,))}
 {'工单编号': '20250701210253', '工号': '2758', '工单生成时间': datetime.datetime(2025, 7, 1, 13, 52, 56), '诉求地址': '杨浦区哔哩哔哩视频网站', '诉求区域': '杨浦区', '内容描述': '市民反映：黑产水军账号多次侵犯造谣以及引导网友去网暴他人目前已经被当事人投诉他，他还狡辩而且他账号还是通过购买水军来关注涨粉按照平台规则是可以禁止他相关身份证关联手机号重新创建账号以下提供相关证据链接和截图【小明剑魔最后声明:严禁“造谣”，污蔑伦姐健身教练!!!-哔哩哔哩】 https://b23.tv/btgoIZf【安德微微佛的个人空间-哔哩哔哩】 https://b23.tv/j6xbQ4U（详见附件），诉求：请管理部门整治（市民要求信息保密，无需回复）。', '工单类别': '一般', '处理描述': ' ', '客户类型': '个人', '一级分类': '公安政法类', '二级分类': '公安（治安、交通）', '三级分类': '社会治安', '四级分类': '网络安全', '主办单位': '市委网信办', '是否匿名': '是', '服务类型': '综合服务', '通话编号': None, '工单类型': '投诉举报类', '新一级分类': '公共安全类', '新二级分类': '公安事务', '新三级分类': '网络安全', '新四级分类': '互联网不良信息监管', '新五级分类': '互联网不良信息监管', '诉求地址_省份': '本市'}
 (1000, 1451727)
 (1000, 1024)
@@ -18330,8 +18593,8 @@ content_description
 1000
 content_description
 {'work_order_number': '20250702204846', 'employee_id': '3940', 'work_order_generation_time': '2025-07-02 09:22:13', 'appeal_address': '浦东新区周邓公路6600弄', 'appeal_area': '浦东新区', 'content_description': '市民来电反映：其是上述地址小区第一排的居民，小区外在建造周邓公路快速路，噪音扰民，而且市民担心建成后车道很多，依然会有噪音影响的问题。诉求：希望管理部门核实，给予解决方案，处理噪音扰民问题。', 'work_order_category': '一般', 'processing_description': '案件进入浦东新区城市网格化信息系统', 'customer_type': '个人', 'first_level_category': '建设交通类', 'secondary_category': '环境保护', 'third_level_category': '污染', 'fourth_level_category': '噪音污染', 'hosting_unit': '浦东新区人民政府', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': '1751419053-2372942', 'work_order_type': '求助类', 'new_level_category': '环境与资源类', 'new_subcategory': '生态环境', 'new_third_level_category': '环境污染', 'new_fourth_level_category': '噪音污染', 'new_five_level_classification': '公路、高架施工噪声', 'appeal_address_province': '本市', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 29 stored elements and shape (1, 1451727)>, 'dense': array([ 0.02210999, -0.00558472,  0.03121948, ..., -0.02932739,
-       -0.05712891, -0.04806519], shape=(1024,))}
+	with 29 stored elements and shape (1, 1451727)>, 'dense': array([ 0.0221405 , -0.00555801,  0.03121948, ..., -0.02940369,
+       -0.05706787, -0.04812622], shape=(1024,))}
 {'工单编号': '20250702207230', '工号': '1939', '工单生成时间': datetime.datetime(2025, 7, 2, 9, 59, 31), '诉求地址': '本市', '诉求区域': '本市', '内容描述': '市民来电反映：抖音订单号：6942769887253238842，男士冰丝短裤，速干面料，收到的是网面透明的，实物和宣传的不符，之前有向12315反映过，未有任何的电话回复，只有短信回复，其对此不满，诉求：要求尽快退款处理。', '工单类别': '一般', '处理描述': '工单进入消保系统', '客户类型': '个人', '一级分类': '社会管理类', '二级分类': '工商(消保)', '三级分类': '商业服务', '四级分类': '网上购物', '主办单位': '市市场监管局', '是否匿名': '否', '服务类型': '综合服务', '通话编号': '1751421121-996820', '工单类型': '求助类', '新一级分类': '社会管理类', '新二级分类': '市场监管', '新三级分类': '消费维权', '新四级分类': '消费纠纷', '新五级分类': '售后服务纠纷', '诉求地址_省份': '本市'}
 (267, 1451727)
 (267, 1024)
@@ -18340,499 +18603,17 @@ content_description
 {'work_order_number': '20250702207230', 'employee_id': '1939', 'work_order_generation_time': '2025-07-02 09:59:31', 'appeal_address': '本市', 'appeal_area': '本市', 'content_description': '市民来电反映：抖音订单号：6942769887253238842，男士冰丝短裤，速干面料，收到的是网面透明的，实物和宣传的不符，之前有向12315反映过，未有任何的电话回复，只有短信回复，其对此不满，诉求：要求尽快退款处理。', 'work_order_category': '一般', 'processing_description': '工单进入消保系统', 'customer_type': '个人', 'first_level_category': '社会管理类', 'secondary_category': '工商(消保)', 'third_level_category': '商业服务', 'fourth_level_category': '网上购物', 'hosting_unit': '市市场监管局', 'is_anonymous': '否', 'service_type': '综合服务', 'call_number': '1751421121-996820', 'work_order_type': '求助类', 'new_level_category': '社会管理类', 'new_subcategory': '市场监管', 'new_third_level_category': '消费维权', 'new_fourth_level_category': '消费纠纷', 'new_five_level_classification': '售后服务纠纷', 'appeal_address_province': '本市', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
 	with 26 stored elements and shape (1, 1451727)>, 'dense': array([-0.01129913,  0.02606201,  0.01387024, ..., -0.01737976,
        -0.02912903,  0.01327515], shape=(1024,))}
-INFO:     172.31.112.34:57340 - "POST /milvus_dump?db_id=26 HTTP/1.1" 200 OK
-INFO:      - "GET /docs HTTP/1.1" 200 OK
-INFO:      - "GET /docs HTTP/1.1" 200 OK
-INFO:      - "GET /docs HTTP/1.1" 200 OK
-INFO:      - "GET / HTTP/1.1" 404 Not Found
-INFO:      - "GET /docs HTTP/1.1" 200 OK
-INFO:      - "GET /docs HTTP/1.1" 200 OK
-INFO:     172.31.65.96:50795 - "GET /docs HTTP/1.1" 200 OK
-INFO:     172.31.65.96:64206 - "GET /docs HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41012 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41370 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41400 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41636 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.31.112.34:41650 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.31.112.34:41676 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:65532 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.33.12.10:49197 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49399 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49437 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49568 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.33.12.10:49599 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49759 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49816 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49864 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:49932 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.33.12.10:50084 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:50214 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:50773 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:50819 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-SHOW FIELDS FROM gjw;
-('编号', 'bigint', 'YES', '', None, '')
-('年份', 'bigint', 'YES', '', None, '')
-('区局', 'text', 'YES', '', None, '')
-('姓名', 'text', 'YES', '', None, '')
-('年龄', 'bigint', 'YES', '', None, '')
-('姓名拼音', 'text', 'YES', '', None, '')
-('性别', 'text', 'YES', '', None, '')
-('工作单位', 'text', 'YES', '', None, '')
-('工种或工作头衔', 'text', 'YES', '', None, '')
-('领域', 'text', 'YES', '', None, '')
-('行业', 'text', 'YES', '', None, '')
-('工匠介绍', 'text', 'YES', '', None, '')
-编号 bigint
-==> id_number 5
-年份 bigint
-==> year 5
-区局 text
-==> bureau 21
-姓名 text
-==> name 21
-年龄 bigint
-==> age 5
-姓名拼音 text
-==> xing_ming_pinyin 21
-性别 text
-==> gender 21
-工作单位 text
-==> work_unit 21
-工种或工作头衔 text
-==> job_type_or_title 21
-领域 text
-==> field 21
-行业 text
-==> industry 21
-工匠介绍 text
-==> craftsman_introduction 21
-{'编号': 20250311001, '年份': 2016, '区局': '浦东新区', '姓名': '蒋国兴', '年龄': 60, '姓名拼音': 'Jiang3-Guo2-Xing1', '性别': '男', '工作单位': '上海供春陶业有限公司', '工种或工作头衔': '陶艺师', '领域': '文化', '行业': '工艺美术', '工匠介绍': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。'}
-(891, 12599)
-(891, 1024)
-891
-craftsman_introduction
-{'id_number': 20250311001, 'year': 2016, 'bureau': '浦东新区', 'name': '蒋国兴', 'age': 60, 'xing_ming_pinyin': 'Jiang3-Guo2-Xing1', 'gender': '男', 'work_unit': '上海供春陶业有限公司', 'job_type_or_title': '陶艺师', 'field': '文化', 'industry': '工艺美术', 'craftsman_introduction': '蒋国兴，全国劳动模范、全国五一劳动奖章获得者，享受国务院政府特殊津贴专家。他荣获“民进全国社会服务工作先进个人”“上海市十大职工科技创新英才”“上海市首席技师”等称号，其工作室被命名为“上海市技能大师工作室”并获“全国工人先锋号”。在彩陶技艺领域，他突破多项传统工艺难题，开创具有海派特色的“沪上彩陶”技艺，并发明陶瓷壁挂，被联合国教科文组织国际陶艺学会命名为“蒋国兴”。其作品应用于上海东方艺术中心、上海世博园等重要建筑，获国家专利45项。他还将彩陶技艺用于古建筑修复，解决世界性难题。此外，他热衷技艺传承，培养多名徒弟，参与国际展览和学术研究，出版专著并撰写多篇论文，为陶瓷文化发展作出突出贡献。', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 85 stored elements and shape (1, 12599)>, 'dense': array([-0.01663208, -0.01893616,  0.01177216, ..., -0.00128651,
-        0.02241516, -0.00159359], shape=(1024,))}
-INFO:     172.33.12.10:50833 - "POST /milvus_dump?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:56597 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:57590 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:57636 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.33.12.10:57774 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:46692 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:46998 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:47082 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:47130 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:47182 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:47220 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:48348 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:48880 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37910 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41354 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41726 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41746 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41766 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42160 - "POST /milvus_timeline?db_id=14 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42172 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42208 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42294 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42416 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42766 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:42788 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-SHOW FIELDS FROM HongKouDemo;
-('案件编号', 'bigint', 'YES', '', None, '')
-('原编号', 'bigint', 'YES', '', None, '')
-('案件来源/信息来源', 'text', 'YES', '', None, '')
-('工单类型', 'text', 'YES', '', None, '')
-('发现时间', 'text', 'YES', '', None, '')
-('状态', 'text', 'YES', '', None, '')
-('事项类别', 'text', 'YES', '', None, '')
-('事项大类', 'text', 'YES', '', None, '')
-('事项小类', 'text', 'YES', '', None, '')
-('事项名称', 'text', 'YES', '', None, '')
-('事项标签', 'text', 'YES', '', None, '')
-('案件描述/内容描述', 'text', 'YES', '', None, '')
-('上报地址', 'text', 'YES', '', None, '')
-('实际地址', 'text', 'YES', '', None, '')
-('联系人', 'double', 'YES', '', None, '')
-('联系电话', 'double', 'YES', '', None, '')
-('所属街道', 'text', 'YES', '', None, '')
-('主责部门', 'text', 'YES', '', None, '')
-('协同部门', 'text', 'YES', '', None, '')
-('主处置部门', 'text', 'YES', '', None, '')
-('协同处置部门', 'text', 'YES', '', None, '')
-('办理描述', 'text', 'YES', '', None, '')
-('结案时间', 'text', 'YES', '', None, '')
-('结案期限(是否超时)', 'text', 'YES', '', None, '')
-('市紧急程度', 'text', 'YES', '', None, '')
-('收单时间', 'text', 'YES', '', None, '')
-('紧急程度', 'text', 'YES', '', None, '')
-('所属片区', 'text', 'YES', '', None, '')
-('所属居委', 'text', 'YES', '', None, '')
-('派遣时间', 'text', 'YES', '', None, '')
-('案件期限', 'bigint', 'YES', '', None, '')
-('处置计时', 'text', 'YES', '', None, '')
-('案件整体计时', 'text', 'YES', '', None, '')
-('事实认定', 'text', 'YES', '', None, '')
-('诉求认定', 'text', 'YES', '', None, '')
-('是否解决区回访', 'text', 'YES', '', None, '')
-('是否满意区回访', 'text', 'YES', '', None, '')
-案件编号 bigint
-==> case_number 5
-原编号 bigint
-==> original_number 5
-案件来源/信息来源 text
-==> case_source_information_source 21
-工单类型 text
-==> work_order_type 21
-发现时间 text
-==> discovery_time 21
-状态 text
-==> status 21
-事项类别 text
-==> matter_category 21
-事项大类 text
-==> matters_category 21
-事项小类 text
-==> matter_subcategory 21
-事项名称 text
-==> matter_name 21
-事项标签 text
-==> matter_label 21
-案件描述/内容描述 text
-==> case_description_content_description 21
-上报地址 text
-==> report_address 21
-实际地址 text
-==> actual_address 21
-联系人 double
-==> contact_person 11
-联系电话 double
-==> contact_number 11
-所属街道 text
-==> belonging_street 21
-主责部门 text
-==> responsible_department 21
-协同部门 text
-==> collaboration_department 21
-主处置部门 text
-==> main_disposal_department 21
-协同处置部门 text
-==> cooperative_disposal_department 21
-办理描述 text
-==> processing_description 21
-结案时间 text
-==> case_closure_time 21
-结案期限(是否超时) text
-==> case_closure_deadline__is_overdue 21
-市紧急程度 text
-==> emergency_level_of_city 21
-收单时间 text
-==> collection_time 21
-紧急程度 text
-==> urgency_level 21
-所属片区 text
-==> belonging_district 21
-所属居委 text
-==> belonging_resident_committee 21
-派遣时间 text
-==> dispatch_time 21
-案件期限 bigint
-==> case_deadline 5
-处置计时 text
-==> disposal_timing 21
-案件整体计时 text
-==> case_overall_timing 21
-事实认定 text
-==> fact_recognition 21
-诉求认定 text
-==> appeal_recognition 21
-是否解决区回访 text
-==> is_resolved_area_follow_up 21
-是否满意区回访 text
-==> satisfied_with_area_follow_up 21
-{'案件编号': 202408317745200116, '原编号': 20240831030597, '案件来源/信息来源': '12345热线', '工单类型': '投诉举报类', '发现时间': '2024-08-31 22:20', '状态': '待接单处置', '事项类别': '公共管理', '事项大类': '环境保护', '事项小类': '噪声污染', '事项名称': '夜间施工扰民', '事项标签': None, '案件描述/内容描述': '市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需回复）', '上报地址': '虹口区衡水路89弄小区附近', '实际地址': '衡水路89弄小区附近', '联系人': None, '联系电话': None, '所属街道': '四川北路街道', '主责部门': '虹口区建设和管理委员会', '协同部门': None, '主处置部门': '虹口区建设和管理委员会/市政和水务管理中心5', '协同处置部门': None, '办理描述': None, '结案时间': None, '结案期限(是否超时)': '正常', '市紧急程度': '普通', '收单时间': '2024-09-01 11:12:36', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '四川居委', '派遣时间': '2024-09-01 11:53:06', '案件期限': 7, '处置计时': '0天15小时50分钟14秒', '案件整体计时': '0天15小时50分钟14秒', '事实认定': None, '诉求认定': None, '是否解决区回访': None, '是否满意区回访': None}
-(1000, 11625)
-(1000, 1024)
-1000
-case_description_content_description
-{'case_number': 202408317745200116, 'original_number': 20240831030597, 'case_source_information_source': '12345热线', 'work_order_type': '投诉举报类', 'discovery_time': '2024-08-31 22:20', 'status': '待接单处置', 'matter_category': '公共管理', 'matters_category': '环境保护', 'matter_subcategory': '噪声污染', 'matter_name': '夜间施工扰民', 'matter_label': None, 'case_description_content_description': '市民来电反映:上述小区附近，每天22:00后会有人修路，不是2、3天，已经修了1个月了，并且越修越响，工人直接将管子砸在地上，凌晨2：00还没停，影响居民休息。诉求：要求马上停止施工并给市民说法。（需回复）', 'report_address': '虹口区衡水路89弄小区附近', 'actual_address': '衡水路89弄小区附近', 'contact_person': None, 'contact_number': None, 'belonging_street': '四川北路街道', 'responsible_department': '虹口区建设和管理委员会', 'collaboration_department': None, 'main_disposal_department': '虹口区建设和管理委员会/市政和水务管理中心5', 'cooperative_disposal_department': None, 'processing_description': None, 'case_closure_time': None, 'case_closure_deadline__is_overdue': '正常', 'emergency_level_of_city': '普通', 'collection_time': '2024-09-01 11:12:36', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '四川居委', 'dispatch_time': '2024-09-01 11:53:06', 'case_deadline': 7, 'disposal_timing': '0天15小时50分钟14秒', 'case_overall_timing': '0天15小时50分钟14秒', 'fact_recognition': None, 'appeal_recognition': None, 'is_resolved_area_follow_up': None, 'satisfied_with_area_follow_up': None, 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 33 stored elements and shape (1, 11625)>, 'dense': array([ 0.0080719 ,  0.0062561 ,  0.01852417, ..., -0.00895691,
-       -0.05923462, -0.03924561], shape=(1024,))}
-{'案件编号': 202408249755900045, '原编号': 20240824009914, '案件来源/信息来源': '12345热线', '工单类型': '求助类', '发现时间': '2024-08-24 11:39', '状态': '已结案', '事项类别': '公共管理', '事项大类': '房屋保障', '事项小类': '房屋管理', '事项名称': '房屋产权', '事项标签': None, '案件描述/内容描述': '市民来电反映:市民需要办理上述地址公租房转为产权房的手续，市民一开始咨询街道和物业，对方一开始称厨卫统一改建还未完成，故无法办理公租房转为产权的手续，现在已经完成改建还是无法办理相应手续，只告知市民需要等上级指示，市民表示不解，故来电求助，诉求：希望管理部门核实具体情况，帮助市民解决公租房转为产权房的手续。（需回复）', '上报地址': '虹口区车站西路307弄4号201室', '实际地址': '车站西路307弄4号201室', '联系人': None, '联系电话': None, '所属街道': '江湾镇街道', '主责部门': '虹口区住房保障和房屋管理局', '协同部门': None, '主处置部门': '虹口区住房保障和房屋管理局/案件审理科', '协同处置部门': None, '办理描述': '经调查，车站西路307弄4号属于车西三期成套改造项目。未办理产证主要为两个问题，一是项目手续问题，当时由于使用修缮平台进行报建无法进行综合验收，此问题现已明确解决路径，在补充验收文件后可予以办理。二是设计图纸与现场实际不符需重新进行审核，现已完成图纸确认，需报规划进行变更。已督促虹房集团按照产证办理问题协调会会议纪要加快办理手续。\n于8月29日早10:30联系居民，向居民解释了情况，居民已知晓。居民提出其原房屋为车站西路307弄4号201室，原房屋面积约40平，改造后由于布局调整规划面积不足，实际归还了原房屋（约30平）及另一套车站西路305弄2号504室（原二期加层房屋），其中504室...', '结案时间': '2024-08-30 14:26:59', '结案期限(是否超时)': '过半', '市紧急程度': '普通', '收单时间': '2024-08-24 15:30:09', '紧急程度': '一般', '所属片区': '第五片区', '所属居委': '车站居委', '派遣时间': '2024-08-26 09:17:37', '案件期限': 7, '处置计时': '4天0小时26分钟59秒', '案件整体计时': '4天14小时26分钟59秒', '事实认定': '属实', '诉求认定': '诉求过高', '是否解决区回访': '解释说明', '是否满意区回访': '满意'}
-(1000, 11625)
-(1000, 1024)
-1000
-case_description_content_description
-{'case_number': 202408249755900045, 'original_number': 20240824009914, 'case_source_information_source': '12345热线', 'work_order_type': '求助类', 'discovery_time': '2024-08-24 11:39', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '房屋保障', 'matter_subcategory': '房屋管理', 'matter_name': '房屋产权', 'matter_label': None, 'case_description_content_description': '市民来电反映:市民需要办理上述地址公租房转为产权房的手续，市民一开始咨询街道和物业，对方一开始称厨卫统一改建还未完成，故无法办理公租房转为产权的手续，现在已经完成改建还是无法办理相应手续，只告知市民需要等上级指示，市民表示不解，故来电求助，诉求：希望管理部门核实具体情况，帮助市民解决公租房转为产权房的手续。（需回复）', 'report_address': '虹口区车站西路307弄4号201室', 'actual_address': '车站西路307弄4号201室', 'contact_person': None, 'contact_number': None, 'belonging_street': '江湾镇街道', 'responsible_department': '虹口区住房保障和房屋管理局', 'collaboration_department': None, 'main_disposal_department': '虹口区住房保障和房屋管理局/案件审理科', 'cooperative_disposal_department': None, 'processing_description': '经调查，车站西路307弄4号属于车西三期成套改造项目。未办理产证主要为两个问题，一是项目手续问题，当时由于使用修缮平台进行报建无法进行综合验收，此问题现已明确解决路径，在补充验收文件后可予以办理。二是设计图纸与现场实际不符需重新进行审核，现已完成图纸确认，需报规划进行变更。已督促虹房集团按照产证办理问题协调会会议纪要加快办理手续。\n于8月29日早10:30联系居民，向居民解释了情况，居民已知晓。居民提出其原房屋为车站西路307弄4号201室，原房屋面积约40平，改造后由于布局调整规划面积不足，实际归还了原房屋（约30平）及另一套车站西路305弄2号504室（原二期加层房屋），其中504室...', 'case_closure_time': '2024-08-30 14:26:59', 'case_closure_deadline__is_overdue': '过半', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-24 15:30:09', 'urgency_level': '一般', 'belonging_district': '第五片区', 'belonging_resident_committee': '车站居委', 'dispatch_time': '2024-08-26 09:17:37', 'case_deadline': 7, 'disposal_timing': '4天0小时26分钟59秒', 'case_overall_timing': '4天14小时26分钟59秒', 'fact_recognition': '属实', 'appeal_recognition': '诉求过高', 'is_resolved_area_follow_up': '解释说明', 'satisfied_with_area_follow_up': '满意', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 34 stored elements and shape (1, 11625)>, 'dense': array([-0.00310326,  0.01766968, -0.01222229, ...,  0.01005554,
-       -0.01364136, -0.05755615], shape=(1024,))}
-{'案件编号': 202408175022800018, '原编号': 20240817002907, '案件来源/信息来源': '12345热线', '工单类型': '求助类', '发现时间': '2024-08-17 09:02', '状态': '已结案', '事项类别': '公共管理', '事项大类': '绿化市容', '事项小类': '市容环境', '事项名称': '文明施工措施不落实', '事项标签': None, '案件描述/内容描述': '市民来电反映:市民是居住在上述地址的居民，现在水电路261弄进行旧区改造，出现扬尘和噪音问题。并且在拆除建筑的时候产生振动，导致自己房屋墙面开裂，诉求：请管理部门派人查看，并针对旧区改造造成的影响给予处理方案。', '上报地址': '虹口区广中支路24弄2号', '实际地址': '广中支路24弄', '联系人': None, '联系电话': None, '所属街道': '广中路街道', '主责部门': '虹房集团', '协同部门': None, '主处置部门': '虹房集团/处置部门1', '协同处置部门': None, '办理描述': '8月21日上午虹建公司负责人上门了解情况，杭女士反映前期拆房时虽然作了事先告知、防尘等防护措施，但还是会影响其生活。目前拆房已结束，已无扬尘及噪音、振动等情况。8月22日9:20虹房集团工作人员回访市民了解处理情况，市民表示其反映的扬尘及噪音等情况已解决，对施工单位及时上门处理表示满意。', '结案时间': '2024-08-26 16:18:50', '结案期限(是否超时)': '正常', '市紧急程度': '普通', '收单时间': '2024-08-17 16:03:00', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '商一居委', '派遣时间': '2024-08-20 09:35:13', '案件期限': 7, '处置计时': '2天22小时41分钟18秒', '案件整体计时': '5天16小时18分钟50秒', '事实认定': '属实', '诉求认定': '诉求合理', '是否解决区回访': '实际解决', '是否满意区回访': '满意'}
-(1000, 11625)
-(1000, 1024)
-1000
-case_description_content_description
-{'case_number': 202408175022800018, 'original_number': 20240817002907, 'case_source_information_source': '12345热线', 'work_order_type': '求助类', 'discovery_time': '2024-08-17 09:02', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '绿化市容', 'matter_subcategory': '市容环境', 'matter_name': '文明施工措施不落实', 'matter_label': None, 'case_description_content_description': '市民来电反映:市民是居住在上述地址的居民，现在水电路261弄进行旧区改造，出现扬尘和噪音问题。并且在拆除建筑的时候产生振动，导致自己房屋墙面开裂，诉求：请管理部门派人查看，并针对旧区改造造成的影响给予处理方案。', 'report_address': '虹口区广中支路24弄2号', 'actual_address': '广中支路24弄', 'contact_person': None, 'contact_number': None, 'belonging_street': '广中路街道', 'responsible_department': '虹房集团', 'collaboration_department': None, 'main_disposal_department': '虹房集团/处置部门1', 'cooperative_disposal_department': None, 'processing_description': '8月21日上午虹建公司负责人上门了解情况，杭女士反映前期拆房时虽然作了事先告知、防尘等防护措施，但还是会影响其生活。目前拆房已结束，已无扬尘及噪音、振动等情况。8月22日9:20虹房集团工作人员回访市民了解处理情况，市民表示其反映的扬尘及噪音等情况已解决，对施工单位及时上门处理表示满意。', 'case_closure_time': '2024-08-26 16:18:50', 'case_closure_deadline__is_overdue': '正常', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-17 16:03:00', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '商一居委', 'dispatch_time': '2024-08-20 09:35:13', 'case_deadline': 7, 'disposal_timing': '2天22小时41分钟18秒', 'case_overall_timing': '5天16小时18分钟50秒', 'fact_recognition': '属实', 'appeal_recognition': '诉求合理', 'is_resolved_area_follow_up': '实际解决', 'satisfied_with_area_follow_up': '满意', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 31 stored elements and shape (1, 11625)>, 'dense': array([ 0.01605225,  0.0294342 ,  0.00228119, ..., -0.0140686 ,
-       -0.02677917, -0.06027222], shape=(1024,))}
-{'案件编号': 202408101409200042, '原编号': 20240810007230, '案件来源/信息来源': '12345热线', '工单类型': '投诉举报类', '发现时间': '2024-08-10 11:02', '状态': '已结案', '事项类别': '公共管理', '事项大类': '房屋保障', '事项小类': '物业服务', '事项名称': '小区公共区域维护', '事项标签': None, '案件描述/内容描述': '【投诉】市民来电反映：市民表示上述地址的消防门不应该锁住，只能装控制装置使得门只能从里面推开不能从外面推开的办法解决，业委会表示是市民进出不随手关门的但是没有任何证据，市民认为极大可能是楼里的做工人员进出不关门造成的，市民就此问题向物业反映多次未得到解决。诉求：投诉物业不作为，请管理部门核实整改给到解释至12345，市民会来电查询。关联的前工单编号:20240727025866', '上报地址': '虹口区瑞虹新城一期2号楼1楼后门', '实际地址': '瑞虹新城一期2号楼1楼后门', '联系人': None, '联系电话': None, '所属街道': '嘉兴路街道', '主责部门': '嘉兴路街道办事处', '协同部门': None, '主处置部门': '嘉兴路街道办事处/嘉兴路街道城运中心', '协同处置部门': None, '办理描述': '经了解，居民反映大门为消防通道门。万科物业入驻前，该门处常开状态，物业入驻后，已装上消防通道锁，从小区内部推动消防门，门锁自动打开，即为通道；从小区外面无法打开消防门。保障应急情况下安全疏散和消防救援需要，同时保证小区外来人员进出的管理。', '结案时间': '2024-08-19 14:00:50', '结案期限(是否超时)': '过半', '市紧急程度': '普通', '收单时间': '2024-08-10 14:42:04', '紧急程度': '一般', '所属片区': '第三片区', '所属居委': '瑞虹第一居委', '派遣时间': '2024-08-10 14:43:22', '案件期限': 7, '处置计时': '5天11小时15分钟17秒', '案件整体计时': '5天14小时0分钟50秒', '事实认定': '部分属实', '诉求认定': '诉求过高', '是否解决区回访': '未评价', '是否满意区回访': '未评价'}
-(143, 11625)
-(143, 1024)
-143
-case_description_content_description
-{'case_number': 202408101409200042, 'original_number': 20240810007230, 'case_source_information_source': '12345热线', 'work_order_type': '投诉举报类', 'discovery_time': '2024-08-10 11:02', 'status': '已结案', 'matter_category': '公共管理', 'matters_category': '房屋保障', 'matter_subcategory': '物业服务', 'matter_name': '小区公共区域维护', 'matter_label': None, 'case_description_content_description': '【投诉】市民来电反映：市民表示上述地址的消防门不应该锁住，只能装控制装置使得门只能从里面推开不能从外面推开的办法解决，业委会表示是市民进出不随手关门的但是没有任何证据，市民认为极大可能是楼里的做工人员进出不关门造成的，市民就此问题向物业反映多次未得到解决。诉求：投诉物业不作为，请管理部门核实整改给到解释至12345，市民会来电查询。关联的前工单编号:20240727025866', 'report_address': '虹口区瑞虹新城一期2号楼1楼后门', 'actual_address': '瑞虹新城一期2号楼1楼后门', 'contact_person': None, 'contact_number': None, 'belonging_street': '嘉兴路街道', 'responsible_department': '嘉兴路街道办事处', 'collaboration_department': None, 'main_disposal_department': '嘉兴路街道办事处/嘉兴路街道城运中心', 'cooperative_disposal_department': None, 'processing_description': '经了解，居民反映大门为消防通道门。万科物业入驻前，该门处常开状态，物业入驻后，已装上消防通道锁，从小区内部推动消防门，门锁自动打开，即为通道；从小区外面无法打开消防门。保障应急情况下安全疏散和消防救援需要，同时保证小区外来人员进出的管理。', 'case_closure_time': '2024-08-19 14:00:50', 'case_closure_deadline__is_overdue': '过半', 'emergency_level_of_city': '普通', 'collection_time': '2024-08-10 14:42:04', 'urgency_level': '一般', 'belonging_district': '第三片区', 'belonging_resident_committee': '瑞虹第一居委', 'dispatch_time': '2024-08-10 14:43:22', 'case_deadline': 7, 'disposal_timing': '5天11小时15分钟17秒', 'case_overall_timing': '5天14小时0分钟50秒', 'fact_recognition': '部分属实', 'appeal_recognition': '诉求过高', 'is_resolved_area_follow_up': '未评价', 'satisfied_with_area_follow_up': '未评价', 'sparse': <Compressed Sparse Row sparse array of dtype 'float32'
-	with 43 stored elements and shape (1, 11625)>, 'dense': array([-0.03167725, -0.00790405,  0.0199585 , ..., -0.00174427,
-       -0.03564453, -0.01003265], shape=(1024,))}
-INFO:     172.31.112.34:42794 - "POST /milvus_dump?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:43022 - "POST /milvus_timeline?db_id=14 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:43036 - "POST /milvus_timeline?db_id=14 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:47818 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:54350 - "POST /milvus_timeline?db_id=14 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:41648 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:46464 - "POST /milvus_timeline?db_id=14 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36098 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36658 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36672 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36686 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36750 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36786 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:36818 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37004 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37042 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37420 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37576 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37608 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37628 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37728 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37794 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:37900 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:38064 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:38248 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.33.12.6:52693 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:38802 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
-INFO:     172.31.112.34:43616 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:53962 - "POST /milvus_dump?db_id=26 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:56974 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:57182 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:34676 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:34706 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.33.12.10:64323 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
+INFO:     172.33.12.10:52644 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
+INFO:     172.33.12.6:64930 - "POST /milvus_timeline?db_id=22 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:35904 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:37506 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:37528 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:39046 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:57366 - "POST /milvus_timeline?db_id=4 HTTP/1.1" 200 OK
+INFO:     172.31.112.34:36504 - "POST /milvus_timeline?db_id=26 HTTP/1.1" 200 OK

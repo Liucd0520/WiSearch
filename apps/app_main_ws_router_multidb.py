@@ -34,7 +34,7 @@ from apps.websocket_manager import clients
 from apps.websocket_manager import send_to_clients
 from pymilvus import MilvusClient
 from operator_workflow.milvus_client import MilvusOperation
-from operator_workflow.workflow import app_retrieve, app_retrieve_extraction, app_retrieve_summary
+from operator_workflow.workflow import app_retrieve, app_retrieve_extraction, app_retrieve_summary, app_simorder
 import datetime
 from sql_processing.view_manager import drop_view
 from typing import List 
@@ -56,7 +56,7 @@ config_dict = defaultdict(dict)  # 主程序里加入到缓存里的变量构成
 
 class ObtainDataItem(BaseModel):
     query: str = '近1年哪些小区有设备维修的需求'
-    task_type:  Literal['SQL', '内容抽取', '内容总结', 'All'] = Field(default='All')
+    task_type:  Literal['SQL', '内容抽取', '内容总结', '多人同诉', 'All'] = Field(default='All')
     databaseIds: List[int]
  
 
@@ -103,13 +103,12 @@ async def websocket_endpoint(websocket: WebSocket):
         
 
         if databaseId == -1:
-            logger.error('模型选择的数据库Id超过给出的范围')
-            raise ValueError("不可用的 databaseId: %s" % databaseId)
+            logger.error('该查询问题没有找到合适的数据库，请换一种说法 ...')
+            raise ValueError("该查询问题没有找到合适的数据库，请换一种说法 ...")
             
 
         # 读取配置加载接口得到的配置信息
         table_schema_dict = config_dict['table_schema_dict'][databaseId]
-
         full_related_dict = config_dict['full_related_dict'][databaseId]  #{table1: {column1: distinct_values, ...}, table2: {}, ...}
         full_abbr_dict = config_dict['full_abbr_dict'][databaseId]  #{table1: {column1: distinct_values, ...}, ...}
         
@@ -119,7 +118,19 @@ async def websocket_endpoint(websocket: WebSocket):
         milvus_field_type = config_dict['milvus_field_type'][databaseId]
         milvus_opt = config_dict['milvus_opt'][databaseId]
         mysql_db = config_dict['mysql_db'][databaseId]
-        
+        config.columns_map = config_dict['config_param_dict'][databaseId]['columns_map']
+        config.unstructured_column = config_dict['config_param_dict'][databaseId]['unstructured_column']
+        config.is_semantic_analysis = config_dict['config_param_dict'][databaseId]['is_semantic_analysis']
+        config.datetime_type_field = config_dict['config_param_dict'][databaseId]['datetime_type_field']
+        config.is_abbr_analysis = config_dict['config_param_dict'][databaseId]['is_abbr_analysis']
+
+        if milvus_opt:
+            config.large_step = config_dict['config_param_dict'][databaseId]['large_step']
+            config.small_step = config_dict['config_param_dict'][databaseId]['small_step']
+            config.window_size = config_dict['config_param_dict'][databaseId]['window_size']
+            config.min_samples = config_dict['config_param_dict'][databaseId]['min_samples']
+            config.limit = config_dict['config_param_dict'][databaseId]['limit']
+
 
         full_tables = list(table_schema_dict.keys())
         full_schema = '\n\n'.join(list(table_schema_dict.values()))
@@ -162,13 +173,16 @@ async def websocket_endpoint(websocket: WebSocket):
 
         # 如果不指定，则进行模型决策
         if task_type == 'All':
-            # 判断查询列是否在结构化字段里
-            if  unstructured_table in use_tables and unstructured_column in target_columns: 
-                # 意味着可能需要语义分析
-                res = await task_aware_chain.ainvoke({'query': query, })
-                task_type = res['TaskType']
+            if '多人同诉' in query or '多人一诉' in query:
+                task_type = '多人同诉'
             else:
-                task_type = 'SQL'
+                # 判断查询列是否在结构化字段里
+                if  unstructured_table in use_tables and unstructured_column in target_columns: 
+                    # 意味着可能需要语义分析
+                    res = await task_aware_chain.ainvoke({'query': query, })
+                    task_type = res['TaskType']
+                else:
+                    task_type = 'SQL'
 
         logger.info(f'任务类型: {task_type}')
 
@@ -181,7 +195,7 @@ async def websocket_endpoint(websocket: WebSocket):
             
             await send_to_clients(simplejson.dumps({"sql_gen": sql_result['sql_std']}, ensure_ascii=False))
             
-        elif task_type in ['内容抽取', '内容总结']:  
+        elif task_type in ['内容抽取', '内容总结', '多人同诉']:  
             if len(use_tables) > 1 or (unstructured_table not in use_tables):
                 await send_to_clients(simplejson.dumps( {"information": "提示：此功能无法支持该问题的查询"}, ensure_ascii=False))
                 return 
@@ -195,12 +209,24 @@ async def websocket_endpoint(websocket: WebSocket):
             if task_type == '内容总结':
                 final_state = await app_retrieve_summary.ainvoke(
                     {"unstr_value": unstructrued_value, "filter_exp":  filter_expr, "milvus_opt": milvus_opt})
+            
+            if task_type == '多人同诉':
+                final_state = await app_simorder.ainvoke(
+                    {"unstr_value": unstructrued_value, "filter_exp":  filter_expr, "milvus_opt": milvus_opt, "schema": schema})
                 
             elif task_type == '内容抽取':
                 final_state = await app_retrieve_extraction.ainvoke(
                     { 'query': query, "unstr_value": unstructrued_value, "filter_exp":  filter_expr,"milvus_opt": milvus_opt})
+                
+            
                     # [{"企业": "孔乙己酒家", "数量": 2}, {}, {}]
-            obtain_data = final_state['outputs'] 
+            
+            result_data = final_state['outputs']['result'] # [{"theme1": [doc1, doc2, doc3]}, {"theme2": [doc4, doc5]}]
+            detail_data = final_state['outputs']['detail']
+
+            obtain_data = [{'摘要': list(each_result.keys()), "数量": len(list(each_result.values())[0]), "内容": '  |||  '.join(list(each_result.values())[0]) } for each_result in result_data]
+            print('obtain_data', obtain_data[0])
+        
         else:
             print('{} 任务类型目前还不支持处理'.format(task_type))
             
@@ -216,34 +242,54 @@ async def websocket_endpoint(websocket: WebSocket):
         if task_type in ['SQL', '内容分类']:
             pattern = r"(?i)(SELECT\s+)(.*?)(\s+FROM)"
             modified_sql = re.sub(pattern, lambda match: f"{match.group(1)}*{match.group(3)}", sql_result['sql_view'],count=1, flags=re.IGNORECASE)
-            modified_sql_group_remove = remove_group_by(modified_sql)
-            logger.info(f'数据明细对应的SQL： {modified_sql_group_remove}, {params}', )
-            execute_result = sql_execute(mysql_db, modified_sql_group_remove, schema, params, sql_feedback_chain)
+            detail_sql = remove_group_by(modified_sql)
+            logger.info(f'数据明细对应的SQL： {detail_sql}, {params}', )
+            execute_result = sql_execute(mysql_db, detail_sql, schema, params, sql_feedback_chain)
             
             result_detail = eval(execute_result) if  execute_result != '' else [{}]
         else: 
-            result_detail = [{}] 
-        await send_to_clients(simplejson.dumps({ "data_detail": result_detail[:1000], "sql":modified_sql_group_remove, "param":params,  "databaseId": databaseId}, 
+            flipped_mapping_dict = {v:k for k, v in config.columns_map.items()}
+            detail_expr = f"""{config.columns_map[config.unstructured_column]} IN {detail_data}"""
+            mark = milvus_opt.query_with_filter(
+            output_fields=list(flipped_mapping_dict.keys()),  
+            filter_exp= ' AND '.join([filter_expr, detail_expr]), 
+            limit = config.limit)
+
+            # 将MIlvus里的英文字段，换成中文的
+            result_detail = [{flipped_mapping_dict[field_en]: data[field_en] for field_en in flipped_mapping_dict.keys()} for data in mark ] 
+            detail_sql = filter_expr
+            params = {}
+            databaseId = -1 
+
+        await send_to_clients(simplejson.dumps({ "data_detail": result_detail[:1000], "sql":detail_sql, "param":params,  "databaseId": databaseId}, 
                                             default=str,ensure_ascii=False))  # 会把datatime转成字符串，另外一种是把result_detail转换字符串: str(result_detail)
         
+        print('--xxxxx')
         # 将对结果的解读发送给前端
-        TopK_data = obtain_data[:15]
-        result_insight = chat_chain.invoke({ "query": query, "obtain_data": TopK_data})
+        if task_type == '多人同诉':
+            TopK_data = [{'event': list(each_data.keys())[0], 'count': len(list(each_data.values())[0])} for each_data in obtain_data[:50]]
+        else:
+            TopK_data = obtain_data[:10]
+
+        result_insight = await chat_chain.ainvoke({ "query": query, "obtain_data": TopK_data})
         await send_to_clients(simplejson.dumps( {"result_insight": result_insight}, ensure_ascii=False))
         
         # 将接下来的推荐问题发生给前端
-        query_recommands = recommand_chain.invoke({ "query": query, "schema": schema, "obtain_data": TopK_data})
+        query_recommands = await recommand_chain.ainvoke({ "query": query, "schema": schema, "obtain_data": TopK_data})
         await send_to_clients(json.dumps({"result_recommand": query_recommands}, ensure_ascii=False))
         
         await send_to_clients(json.dumps({'connect_flag': 'END'}, ensure_ascii=False))
-        # 执行完sql之后删除视图
-        drop_view(mysql_db, view_table_names)
+
+        # 执行完sql之后删除视图 (目前只针对MySQL数据库)
+        if task_type in ['SQL', '内容分类']: 
+            drop_view(mysql_db, view_table_names)
+        
 
         logger.info(f'query: {query} 处理完毕')
     except Exception as e:
         logger.error(f'Unexpected error occured:{e}', exc_info=True)
-
-        await send_to_clients(json.dumps({'connect_flag': f'报错：str({e})'}, ensure_ascii=False))
+        await send_to_clients(str(e) + '\n')
+        await send_to_clients(json.dumps({'connect_flag': 'ERROR'}, ensure_ascii=False))
         # 执行完sql之后删除视图
         # drop_view(mysql_db, view_table_names)
         # 出现错误时，移除客户端连接
@@ -350,7 +396,7 @@ async def load_config(databaseId: int):
     config_dict['config_param_dict'].update({databaseId: config_param_dict})
     config_dict['description'].update({databaseId: description}) 
 
-    
+
     return {'result': 'Done'}
     
 

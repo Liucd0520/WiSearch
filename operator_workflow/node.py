@@ -1,5 +1,6 @@
 
-from operator_workflow.utils import retrieve_document_milvus, unstr_cluster
+from operator_workflow.utils import retrieve_document_milvus, unstr_cluster, build_label2theme_with_batch
+from operator_workflow.utils import index_search, dbscan_infer, update_mapping
 from module.structured_output import create_str_chain, create_json_chain, create_structured_chain
 from langchain.prompts import PromptTemplate
 from operator_workflow.prompt import *
@@ -8,13 +9,17 @@ from typing import List, Literal
 from configs import config 
 from pymilvus import MilvusClient
 from collections import Counter
-from operator_workflow.utils import index_search
 from typing import List
 import random 
 from models.langchain_models import llm_qwen_14B, llm_qwen_7B
 from utils.util import *
 import numpy as np 
 from more_itertools import collapse
+from models.langchain_models import embedding_bge
+from itertools import groupby
+from operator import itemgetter
+from operator_workflow.utils import search_best_cluster_combine
+
 
 class KeywordExtraction(BaseModel):
     extracted_keyword: List[str] = Field(
@@ -43,6 +48,13 @@ enr_ext_chain =  create_json_chain(IE_prompt, llm_qwen_7B) #create_structured_ch
 summary_prompt = PromptTemplate(template=create_summary_prompt_template, input_variables=["docs_list"])
 summary_chain = create_str_chain(summary_prompt, llm_qwen_7B)
 
+simorder_prompt = PromptTemplate(template=simorder_theme_prompt, input_variables=["order_list", ])
+simorder_chain =  simorder_prompt | llm_qwen_7B
+
+# 多人同诉找地址字段的模型
+prompt = PromptTemplate(template=address_find_prompt, input_variables=["schema", ])
+address_find_chain = create_json_chain(prompt, llm_qwen_14B, )
+
 async def retrieve(state):
     """
     retrieve documents from milvus
@@ -57,12 +69,11 @@ async def retrieve(state):
     filter_exp = state['filter_exp']
     milvus_opt = state['milvus_opt']
     unstructured_value = state['unstr_value']
+    print(unstructured_value, milvus_opt, filter_exp,)
     documents, dense_emb = retrieve_document_milvus(unstructured_value, milvus_opt, filter_exp, limit=config.limit)
     logger.info(f'检索到的文档总数量为：{len(documents)}')
     
     return {"documents": documents, "outputs": np.array(dense_emb)}
-
-
 
 
 class GradeDocuments(BaseModel):
@@ -195,11 +206,13 @@ async def ENR_with_extension(state):
     # 按照第一个抽取的信息的数量进行排序
     key_word = key_words[0]
     extracted_entities = list(collapse([d[key_word] for d in outputs if key_word in d])) # collapse 操作是为了让其中某些元素是列表的情况展平为实体，为了解决存在抽取了多个实体的问题
+    detail_docs = [d[config.unstructured_column] for d in outputs if key_word in d]
+    
     new_output = sorted(Counter(extracted_entities).items(), key=lambda x: x[1], reverse=True)
     new_output = dict(new_output)    
     output_list =  [{key_word: key, '数量': value} for key, value in new_output.items()]
     
-    return {'documents': new_documents,  'outputs': output_list}
+    return {'documents': new_documents,  'outputs': {'result': output_list, 'detail': detail_docs}}
 
 
 async def documents_cluster_summary(state):
@@ -209,10 +222,17 @@ async def documents_cluster_summary(state):
     dense_emb = state['outputs']
 
     if len(documents) == 0:
-        return {"outputs": []}
+        return {"outputs": {'result': [], 'detail': []}}
     assert len(documents) == dense_emb.shape[0], '文档数量必定与嵌入模型数目一致'
     documents_cluster = unstr_cluster([doc for doc in documents], dense_emb)  
-    
+
+     # documents_cluster[1: ] 把背景过滤掉
+    detail_docs = []
+    for cluster in documents_cluster[1: ]:
+        detail_docs.extend(cluster[0])
+
+
+    # 聚类
     summary_list = []
     for sub_docs, count in documents_cluster:
         selected_docs = random.sample(sub_docs, min(20, len(sub_docs)))
@@ -224,5 +244,66 @@ async def documents_cluster_summary(state):
     # 按照字典中的'数量'值从高到低排序, 第一个是背景（DBSCAN)
     sorted_summary_list = sorted(summary_list[1: ], key=lambda x: x['数量'], reverse=True)
 
-    return {'outputs': sorted_summary_list}
+    return {'outputs': {'result': sorted_summary_list, 'detail': detail_docs}}
 
+
+
+
+async def documents_simorder(state):
+    logger.info('开始多人同诉聚类')
+    filter_exp = state['filter_exp']
+    milvus_opt = state['milvus_opt']
+    schema = state['schema']
+    
+    unstructured_field = config.columns_map[config.unstructured_column] 
+    address_field = await address_find_chain.ainvoke({"schema": schema})
+    address_zh_list = address_field['address_field']
+    address_list = [config.columns_map[addr_field] for addr_field in address_zh_list if f'`{addr_field}`' in schema] # 只要保证输出的字段在schema里
+    logger.info(f'多人同诉地址字段： {address_list}')
+    search_result = milvus_opt.query_with_filter(
+        output_fields=address_list + [unstructured_field, 'dense'],  # 除了`内容描述`之外选择使用哪些字段应该由query解析的结果决定
+        filter_exp=filter_exp, 
+        limit = config.limit)
+    logger.info(f'多人同诉检索到的工单总数量为：{len(search_result)}')
+    addr_list = ['-'.join([each_result[addr] if each_result[addr] is not None else '' for addr in address_list]) for each_result in search_result]
+    docs_list = [retr_result[unstructured_field] for retr_result in search_result]
+    if len(docs_list)== 0:
+        return  {'outputs': {'result': [], 'detail': []}}
+    
+    theme_embeddings = np.array([retr_result['dense'] for retr_result in search_result])
+    address_embeddings = embedding_bge(addr_list)
+
+    # alpha固定取1，地址和内容权重一样
+    cluster_label = search_best_cluster_combine(theme_embeddings, address_embeddings, eps=0.65, alpha_list=[0.6, 1])
+    print(cluster_label)
+    
+    # {label1: order_list1, label2: order_list2, ...}
+    grouped_dict = {int(label): [docs_list[i] for i in range(len(cluster_label)) if cluster_label[i] == label]
+                    for label in set(cluster_label)}
+
+
+    label2theme = build_label2theme_with_batch(grouped_dict, simorder_chain)
+  
+    sentence_list = list(label2theme.values())
+    embeddings_sent = embedding_bge(sentence_list) 
+
+    cluster_labels = dbscan_infer(embeddings_sent, 0.6, 2) # -1, -1, 0, 0, -1, -1 ...
+    cluster_labels = [label for label in cluster_labels]
+
+    # 根据原始的标签与主题的映射变量label2theme 与 聚类后的标签cluster_labels 生成新的
+    new_label2theme = update_mapping(label2theme, cluster_labels)
+    logger.info(f'多人同诉输出结果：{new_label2theme}')
+
+    # 创建新的列表，包含每个样本对应的主题、地址和工单
+    mapped_texts = [{'theme':new_label2theme[label], 'simorder': addr + '  ' + doc  } for doc, addr, label in zip(docs_list, addr_list, cluster_label) if label != -1]
+    detail_docs = [doc for doc, label in zip(docs_list, cluster_label) if label != -1]
+    # 1. 按照 'theme' 排序（groupby 要求输入是排序后的数据）
+    mapped_texts.sort(key=itemgetter('theme'))
+    # 2. 使用 groupby 对 theme 分组，并提取 simorder 到列表中
+    result = [
+        {key: [item['simorder'] for item in group]}
+        for key, group in groupby(mapped_texts, key=itemgetter('theme'))
+    ] # [{"theme1": [doc1, doc2, doc3]}, {"theme2": [doc4, doc5]}]
+
+
+    return  {'outputs': {'result': result, 'detail': detail_docs}}

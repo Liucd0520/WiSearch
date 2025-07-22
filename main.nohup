@@ -1,0 +1,660 @@
+nohup: ignoring input
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+INFO:     Started server process [1790485]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:33063 (Press CTRL+C to quit)
+INFO:     ('172.33.12.10', 52433) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:35:41,437 ChatBI->     INFO     查询的问题为：  一共有多少工单
+2025-07-09 01:35:41,437 ChatBI->     ERROR    Unexpected error occured:24
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 91, in websocket_endpoint
+    mapping = {db_id: list(config_dict['table_schema_dict'][db_id].values()) for db_id in databaseIds}
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+KeyError: 24
+content='你好！很高兴为你提供帮助。有什么我可以帮你的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'text2sql2', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--327af4c6-295f-4177-b170-44ea48d566eb-0' usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44, 'input_token_details': {}, 'output_token_details': {}}
+content='你好！有什么问题或者需要帮助的吗？' additional_kwargs={'refusal': None} response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 30, 'total_tokens': 41, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'Qwen2.5-7B-Instruct', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run--f411a71d-d12a-4534-8c52-6fe588e69a42-0' usage_metadata={'input_tokens': 30, 'output_tokens': 11, 'total_tokens': 41, 'input_token_details': {}, 'output_token_details': {}}
+log_2025-07-09-01-35-28.log
+{}
+INFO:     172.31.112.34:39200 - "POST /load_config?databaseId=24 HTTP/1.1" 200 OK
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 1.094 seconds.
+Prefix dict has been built successfully.
+{'large_step': '100', 'small_step': '10', 'window_size': '40', 'min_samples': '5', 'max_samples': '1000'}
+INFO:     172.31.112.34:39214 - "POST /load_config?databaseId=22 HTTP/1.1" 200 OK
+INFO:     connection closed
+{'large_step': '150', 'small_step': '10', 'window_size': '50', 'min_samples': '5', 'max_samples': '1000'}
+INFO:     172.31.112.34:39224 - "POST /load_config?databaseId=4 HTTP/1.1" 200 OK
+INFO:     ('172.33.12.10', 52658) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:36:00,937 ChatBI->     INFO     查询的问题为：  一共有多少工单
+2025-07-09 01:36:00,937 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:36:02,840 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'工单'的数量，而数据库Id为4的'HongKouDemo'表中包含了'工单类型'和'案件编号'等相关字段，表明该数据库与工单处理和管理直接相关。因此，选择数据库Id为4是最合适的。
+2025-07-09 01:36:02,840 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:36:03,353 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:36:03,353 ChatBI->     INFO     old schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:36:04,523 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:36:05,431 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 01:36:05,444 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:36:05,444 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:36:05,444 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:36:05,444 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:36:05,449 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 01:36:08,453 ChatBI->     INFO     query: 一共有多少工单 处理完毕
+INFO:     ('172.33.12.23', 52132) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:36:23,596 ChatBI->     INFO     查询的问题为：  哪个街道提交的工单最多
+2025-07-09 01:36:23,597 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:36:26,767 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'哪个街道提交的工单最多'，这与案件提交的街道信息有关。在现有的数据库描述中，数据库Id为4的'HongKouDemo'表包含了'所属街道'字段，该字段记录了案件发生或涉及的具体街道名称。因此，数据库Id为4的'HongKouDemo'表是与用户提问最相关的数据库。
+2025-07-09 01:36:26,768 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:36:27,316 ChatBI->     INFO     schema linking: {'target_columns': ['所属街道'], 'condition_columns': {}}
+2025-07-09 01:36:27,316 ChatBI->     INFO     old schema linking: {'target_columns': ['所属街道'], 'condition_columns': {}}
+2025-07-09 01:36:28,849 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:36:30,022 ChatBI->     INFO     stad sql: SELECT `所属街道`, COUNT(*) AS `工单数量` FROM HongKouDemo GROUP BY `所属街道` ORDER BY `工单数量` DESC LIMIT 5000;
+2025-07-09 01:36:30,023 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:36:30,023 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:36:30,023 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:36:30,023 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:36:30,032 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM HongKouDemo, {}
+2025-07-09 01:36:33,448 ChatBI->     INFO     query: 哪个街道提交的工单最多 处理完毕
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('172.33.12.10', 56518) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:41:08,706 ChatBI->     INFO     查询的问题为：  一共有多少工单
+2025-07-09 01:41:08,707 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:41:10,610 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'工单'的数量，而数据库Id为4的'HongKouDemo'表中包含了'工单类型'和'案件编号'等相关字段，表明该数据库与工单处理和管理直接相关。因此，选择数据库Id为4是最合适的。
+2025-07-09 01:41:10,610 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:41:11,150 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:41:11,150 ChatBI->     INFO     old schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:41:12,357 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:41:13,264 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 01:41:13,266 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:41:13,266 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:41:13,266 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:41:13,266 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:41:13,277 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 01:41:16,190 ChatBI->     INFO     query: 一共有多少工单 处理完毕
+INFO:     ('172.33.12.10', 61245) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:48:11,077 ChatBI->     INFO     查询的问题为：  一共有多少工单？
+2025-07-09 01:48:11,078 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:48:13,053 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及工单的数量，而数据库Id为4的'HongKouDemo'表中包含了工单相关的字段，如'案件编号'、'工单类型'、'发现时间'等，因此该数据库最有可能包含用户所需的信息。
+2025-07-09 01:48:13,053 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:48:13,606 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:48:13,606 ChatBI->     INFO     old schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:48:14,781 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:48:15,695 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 01:48:15,697 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:48:15,697 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:48:15,697 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:48:15,697 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:48:15,705 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 01:48:18,436 ChatBI->     INFO     query: 一共有多少工单？ 处理完毕
+INFO:     ('172.33.12.10', 63402) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:51:30,019 ChatBI->     INFO     查询的问题为：  一共有多少工单？
+2025-07-09 01:51:30,020 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:51:31,751 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'工单'的数量，而数据库Id为4的'HongKouDemo'表中包含了'工单类型'和'案件编号'等相关字段，表明该数据库与工单处理和管理有关。因此，选择数据库Id为4是最合适的。
+2025-07-09 01:51:31,751 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:51:32,261 ChatBI->     INFO     schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:51:32,262 ChatBI->     INFO     old schema linking: {'target_columns': ['案件编号'], 'condition_columns': {}}
+2025-07-09 01:51:33,370 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:51:34,241 ChatBI->     INFO     stad sql: SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 01:51:34,243 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:51:34,244 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:51:34,244 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:51:34,244 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:51:34,252 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 01:51:36,727 ChatBI->     INFO     query: 一共有多少工单？ 处理完毕
+INFO:     ('172.33.12.10', 51544) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 01:58:29,101 ChatBI->     INFO     查询的问题为：  哪些街道的工单数量最多？
+2025-07-09 01:58:29,101 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 01:58:33,589 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及工单数量最多的街道，这与案件处理和管理相关。根据现有的数据库描述，数据库Id为4的'HongKouDemo'表包含了详细的案件信息，包括案件来源、工单类型、发现时间、状态、事项类别、事项大类、事项小类、事项名称、事项标签、案件描述、上报地址、实际地址、联系人、联系电话、所属街道、主责部门、协同部门、主处置部门、协同处置部门、办理描述、结案时间、结案期限、市紧急程度、收单时间、紧急程度、所属片区、所属居委、派遣时间、案件期限、处置计时、案件整体计时、事实认定、诉求认定、是否解决区回访、是否满意区回访等字段。其中，'所属街道'字段直接对应用户提问中的'街道'，因此该数据库是最适合回答用户问题的。
+2025-07-09 01:58:33,589 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 01:58:34,108 ChatBI->     INFO     schema linking: {'target_columns': ['所属街道'], 'condition_columns': {}}
+2025-07-09 01:58:34,108 ChatBI->     INFO     old schema linking: {'target_columns': ['所属街道'], 'condition_columns': {}}
+2025-07-09 01:58:35,949 ChatBI->     INFO     任务类型: SQL
+2025-07-09 01:58:37,048 ChatBI->     INFO     stad sql: SELECT `所属街道`, COUNT(*) AS `工单数量` FROM HongKouDemo GROUP BY `所属街道` ORDER BY `工单数量` DESC LIMIT 5000;
+2025-07-09 01:58:37,051 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 01:58:37,051 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 01:58:37,051 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 01:58:37,051 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 01:58:37,068 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM HongKouDemo, {}
+2025-07-09 01:58:39,986 ChatBI->     INFO     query: 哪些街道的工单数量最多？ 处理完毕
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('172.31.112.34', 41782) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 02:02:26,801 ChatBI->     ERROR    Unexpected error occured:1 validation error for ObtainDataItem
+databaseIds
+  Field required [type=missing, input_value={'query': '一共多少条工单\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 77, in websocket_endpoint
+    validated_data = ObtainDataItem(**data)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ObtainDataItem
+databaseIds
+  Field required [type=missing, input_value={'query': '一共多少条工单\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+INFO:     connection closed
+INFO:     ('172.33.12.10', 52052) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:19:42,325 ChatBI->     INFO     查询的问题为：  一共多少个部门
+2025-07-09 05:19:42,326 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:19:44,496 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少个部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:19:44,496 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:19:45,058 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:19:45,058 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:19:46,166 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:19:47,081 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:19:47,084 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:19:47,084 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:19:47,084 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:19:47,084 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:19:47,102 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:19:49,453 ChatBI->     INFO     query: 一共多少个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.10', 58395) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:29:14,988 ChatBI->     INFO     查询的问题为：  一共多少个部门
+2025-07-09 05:29:14,989 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:29:17,055 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少个部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:29:17,055 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:29:17,581 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:29:17,581 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:29:18,697 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:29:19,582 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:29:19,584 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:29:19,584 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:29:19,584 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:29:19,584 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:29:19,600 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:29:21,934 ChatBI->     INFO     query: 一共多少个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.10', 60049) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:31:29,076 ChatBI->     INFO     查询的问题为：  一共多少部门
+2025-07-09 05:31:29,076 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:31:31,141 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:31:31,141 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:31:31,680 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:31:31,680 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:31:32,914 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:31:33,902 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:31:33,903 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:31:33,903 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:31:33,903 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:31:33,903 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:31:33,913 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:31:36,063 ChatBI->     INFO     query: 一共多少部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.31.65.97', 63160) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:35:53,476 ChatBI->     INFO     查询的问题为：  一共多少个部门
+2025-07-09 05:35:53,477 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:35:55,553 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少个部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:35:55,553 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:35:56,075 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:35:56,075 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:35:57,185 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:35:58,117 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:35:58,118 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:35:58,118 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:35:58,118 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:35:58,118 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:35:58,130 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:36:00,478 ChatBI->     INFO     query: 一共多少个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.31.65.97', 63604) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:36:24,782 ChatBI->     INFO     查询的问题为：  一共多少个部门
+2025-07-09 05:36:24,783 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:36:26,832 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少个部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:36:26,833 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:36:27,356 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:36:27,356 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:36:28,451 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:36:29,347 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:36:29,350 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:36:29,350 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:36:29,350 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:36:29,350 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:36:29,365 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:36:31,806 ChatBI->     INFO     query: 一共多少个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.10', 51713) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 05:42:29,011 ChatBI->     INFO     查询的问题为：  一共多少部门
+2025-07-09 05:42:29,011 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 05:42:31,048 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 05:42:31,048 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 05:42:31,571 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:42:31,571 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 05:42:32,686 ChatBI->     INFO     任务类型: SQL
+2025-07-09 05:42:33,572 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 05:42:33,575 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 05:42:33,575 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 05:42:33,575 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 05:42:33,575 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 05:42:33,596 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 05:42:35,941 ChatBI->     INFO     query: 一共多少部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.6', 53171) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 06:18:18,372 ChatBI->     INFO     查询的问题为：  一共有几个部门
+2025-07-09 06:18:18,372 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 06:18:20,471 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'一共有几个部门'，这表明用户对某个数据库中的部门数量感兴趣。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。因此，数据库Id为4是最适合回答用户提问的数据库。
+2025-07-09 06:18:20,471 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 06:18:21,095 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:18:21,095 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:18:22,394 ChatBI->     INFO     任务类型: SQL
+2025-07-09 06:18:23,361 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+2025-07-09 06:18:23,363 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 06:18:23,363 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 06:18:23,363 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 06:18:23,364 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 06:18:23,377 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo`;, {}
+2025-07-09 06:18:25,840 ChatBI->     INFO     query: 一共有几个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.6', 54149) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 06:26:59,149 ChatBI->     INFO     查询的问题为：  一共有几个部门
+2025-07-09 06:26:59,150 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 06:27:01,291 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'一共有几个部门'，这表明用户对某个数据库中的部门数量感兴趣。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。因此，数据库Id为4是最适合回答用户提问的数据库。
+2025-07-09 06:27:01,291 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 06:27:01,900 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:27:01,901 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:27:03,212 ChatBI->     INFO     任务类型: SQL
+2025-07-09 06:27:04,162 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+2025-07-09 06:27:04,164 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 06:27:04,164 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 06:27:04,165 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 06:27:04,165 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 06:27:04,179 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo`;, {}
+2025-07-09 06:27:06,501 ChatBI->     INFO     query: 一共有几个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.6', 54789) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 06:33:31,327 ChatBI->     INFO     查询的问题为：  一共有几个部门
+2025-07-09 06:33:31,328 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 06:33:33,450 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'一共有几个部门'，这表明用户对某个数据库中的部门数量感兴趣。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。因此，数据库Id为4是最适合回答用户提问的数据库。
+2025-07-09 06:33:33,450 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 06:33:34,057 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:33:34,057 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:33:35,341 ChatBI->     INFO     任务类型: SQL
+2025-07-09 06:33:36,299 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+2025-07-09 06:33:36,303 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 06:33:36,303 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 06:33:36,303 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 06:33:36,303 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 06:33:36,321 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo`;, {}
+2025-07-09 06:33:38,697 ChatBI->     INFO     query: 一共有几个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.6', 54946) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 06:34:58,263 ChatBI->     INFO     查询的问题为：  一共有几个部门
+2025-07-09 06:34:58,263 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 06:35:00,330 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'一共有几个部门'，这表明用户对某个数据库中的部门数量感兴趣。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。因此，数据库Id为4是最适合回答用户提问的数据库。
+2025-07-09 06:35:00,331 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 06:35:00,935 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:35:00,935 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-09 06:35:02,215 ChatBI->     INFO     任务类型: SQL
+2025-07-09 06:35:03,160 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+2025-07-09 06:35:03,163 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 06:35:03,163 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 06:35:03,163 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 06:35:03,163 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 06:35:03,175 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo`;, {}
+2025-07-09 06:35:05,553 ChatBI->     INFO     query: 一共有几个部门 处理完毕
+INFO:     connection closed
+INFO:     ('172.33.12.10', 51892) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 07:51:41,207 ChatBI->     INFO     查询的问题为：  上海公积金
+2025-07-09 07:51:41,208 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 07:51:43,423 ChatBI->     INFO     use_databaseId: 24, database_explanations: 用户提问涉及'上海公积金'，而现有的数据库中没有直接与公积金相关的表或字段。因此，无法从给定的数据库中找到与用户提问直接相关的数据库Id。根据要求，只能从提供的选项中选择一个数据库Id，但由于没有合适的匹配项，无法给出合理的解释。在这种情况下，选择一个最接近或最有可能相关的数据库Id。
+2025-07-09 07:51:45,148 ChatBI->     INFO     use_tables: [], table_explanations: 用户提问'上海公积金'，但是根据现有的数据库元数据，两个表AI_ASK_MEMBER和AI_ASK_PROJECT中都没有关于'上海公积金'的相关字段或信息。因此，无法从这两个表中提取与用户提问相关的信息。
+2025-07-09 07:51:45,677 ChatBI->     INFO     schema linking: {'target_columns': [], 'condition_columns': {'城市': '上海'}}
+2025-07-09 07:51:45,678 ChatBI->     INFO     old schema linking: {'target_columns': [], 'condition_columns': {'城市': '上海'}}
+2025-07-09 07:51:46,907 ChatBI->     INFO     任务类型: SQL
+2025-07-09 07:51:47,791 ChatBI->     INFO     stad sql: SELECT `公积金总额`, `公积金缴纳人数` FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;
+2025-07-09 07:51:47,791 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 07:51:47,792 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 07:51:48,051 ChatBI->     INFO     websocket发送的数据为：{"response": [{}]}
+2025-07-09 07:51:48,054 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;, {}
+2025-07-09 07:51:49,595 ChatBI->     INFO     query: 上海公积金 处理完毕
+INFO:     ('172.33.12.10', 52046) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 07:51:56,191 ChatBI->     INFO     查询的问题为：  一共多少部门
+2025-07-09 07:51:56,192 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-09 07:51:58,207 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问'一共多少部门'，涉及到对部门数量的统计。在现有的数据库描述中，只有数据库Id为4的'HongKouDemo'表包含了与部门相关的字段，如'main_responsible_department'和'cooperative_department'。这些字段可以用来统计部门的数量。因此，选择数据库Id为4是最合适的。
+2025-07-09 07:51:58,207 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 07:51:58,727 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 07:51:58,727 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门'], 'condition_columns': {}}
+2025-07-09 07:51:59,843 ChatBI->     INFO     任务类型: SQL
+2025-07-09 07:52:00,725 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+2025-07-09 07:52:00,728 ChatBI->     INFO     非结构化信息为: {}
+2025-07-09 07:52:00,728 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-09 07:52:00,728 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-09 07:52:00,728 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-09 07:52:00,746 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM `HongKouDemo` LIMIT 5000;, {}
+2025-07-09 07:52:03,104 ChatBI->     INFO     query: 一共多少部门 处理完毕
+INFO:     ('172.33.12.10', 55342) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-09 07:56:31,235 ChatBI->     INFO     查询的问题为：  这些部门分别属于哪些街道？
+2025-07-09 07:56:31,236 ChatBI->     INFO     所有库的schema长度为： 9342
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+2025-07-09 07:56:33,388 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'这些部门分别属于哪些街道？'，这表明用户需要查询部门与街道之间的关系。在现有的数据库中，数据库Id为4的'HongKouDemo'表包含了'主责部门'和'所属街道'两个字段，这两个字段直接对应了用户提问中的需求。因此，选择数据库Id为4是最合适的。
+2025-07-09 07:56:33,388 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-09 07:56:34,968 ChatBI->     INFO     schema linking: {'target_columns': ['所属街道'], 'condition_columns': {'主责部门': '公安局虹口分局', '协同部门': '公安局虹口分局', '主处置部门': '虹口区体育局/群众体育科', '协同处置部门': '广中路街道办事处/城市建设管理服务中心'}}
+2025-07-09 07:56:34,968 ChatBI->     INFO     old schema linking: {'target_columns': ['所属街道'], 'condition_columns': {'主责部门': '公安局虹口分局', '协同部门': '公安局虹口分局', '主处置部门': '虹口区体育局/群众体育科', '协同处置部门': '广中路街道办事处/城市建设管理服务中心'}}
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 331, in asgi_send
+    await self.send(data)  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/websockets/legacy/protocol.py", line 620, in send
+    await self.ensure_open()
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/websockets/legacy/protocol.py", line 921, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 85, in send
+    await self._send(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 39, in sender
+    await send(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 344, in asgi_send
+    raise ClientDisconnected from exc
+uvicorn.protocols.utils.ClientDisconnected
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 156, in websocket_endpoint
+    await websocket.send_text(chunk)  # 将每个 chunk 发送给客户端
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 165, in send_text
+    await self.send({"type": "websocket.send", "text": data})
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 88, in send
+    raise WebSocketDisconnect(code=1006)
+starlette.websockets.WebSocketDisconnect
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 243, in run_asgi
+    result = await self.app(self.scope, self.asgi_receive, self.asgi_send)  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/cors.py", line 77, in __call__
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 362, in handle
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 95, in app
+    await wrap_app_handling_exceptions(app, session)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 93, in app
+    await func(session)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/routing.py", line 383, in app
+    await dependant.call(**solved_result.values)
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 240, in websocket_endpoint
+    await send_to_clients(json.dumps({'connect_flag': 'ERROR'}, ensure_ascii=False))
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/websocket_manager.py", line 13, in send_to_clients
+    await client.send_text(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 165, in send_text
+    await self.send({"type": "websocket.send", "text": data})
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 97, in send
+    raise RuntimeError('Cannot call "send" once a close message has been sent.')
+RuntimeError: Cannot call "send" once a close message has been sent.
+INFO:     ('172.31.112.34', 58466) - "WebSocket /ws" [accepted]
+INFO:     connection open
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 75, in websocket_endpoint
+    message = await websocket.receive_text()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 119, in receive_text
+    self._raise_on_disconnect(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 113, in _raise_on_disconnect
+    raise WebSocketDisconnect(message["code"], message.get("reason"))
+starlette.websockets.WebSocketDisconnect: (<CloseCode.ABNORMAL_CLOSURE: 1006>, '')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 243, in run_asgi
+    result = await self.app(self.scope, self.asgi_receive, self.asgi_send)  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/cors.py", line 77, in __call__
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 362, in handle
+    await self.app(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 95, in app
+    await wrap_app_handling_exceptions(app, session)(scope, receive, send)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/routing.py", line 93, in app
+    await func(session)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/fastapi/routing.py", line 383, in app
+    await dependant.call(**solved_result.values)
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 240, in websocket_endpoint
+    await send_to_clients(json.dumps({'connect_flag': 'ERROR'}, ensure_ascii=False))
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/websocket_manager.py", line 13, in send_to_clients
+    await client.send_text(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 165, in send_text
+    await self.send({"type": "websocket.send", "text": data})
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/websockets.py", line 85, in send
+    await self._send(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/starlette/_exception_handler.py", line 39, in sender
+    await send(message)
+  File "/root/anaconda3/envs/chatbi/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 359, in asgi_send
+    raise RuntimeError(msg % message_type)
+RuntimeError: Unexpected ASGI message 'websocket.send', after sending 'websocket.close' or response already completed.
+INFO:     connection closed
+cond_columns: {}
+0.5135784149169922
+sql_command SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5488383769989014
+sql_command SELECT `所属街道`, COUNT(*) AS `工单数量` FROM HongKouDemo GROUP BY `所属街道` ORDER BY `工单数量` DESC LIMIT 5000;
+sql_command SELECT * FROM HongKouDemo
+cond_columns: {}
+0.5406901836395264
+sql_command SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5529289245605469
+sql_command SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5105006694793701
+sql_command SELECT COUNT(`案件编号`) AS `工单数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5192177295684814
+sql_command SELECT `所属街道`, COUNT(*) AS `工单数量` FROM HongKouDemo GROUP BY `所属街道` ORDER BY `工单数量` DESC LIMIT 5000;
+sql_command SELECT * FROM HongKouDemo
+cond_columns: {}
+0.5624918937683105
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5255191326141357
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5391054153442383
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5223965644836426
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.5237040519714355
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.523817777633667
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {}
+0.6241445541381836
+sql_command SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+sql_command SELECT * FROM `HongKouDemo`;
+cond_columns: {}
+0.6096022129058838
+sql_command SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+sql_command SELECT * FROM `HongKouDemo`;
+cond_columns: {}
+0.6069636344909668
+sql_command SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+sql_command SELECT * FROM `HongKouDemo`;
+cond_columns: {}
+0.604640007019043
+sql_command SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS `部门总数` FROM `HongKouDemo`;
+sql_command SELECT * FROM `HongKouDemo`;
+cond_columns: {'城市': '上海'}
+2.254580497741699
+sql_command SELECT `公积金总额`, `公积金缴纳人数` FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;
+error: (mysql.connector.errors.ProgrammingError) 1146 (42S02): Table 'finData.公积金数据表' doesn't exist
+[SQL: SELECT `公积金总额`, `公积金缴纳人数` FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+sql_command SELECT * FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;
+error: (mysql.connector.errors.ProgrammingError) 1146 (42S02): Table 'finData.公积金数据表' doesn't exist
+[SQL: SELECT * FROM `公积金数据表` WHERE `城市` = '上海' LIMIT 5000;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+cond_columns: {}
+0.5193347930908203
+sql_command SELECT COUNT(DISTINCT `主责部门`) AS `部门数量` FROM `HongKouDemo` LIMIT 5000;
+sql_command SELECT * FROM `HongKouDemo` LIMIT 5000;
+cond_columns: {'主责部门': '公安局虹口分局', '协同部门': '公安局虹口分局', '主处置部门': '虹口区体育局/群众体育科', '协同处置部门': '广中路街道办事处/城市建设管理服务中心'}
+1.5800895690917969
+{}
+INFO:     172.31.112.34:58566 - "POST /load_config?databaseId=24 HTTP/1.1" 200 OK
+INFO:     ('172.31.112.34', 58580) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-10 02:45:21,192 ChatBI->     INFO     查询的问题为：  公积金
+2025-07-10 02:45:21,193 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-10 02:45:22,734 ChatBI->     ERROR    Unexpected error occured:int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 98, in websocket_endpoint
+    databaseId = int(databaseId) if int(databaseId) in list(mapping.keys()) else -1
+                                    ^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+INFO:     ('172.31.112.34', 58586) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-10 02:45:35,895 ChatBI->     INFO     查询的问题为：  理想一共多少部门
+2025-07-10 02:45:35,895 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-10 02:45:38,038 ChatBI->     INFO     use_databaseId: 4, database_explanations: 用户提问涉及'理想一共多少部门'，这表明用户可能在询问某个组织或系统的部门数量。在现有的数据库描述中，数据库Id为4的'HongKouDemo'表包含了'主责部门'和'协同部门'字段，这些字段列出了多个部门名称。因此，数据库Id为4是最有可能包含用户所询问信息的数据库。
+2025-07-10 02:45:38,038 ChatBI->     INFO     use_tables: ['HongKouDemo'], table_explanations: 仅有1张表可选
+2025-07-10 02:45:38,663 ChatBI->     INFO     schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-10 02:45:38,663 ChatBI->     INFO     old schema linking: {'target_columns': ['主责部门', '协同部门'], 'condition_columns': {}}
+2025-07-10 02:45:39,904 ChatBI->     INFO     任务类型: SQL
+2025-07-10 02:45:41,813 ChatBI->     INFO     stad sql: SELECT COUNT(DISTINCT `主责部门`) + COUNT(DISTINCT `协同部门`) AS 总部门数 FROM HongKouDemo;
+2025-07-10 02:45:41,816 ChatBI->     INFO     非结构化信息为: {}
+2025-07-10 02:45:41,816 ChatBI->     INFO     sql查询命令中没有非结构化信息则不进行语义分析
+2025-07-10 02:45:41,816 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-10 02:45:41,816 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-10 02:45:43,689 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM HongKouDemo;, {}
+2025-07-10 02:45:46,909 ChatBI->     INFO     query: 理想一共多少部门 处理完毕
+INFO:     ('172.31.112.34', 58700) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-10 02:46:30,241 ChatBI->     INFO     查询的问题为：  公积金
+2025-07-10 02:46:30,242 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-10 02:46:31,666 ChatBI->     ERROR    Unexpected error occured:int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 98, in websocket_endpoint
+    databaseId = int(databaseId) if int(databaseId) in list(mapping.keys()) else -1
+                                    ^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('172.31.112.34', 59078) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-10 02:50:08,796 ChatBI->     INFO     查询的问题为：  工具集
+2025-07-10 02:50:08,796 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-10 02:50:10,380 ChatBI->     INFO     use_databaseId: 24, database_explanations: 用户提问'工具集'没有明确指向任何一个特定的数据库表或字段。因此，无法根据用户提问直接确定应该使用哪个数据库。由于没有足够的信息来匹配用户提问与特定数据库，我们选择默认的数据库Id。
+2025-07-10 02:50:12,578 ChatBI->     INFO     use_tables: ['AI_ASK_MEMBER', 'AI_ASK_PROJECT'], table_explanations: 用户提问为'工具集'，这是一个非常宽泛的术语，可能涉及到多个方面。由于提供的元数据中没有直接与'工具集'相关的字段或表，因此无法确定具体需要哪些数据表来回答这个问题。为了确保能够涵盖所有可能的相关信息，选择了所有可用的数据表。
+2025-07-10 02:50:13,281 ChatBI->     INFO     schema linking: {'target_columns': [], 'condition_columns': {}}
+2025-07-10 02:50:13,282 ChatBI->     INFO     old schema linking: {'target_columns': [], 'condition_columns': {}}
+2025-07-10 02:50:14,491 ChatBI->     INFO     任务类型: SQL
+2025-07-10 02:50:15,495 ChatBI->     INFO     stad sql: SELECT * FROM AI_ASK_MEMBER LIMIT 5000;
+2025-07-10 02:50:15,495 ChatBI->     INFO     开始缩写分析 ... 
+2025-07-10 02:50:15,497 ChatBI->     INFO     没有找到<  >对应的视图
+2025-07-10 02:50:15,838 ChatBI->     INFO     数据明细对应的SQL： SELECT * FROM AI_ASK_MEMBER LIMIT 5000;, {}
+2025-07-10 02:50:20,296 ChatBI->     INFO     query: 工具集 处理完毕
+INFO:     ('172.31.112.34', 59294) - "WebSocket /ws" [accepted]
+INFO:     connection open
+2025-07-10 02:52:16,815 ChatBI->     INFO     查询的问题为：  公积金
+2025-07-10 02:52:16,815 ChatBI->     INFO     所有库的schema长度为： 9342
+2025-07-10 02:52:18,245 ChatBI->     ERROR    Unexpected error occured:int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "/data/yfzx/liucd/chatbi_deploy2/chatbi_DB2/apps/app_main_ws_router.py", line 98, in websocket_endpoint
+    databaseId = int(databaseId) if int(databaseId) in list(mapping.keys()) else -1
+                                    ^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1790485]

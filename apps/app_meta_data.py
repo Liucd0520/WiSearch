@@ -55,7 +55,7 @@ async def meta_data_gen(request: InitProjectRequest):
    
 
     # 获取配置信息
-    mysql_db, param_db, client, _, unstructured_column, dumped_table_name, selected_tables, _ \
+    mysql_db, param_db, _, client, _, unstructured_column, dumped_table_name, selected_tables, _ \
           = obtain_database_config(config.param_uri, config.milvus_uri, db_id=database_id,)
     
     

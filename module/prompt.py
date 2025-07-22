@@ -26,6 +26,10 @@ schema_link_prompt = """
 <|end_of_qeury|>
 
 
+## 当前时间
+{datetime}
+
+
 ## 输出格式
 
 
@@ -67,7 +71,32 @@ table_linking_prompt = """
 
 """
 
+database_linking_prompt = """
 
+# 指令：
+根据现有的数据库的描述和用户提问意图，识别出用户的提问应该与哪个数据库有关，给出与用户提问有关的数据库Id,并给出理由。
+
+# 要求：
+只输出一个与用户提问有关的数据库Id，如果提问与任何数据库都无关，则输出： -1
+
+# 现有的数据库Id以及描述为：
+{database_description}
+
+# 用户提问：
+{question}
+
+# 可选的数据库Id为:
+{database_id}
+
+不要进行任何假设，但需要详细解释为什么这个数据库会被选择。将最终结果以json格式输出，不要输出markdown格式，格式如下：
+{{
+    "explanations": "<选择这个数据库Id的理由>", 
+    "databaseId": <选择的数据库Id>
+}}
+
+### 输出：
+
+"""
 
 # 将枚举值具体的值放进Prompt里面可以帮助正确地匹配，比如输入是“浦东” ，linking的是“浦东新区”
 metadata_prompt = """
@@ -201,6 +230,9 @@ sql_gen_prompt = """
 
     # 输入查询:
     {query}
+
+    # 当前时间为：
+    {datetime}
 
     # 与查询相关的列为
     {columns}

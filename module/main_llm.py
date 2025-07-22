@@ -16,6 +16,8 @@ from pydantic import BaseModel, Field
 from typing import List, Literal
 from datetime import datetime
 
+
+
 # 任务感知模型
 def task_aware_model(model):
     prompt = PromptTemplate(template=task_aware_prompt, input_variables=["query", ])
@@ -25,8 +27,9 @@ def task_aware_model(model):
 
 
 
+
 def schema_linking_model(model):  
-    prompt_schema_linking = PromptTemplate(template=schema_link_prompt, input_variables=["schema", "query", 'samples'])
+    prompt_schema_linking = PromptTemplate(template=schema_link_prompt, input_variables=["schema", "query", 'datetime', 'samples'])
     linking_chain = create_json_chain(prompt_schema_linking, model )
 
     return linking_chain
@@ -38,14 +41,27 @@ def table_linking_model(model):
 
     return table_linking_chain
 
+
+def database_linking_model(model):  
+    prompt_database_linking = PromptTemplate(template=database_linking_prompt, input_variables=["database_id", "database_description", "question", ])
+    database_linking_chain = create_json_chain(prompt_database_linking, model )
+
+    return database_linking_chain
+
+
 def sql_gen_model(model):
-    prompt_sql_gen = PromptTemplate(template=sql_gen_prompt, input_variables=["schema", "query", 'columns'])
+    prompt_sql_gen = PromptTemplate(template=sql_gen_prompt, input_variables=["schema", "query", 'columns', 'datetime'])
     sql_gen_chain = create_json_chain(prompt_sql_gen, model)
 
     return sql_gen_chain
 
 
-# 
+def address_finding_model(model):
+    prompt = PromptTemplate(template=address_find_prompt, input_variables=["schema", ])
+    address_find_chain = create_json_chain(prompt, model, )
+
+    return address_find_chain
+
 
 # 命名实体判别模型
 class GradeDocuments(BaseModel):

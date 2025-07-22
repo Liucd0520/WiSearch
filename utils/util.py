@@ -31,7 +31,7 @@ from Crypto.Util.Padding import pad, unpad
 from Crypto.Util.strxor import strxor
 import base64
 from pymilvus import MilvusClient, DataType
-
+import concurrent.futures
 
 def create_path(_path):
     if not os.path.exists(_path):
@@ -88,6 +88,7 @@ def obtain_database_config(param_uri, milvus_uri, db_id: int, ):
     target_table =  conf_field[0]['target_table']
     is_semantic_analysis = conf_field[0]['is_semantic_analysis']
     selected_tables = conf_field[0]['selected_tables']
+    description = conf_field[0]['description']
 
     if is_semantic_analysis:
         semtantic_params_dict = {
@@ -115,7 +116,7 @@ def obtain_database_config(param_uri, milvus_uri, db_id: int, ):
     else:
         client = None 
         
-    return mysql_db, param_db, client, primary_key_name, unstr_field, target_table, selected_tables, semtantic_params_dict
+    return mysql_db, param_db, description, client, primary_key_name, unstr_field, target_table, selected_tables, semtantic_params_dict
 
 
 
@@ -462,7 +463,7 @@ def sql_execute(mysql_db, sql_command: str, schema: str,  params: dict, sql_rewr
 
 def datetime_parser(query: str, text2datetime_chain: Runnable):
 
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     start_time = time.time()
     generation = text2datetime_chain.invoke({"query": query, "now": now})
@@ -645,31 +646,71 @@ def get_enum_values(
         return {}, {}
     
 
+# def get_distinct_values(
+#     mysql_db,
+#     table_name: str,
+#     column_list: list, 
+#     LIMIT: int = 100000):
+#     """
+#     获取表中制定列名的枚举值
+#     """
+#     result = {}
+#     for column_name in column_list:
+#         distinct_query = f"""
+#             SELECT DISTINCT `{column_name}`
+#             FROM `{table_name}` 
+#             WHERE `{column_name}` IS NOT NULL 
+#             LIMIT {LIMIT}
+#         """
+
+#         distinct_values = mysql_db.run(distinct_query, include_columns=True)
+#         distinct_values = eval(distinct_values)
+#         dist_dict =  {column_name: [d[column_name] for d in distinct_values]}
+#         result.update(dist_dict)
+    
+#     # result: {'事项名称': [x, x, x], 'xx': [x, x, x,]}
+#     return result
+
+
 def get_distinct_values(
     mysql_db,
     table_name: str,
     column_list: list, 
-    LIMIT: int = 100000):
-    """
-    获取表中制定列名的枚举值
-    """
-    result = {}
-    for column_name in column_list:
+    LIMIT: int = 100000,
+    max_workers: int = 5):
+    """使用多线程并行执行多个单列查询"""
+    
+    def fetch_column_distinct(column_name):
         distinct_query = f"""
             SELECT DISTINCT `{column_name}`
             FROM `{table_name}` 
             WHERE `{column_name}` IS NOT NULL 
             LIMIT {LIMIT}
         """
-
-        distinct_values = mysql_db.run(distinct_query, include_columns=True)
-        distinct_values = eval(distinct_values)
-        dist_dict =  {column_name: [d[column_name] for d in distinct_values]}
-        result.update(dist_dict)
+        try:
+            distinct_values = mysql_db.run(distinct_query, include_columns=True)
+            distinct_values = eval(distinct_values)
+            return {column_name: [d[column_name] for d in distinct_values]}
+        except Exception as e:
+            print(f"Error fetching {column_name}: {e}")
+            return {column_name: []}
     
-    # result: {'事项名称': [x, x, x], 'xx': [x, x, x,]}
+    # 使用线程池并行执行查询
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_col = {executor.submit(fetch_column_distinct, col): col for col in column_list}
+        
+        result = {}
+        for future in concurrent.futures.as_completed(future_to_col):
+            col = future_to_col[future]
+            try:
+                col_result = future.result()
+                result.update(col_result)
+            except Exception as e:
+                print(f"Error processing {col}: {e}")
+    
     return result
-                
+
+
 
 
 # if __name__ == '__main__':

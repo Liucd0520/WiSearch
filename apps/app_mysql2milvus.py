@@ -97,7 +97,7 @@ async def vector_dump(db_id: int):
 
     # 获取配置信息
     param_uri = config.param_uri
-    mysql_db, param_db, client, primary_key_name, unstr_field, dumped_table_name, _, _ = obtain_database_config(param_uri, milvus_uri, db_id,)
+    mysql_db, param_db, _, client, primary_key_name, unstr_field, dumped_table_name, _, _ = obtain_database_config(param_uri, milvus_uri, db_id,)
 
     # 向量库的collection名字
     collection_name = dumped_table_name
@@ -182,7 +182,7 @@ async def dump_timeline(db_id: int):
     milvus_uri = config.milvus_uri 
 
     # 获取配置信息
-    mysql_db, _, client, _, unstr_field, dumped_table_name, _, _ = obtain_database_config(param_uri, milvus_uri, db_id)
+    mysql_db, _, _, client, _, unstr_field, dumped_table_name, _, _ = obtain_database_config(param_uri, milvus_uri, db_id)
     mysql_res = mysql_db.run(f'SELECT COUNT(DISTINCT `{unstr_field}`) AS total_num FROM {dumped_table_name}', include_columns=True)
     total_num = eval(mysql_res)[0]['total_num']
     # 向量库的collection名字

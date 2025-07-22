@@ -23,7 +23,7 @@ is_semantic_analysis = False
 unstructured_column = ''
 extend_field = ''
 columns_map = {}
-datetime_type_field = []
+datetime_type_field = ['工单生成时间']
 
 
 """没加在数据库里的两个参数"""

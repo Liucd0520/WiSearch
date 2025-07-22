@@ -13,6 +13,8 @@ meta_data_chain = meta_data_model(llm_qwen_14B)
 each_meta_data_chain  = each_meta_data_model(llm_qwen_14B)
 translate_chain = translate_english_model(llm_qwen_14B)
 table_chain = table_linking_model(llm_qwen_14B)
+database_chain = database_linking_model(llm_qwen_14B)
+
 
 # 配置前端的模型
 explanation_chain = query_insight_model(llm_qwen_14B)

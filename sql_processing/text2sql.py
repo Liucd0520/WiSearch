@@ -24,7 +24,7 @@ from langchain.schema.runnable import Runnable
 from models.langchain_models import llm_qwen_14B
 import json 
 import os 
-
+from datetime import datetime
 
 
 async def schema_linking(query: str, 
@@ -36,7 +36,9 @@ async def schema_linking(query: str,
     values_dict = {k:v for d in col_values_list for k, v in d.items()} # {column1: distincut_values1, columns2:xx ...}
     related_columns = list(values_dict.keys())
     
-    output = await chain.ainvoke({"schema": schema, "query": query, "samples": examples})
+    now = datetime.now()
+    date_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    output = await chain.ainvoke({"schema": schema, "query": query, 'datetime': date_now,  "samples": examples})
     
     old_output = copy.deepcopy(output)
     cond_columns = copy.deepcopy(output['condition_columns'])
@@ -69,8 +71,10 @@ async def schema_linking(query: str,
 
 def sql_gen(query: str, columns: dict, schema: str, chain: Runnable):
     # 利用上一步schema补全的结果    
-            
-    output = chain.invoke({"schema": schema, "query": query, "columns": columns})
+    now = datetime.now()
+    date_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    print('==-=-=> ', date_now)
+    output = chain.invoke({"schema": schema, "query": query, "columns": columns, "datetime": date_now})
     
     return output['SQL']
 

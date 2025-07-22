@@ -16,5 +16,6 @@ class GraphState(TypedDict):
     filter_exp: str 
     milvus_opt: object 
     documents: List[str]    
-    outputs: List[str]
+    outputs: dict
+    schema: str 
 

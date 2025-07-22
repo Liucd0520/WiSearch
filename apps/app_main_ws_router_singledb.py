@@ -37,8 +37,6 @@ from operator_workflow.milvus_client import MilvusOperation
 from operator_workflow.workflow import app_retrieve, app_retrieve_extraction, app_retrieve_summary
 import datetime
 from sql_processing.view_manager import drop_view
-from typing import List 
-from collections import defaultdict
 
 app = FastAPI()
 
@@ -51,13 +49,12 @@ allow_headers=["*"],
 ) # 中间件白名单
 
 
-config_dict = defaultdict(dict)  # 主程序里加入到缓存里的变量构成的字典
+config_dict = {}  # 主程序里加入到缓存里的变量构成的字典
 
 
 class ObtainDataItem(BaseModel):
     query: str = '近1年哪些小区有设备维修的需求'
     task_type:  Literal['SQL', '内容抽取', '内容总结', 'All'] = Field(default='All')
-    databaseIds: List[int]
  
 
 # WebSocket路由 
@@ -77,48 +74,23 @@ async def websocket_endpoint(websocket: WebSocket):
         validated_data = ObtainDataItem(**data)
         query = validated_data.query
         task_type = validated_data.task_type
-        databaseIds = validated_data.databaseIds
 
         view_values = '' # 暂且不设置视图
         filtered_list = []
 
         logger.info(f'查询的问题为：  {query}')
-        # 选择某个库
-        if len(databaseIds) == 1:
-            databaseId = databaseIds[0]
-            database_explanations = '仅有1个数据库被选中'
-            
-        else:
-            # mapping = {db_id: config_dict['description'][db_id] for db_id in databaseIds}
-            mapping = {db_id: list(config_dict['table_schema_dict'][db_id].values()) for db_id in databaseIds}
-            logger.info(f'所有库的schema长度为： {len(str(mapping))}')
-            selected_db = await database_chain.ainvoke({"database_id": list(mapping.keys()), 
-                                          "database_description": mapping, 
-                                          "question": query})
-            
-            databaseId = selected_db['databaseId']
-            database_explanations = selected_db['explanations']
-            databaseId = int(databaseId) if int(databaseId) in list(mapping.keys()) else -1
-        logger.info(f'use_databaseId: {databaseId}, database_explanations: {database_explanations}')
-        
-
-        if databaseId == -1:
-            logger.error('模型选择的数据库Id超过给出的范围')
-            raise ValueError("不可用的 databaseId: %s" % databaseId)
-            
-
         # 读取配置加载接口得到的配置信息
-        table_schema_dict = config_dict['table_schema_dict'][databaseId]
+        table_schema_dict = config_dict['table_schema_dict'] 
 
-        full_related_dict = config_dict['full_related_dict'][databaseId]  #{table1: {column1: distinct_values, ...}, table2: {}, ...}
-        full_abbr_dict = config_dict['full_abbr_dict'][databaseId]  #{table1: {column1: distinct_values, ...}, ...}
+        full_related_dict = config_dict['full_related_dict']  #{table1: {column1: distinct_values, ...}, table2: {}, ...}
+        full_abbr_dict = config_dict['full_abbr_dict']  #{table1: {column1: distinct_values, ...}, ...}
         
 
-        unstructured_table = config_dict['target_table'][databaseId]
-        unstructured_column = config_dict['unstructured_column'][databaseId]
-        milvus_field_type = config_dict['milvus_field_type'][databaseId]
-        milvus_opt = config_dict['milvus_opt'][databaseId]
-        mysql_db = config_dict['mysql_db'][databaseId]
+        unstructured_table = config_dict['target_table']
+        unstructured_column = config_dict['unstructured_column'] 
+        milvus_field_type = config_dict['milvus_field_type'] 
+        milvus_opt = config_dict['milvus_opt']
+        mysql_db = config_dict['mysql_db']
         
 
         full_tables = list(table_schema_dict.keys())
@@ -129,7 +101,7 @@ async def websocket_endpoint(websocket: WebSocket):
         # 获取查询的表（可以是多表）
         if len(full_tables) == 1:
             use_tables = full_tables
-            table_explanations = "仅有1张表可选"
+            explanations = "仅有1张表可选"
         elif len(full_tables) > 1:
             select_tables = await table_chain.ainvoke({"table_list": full_tables , 
                                                     "schema": full_schema, 
@@ -137,13 +109,13 @@ async def websocket_endpoint(websocket: WebSocket):
                                                     })
             use_tables = select_tables['tables']
             use_tables = use_tables if set(use_tables).issubset(set(full_tables)) else full_tables
-            table_explanations = select_tables['explanations']
+            explanations = select_tables['explanations']
         else:
             use_tables = []
             logger.error('可选择的表不允许为空')
         schema = '\n\n'.join([table_schema_dict[table] for table in use_tables])
         
-        logger.info(f'use_tables: {use_tables}, table_explanations: {table_explanations}')
+        logger.info(f'use_tables: {use_tables}, explanations: {explanations}')
 
         old_linking_columns, new_linking_columns = await schema_linking(query, schema, full_related_dict, 
                                         examples='\n'.join(filtered_list), chain=schema_linking_chain)
@@ -223,7 +195,7 @@ async def websocket_endpoint(websocket: WebSocket):
             result_detail = eval(execute_result) if  execute_result != '' else [{}]
         else: 
             result_detail = [{}] 
-        await send_to_clients(simplejson.dumps({ "data_detail": result_detail[:1000], "sql":modified_sql_group_remove, "param":params,  "databaseId": databaseId}, 
+        await send_to_clients(simplejson.dumps({ "data_detail": result_detail[:1000], "sql":modified_sql_group_remove, "param":params}, 
                                             default=str,ensure_ascii=False))  # 会把datatime转成字符串，另外一种是把result_detail转换字符串: str(result_detail)
         
         # 将对结果的解读发送给前端
@@ -241,13 +213,11 @@ async def websocket_endpoint(websocket: WebSocket):
 
         logger.info(f'query: {query} 处理完毕')
     except Exception as e:
-        logger.error(f'Unexpected error occured:{e}', exc_info=True)
-
-        await send_to_clients(json.dumps({'connect_flag': f'报错：str({e})'}, ensure_ascii=False))
+        await send_to_clients(json.dumps({'connect_flag': 'ERROR'}, ensure_ascii=False))
         # 执行完sql之后删除视图
         # drop_view(mysql_db, view_table_names)
         # 出现错误时，移除客户端连接
-        
+        logger.error(f'Unexpected error occured:{e}', exc_info=True)
         clients.remove(websocket)
 
 
@@ -256,9 +226,10 @@ async def websocket_endpoint(websocket: WebSocket):
 @app.post('/load_config', summary='加载数据源配置信息')
 async def load_config(databaseId: int):
 
+
     # 获取配置信息
-    mysql_db, param_db, description, client, _, unstructured_column, target_table, selected_tables, params_dict \
-        = obtain_database_config(config.param_uri, config.milvus_uri, db_id=databaseId, )
+    mysql_db, param_db,description, client, _, unstructured_column, target_table, selected_tables, params_dict \
+          = obtain_database_config(config.param_uri, config.milvus_uri, db_id=databaseId, )
     collection_name = target_table
     # 选中的表
     selected_table_names = selected_tables.split(',')
@@ -298,7 +269,6 @@ async def load_config(databaseId: int):
     # logger.info(f'获取每个表中的缩写列: {full_abbr_dict}')
     
 
-    config_param_dict = {}
     # 获取时间类型但是是字符串表示的字段
     datetime_str_cols = []
     if client:  # if client 等价于 if is_semantic_analysis
@@ -310,18 +280,18 @@ async def load_config(databaseId: int):
 
         # 只有开启语义时才会重写这部分的配置
         
-        config_param_dict['large_step'] = int(params_dict['large_step'])
-        config_param_dict['small_step'] = int(params_dict['small_step'])
-        config_param_dict['window_size'] = int(params_dict['window_size'])
-        config_param_dict['min_samples'] = int(params_dict['min_samples'])
-        config_param_dict['limit'] = int(params_dict['max_samples'])
+        config.large_step = int(params_dict['large_step'])
+        config.small_step = int(params_dict['small_step'])
+        config.window_size = int(params_dict['window_size'])
+        config.min_samples = int(params_dict['min_samples'])
+        config.limit = int(params_dict['max_samples'])
 
     # 重写配置
-    config_param_dict['datetime_type_field'] = datetime_str_cols
-    config_param_dict['columns_map'] = columns_map
-    config_param_dict['unstructured_column'] = unstructured_column
-    config_param_dict['is_semantic_analysis'] = 1 if client else 0
-    config_param_dict['is_abbr_analysis'] = 1 if full_abbr_dict else 0 
+    config.datetime_type_field = datetime_str_cols
+    config.columns_map = columns_map
+    config.unstructured_column = unstructured_column
+    config.is_semantic_analysis = 1 if client else 0
+    config.is_abbr_analysis = 1 if full_abbr_dict else 0 
     
 
     # 开启语义分析时，client 不为None
@@ -338,17 +308,16 @@ async def load_config(databaseId: int):
         milvus_field_type = {}
         milvus_opt = None 
 
-    config_dict['table_schema_dict'].update({databaseId: table_schema_dict})
-    config_dict['full_related_dict'].update({databaseId: full_related_dict})
-    config_dict['full_abbr_dict'].update({databaseId: full_abbr_dict})
-    config_dict['target_table'].update({databaseId: target_table})
-    config_dict['unstructured_column'].update({databaseId: unstructured_column})
-
-    config_dict['milvus_field_type'].update({databaseId: milvus_field_type})
-    config_dict['milvus_opt'].update({databaseId: milvus_opt}) 
-    config_dict['mysql_db'].update({databaseId: mysql_db})
-    config_dict['config_param_dict'].update({databaseId: config_param_dict})
-    config_dict['description'].update({databaseId: description}) 
+    config_dict['table_schema_dict'] = table_schema_dict  # 包含了选择的表名 
+    config_dict['full_related_dict'] = full_related_dict
+    config_dict['full_abbr_dict'] = full_abbr_dict 
+    config_dict['target_table'] = target_table
+    config_dict['unstructured_column'] = unstructured_column
+  
+    config_dict['milvus_field_type']  = milvus_field_type
+    config_dict['milvus_opt'] = milvus_opt 
+    config_dict['mysql_db'] = mysql_db
+    
 
     
     return {'result': 'Done'}
